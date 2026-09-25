@@ -8,7 +8,10 @@
   // Single tap: correct pick → "Brava!" + new-phrase note → auto-advance after ~1.2 s.
   const AUTO_ADVANCE_MS = 1200;
   const $ = (id) => document.getElementById(id);
-  const sessionById = (id) => DATA.sessions.find((s) => s.id === id) || DATA.sessions[0];
+  const SONGS = DATA.songs || [];
+  const isSongSet = (s) => SONGS.indexOf(s) >= 0;
+  const sessionById = (id) => DATA.sessions.find((s) => s.id === id) || SONGS.find((s) => s.id === id) || DATA.sessions[0];
+  const reduceMotion = () => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
   /* ---------- saved data (localStorage) ---------- */
   function load() {
@@ -25,7 +28,8 @@
   }
   const saved = load();
   function persist() { try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (_) {} }
-  const isUnlocked = (id) => id === DATA.sessions[0].id || !!saved.unlocked[id];
+  const isUnlocked = (id) => id === DATA.sessions[0].id || !!saved.unlocked[id] || SONGS.some((s) => s.id === id);
+  const prevTitle = (s) => { const i = DATA.sessions.indexOf(s); return i > 0 ? DATA.sessions[i - 1].title : DATA.sessions[0].title; };
 
   /* ---------- play state ---------- */
   const state = { session: null, cards: [], index: 0, firstTry: 0, attempted: {}, ok: {} };
@@ -36,7 +40,7 @@
   }
   // Once a song clip has been started on a card, never auto-advance (let it play).
   function clipPlaying(card) {
-    return !!(card && card.clip && player && !player.paused && player.dataset.card === card.id);
+    return !!(card && card.clip && card.type !== 'lyricq' && player && !player.paused && player.dataset.card === card.id);
   }
   function saveProgress() {
     if (!state.session) return;
@@ -102,7 +106,8 @@
     const play = screen === $('screenPlay');
     $('btnHome').hidden = screen === $('screenHome');
     $('dots').hidden = !play;
-    if (!play) $('topTitle').textContent = 'Italian with Arianna';
+    if (!play) $('topTitle').textContent = screen === $('screenSongs') ? 'Canzoni 🎶' : 'Italian with Arianna';
+    if (!play) pauseVideos();
     if (screen !== $('screenEnd')) { clearTimeout(confetti._t); $('confetti').replaceChildren(); }
     clearTimeout(toast._t); $('toast').hidden = true;
   }
@@ -111,7 +116,7 @@
   function renderHome() {
     const picker = $('picker');
     picker.replaceChildren();
-    if (!isUnlocked(saved.selected)) saved.selected = DATA.sessions[0].id;
+    if (!isUnlocked(saved.selected) || !DATA.sessions.some((s) => s.id === saved.selected)) saved.selected = DATA.sessions[0].id;
     DATA.sessions.forEach((s) => {
       const open = isUnlocked(s.id);
       const b = el('button', 'sess-btn' + (open ? '' : ' locked'));
@@ -121,19 +126,29 @@
       const p = saved.progress[s.id];
       const doneCount = p ? Object.keys(p.ok || {}).length : 0;
       let sub;
-      if (!open) sub = '🔒 Finish Session 1';
+      if (!open) sub = '🔒 Finish ' + prevTitle(s);
       else if (p && doneCount) sub = doneCount + ' / ' + s.cards.length + ' done';
       else if (saved.done[s.id]) sub = '⭐ ' + (saved.best[s.id] || 0) + ' / ' + s.cards.length + ' best';
       else sub = s.cards.length + ' cards';
       b.append(el('span', 's-name', s.emoji + ' ' + s.title), el('span', 's-sub', sub));
-      b.setAttribute('aria-label', s.title + (open ? '' : ', locked. Finish Session 1 to unlock') + (open ? ', ' + sub : ''));
+      b.setAttribute('aria-label', s.title + (open ? ', ' + sub : ', locked. Finish ' + prevTitle(s) + ' to unlock'));
       b.addEventListener('click', () => {
-        if (!open) { sound('wrong'); toast('Finish Session 1 to unlock Session 2 🔒', 2000); return; }
+        if (!open) { sound('wrong'); toast('Finish ' + prevTitle(s) + ' to unlock ' + s.title + ' 🔒', 2000); return; }
         saved.selected = s.id; persist(); sound('tap'); renderHome();
       });
       if (saved.justUnlocked && s.id === saved.justUnlocked) b.classList.add('unlocked-pop');
       picker.appendChild(b);
     });
+    if (SONGS.length) {
+      const k = el('button', 'sess-btn sess-songs');
+      k.type = 'button';
+      const doneSongs = SONGS.filter((x) => saved.done[x.id]).length;
+      const ksub = doneSongs ? '⭐ ' + doneSongs + ' / ' + SONGS.length + ' songs learned' : SONGS.length + ' songs · open anytime';
+      k.append(el('span', 's-name', '🎶 Canzoni'), el('span', 's-sub', ksub));
+      k.setAttribute('aria-label', 'Canzoni, songs: ' + ksub);
+      k.addEventListener('click', () => { sound('tap'); primeAudio(); showSongs(); });
+      picker.appendChild(k);
+    }
     saved.justUnlocked = null;
     const s = sessionById(saved.selected);
     const p = saved.progress[s.id];
@@ -145,6 +160,42 @@
     if (started) $('resumeLine').textContent = s.title + ': you\u2019re on card ' + (Math.min(p.index, s.cards.length - 1) + 1) + ' of ' + s.cards.length + ' 💛';
     $('homeSoft').textContent = s.cards.length + ' quick cards · ' + (saved.muted ? 'sound off 🔇' : 'sound on 🔊');
     persist();
+  }
+
+  /* ---------- Canzoni list ---------- */
+  function showSongs() {
+    cancelAutoAdvance(); stopClip(); hideBubble();
+    const list = $('songList');
+    list.replaceChildren();
+    SONGS.forEach((k) => {
+      const b = el('button', 'song-row');
+      b.type = 'button';
+      b.dataset.song = k.id;
+      const n = k.cards.filter((c) => c.type !== 'song').length;
+      const st = saved.done[k.id] ? '⭐ ' + (saved.best[k.id] || 0) + '/' + n : saved.progress[k.id] ? '▶ keep going' : 'new';
+      const txt = el('span', 'sr-text');
+      txt.append(el('span', 'sr-title', k.title), el('span', 'sr-artist', k.artist));
+      b.append(el('span', 'sr-emoji', k.emoji), txt, el('span', 'sr-state' + (saved.done[k.id] ? ' done' : ''), st));
+      b.setAttribute('aria-label', k.title + ' by ' + k.artist + ': ' + st);
+      b.addEventListener('click', () => { primeAudio(); if (!saved.muted) { try { ctx(); } catch (_) {} } startSession(k.id, !!saved.done[k.id] && !saved.progress[k.id]); });
+      list.appendChild(b);
+    });
+    showScreen($('screenSongs'));
+    $('songsTitle').focus({ preventScroll: true });
+  }
+
+  /* ---------- muted card videos: only the card on screen plays ---------- */
+  function pauseVideos(except) {
+    document.querySelectorAll('#feed video').forEach((v) => { if (v !== except) { try { v.pause(); } catch (_) {} } });
+  }
+  function playVideoOn(i) {
+    const art = $('feed').children[i];
+    const v = art && art.querySelector('video');
+    pauseVideos(v);
+    if (!v || reduceMotion() || !$('screenPlay').classList.contains('active')) return;
+    v.muted = true; v.preload = 'auto';
+    const pr = v.play();
+    if (pr && pr.catch) pr.catch(() => {});
   }
 
   /* ---------- song clips (Apple Music 30 s previews, one shared <audio>) ---------- */
@@ -185,8 +236,13 @@
       pill.setAttribute('aria-pressed', String(st === 'playing'));
       pill.setAttribute('aria-label', (st === 'playing' ? 'Pause ' : 'Play ') + card.clip.label + ' (30-second clip)');
     }
+    const rb = art.querySelector('.replay-btn');
+    if (rb) {
+      rb.textContent = st === 'playing' ? '❚❚ Pause' : st === 'blocked' ? '🎧 Tap to hear it' : '🔁 Hear it again';
+      rb.setAttribute('aria-pressed', String(st === 'playing'));
+    }
     const hint = art.querySelector('.song-hint');
-    if (hint) hint.textContent = st === 'ended' ? 'That was the clip! Swipe up when you\u2019re ready ↑' : 'Swipe up when you\u2019re ready ↑';
+    if (hint) hint.textContent = songHint(card, st === 'ended');
     const lyr = art.querySelector('.lyrics');
     if (lyr && art.dataset.type !== 'song') lyr.hidden = !(st === 'playing' || st === 'paused');
   }
@@ -208,6 +264,32 @@
     // Started the clip during the pause after "Brava!" → stay here and let it play.
     if (state.ok[card.id] && card.type !== 'song' && state.cards[state.index] === card) { cancelAutoAdvance(); addEnjoy(artFor(card.id)); }
   }
+  // Song questions: replay just the line (card.snip = [from, to] seconds) from the same Apple preview.
+  let snipEnd = null;
+  function playSnippet(card) {
+    if (!player || !card.clip || !card.snip) return;
+    if (player.dataset.card === card.id && !player.paused) { player.pause(); return; }
+    if (saved.muted) { saved.muted = false; persist(); updateMuteUI(); }
+    if (player.dataset.card && player.dataset.card !== card.id) stopClip();
+    const from = card.snip[0];
+    snipEnd = { id: card.id, to: card.snip[1] };
+    if (player.dataset.card !== card.id) {
+      player.src = card.clip.url + '#t=' + from;
+      player.dataset.card = card.id;
+    } else {
+      try { player.currentTime = from; } catch (_) {}
+    }
+    player.muted = false;
+    let pr;
+    try { pr = player.play(); } catch (e) { setClipState(card.id, 'blocked'); return; }
+    if (pr && pr.catch) pr.catch(() => { if (player.dataset.card === card.id && player.paused) setClipState(card.id, 'blocked'); });
+  }
+  function songHint(card, ended) {
+    const more = card && card.type === 'song' && state.cards.some((c) => c.songOf === card.id);
+    if (more) return ended ? 'Now 3 quick questions! Swipe up ↑' : 'Then 3 quick questions · swipe up ↑';
+    return ended ? 'That was the clip! Swipe up when you\u2019re ready ↑' : 'Swipe up when you\u2019re ready ↑';
+  }
+  const lineStart = (ln, t) => { const ts = Array.isArray(ln.t) ? ln.t : [ln.t]; let best = -1; ts.forEach((x) => { if (x <= t + 0.15 && x > best) best = x; }); return best; };
   function toggleClip(card) {
     if (player.dataset.card === card.id && !player.paused) player.pause();
     else playClip(card, false);
@@ -219,6 +301,7 @@
     try { player.pause(); } catch (_) {}
     if (id) { player.removeAttribute('src'); try { player.load(); } catch (_) {} }
     player.dataset.card = '';
+    snipEnd = null;
     if (id) { setClipState(id, 'idle'); syncLyrics(id, -1); }
   }
   function addEnjoy(art) {
@@ -232,7 +315,7 @@
     if (!box) return;
     const card = cardById(id);
     let k = -1;
-    if (t >= 0) card.lyrics.forEach((ln, i) => { if (ln.t <= t + 0.15) k = i; });
+    if (t >= 0) { let best = -1; card.lyrics.forEach((ln, i) => { const st = lineStart(ln, t); if (st >= 0 && st >= best) { best = st; k = i; } }); }
     if (String(k) === box.dataset.on) return;
     box.dataset.on = String(k);
     const lines = box.querySelectorAll('.ly-line');
@@ -253,14 +336,26 @@
     player.addEventListener('playing', () => { if (player.dataset.card) { setClipState(player.dataset.card, 'playing'); lyricLoop(); } });
     player.addEventListener('pause', () => { const id = player.dataset.card; if (id && !player.ended) setClipState(id, 'paused'); });
     player.addEventListener('ended', () => { const id = player.dataset.card; if (id) { setClipState(id, 'ended'); syncLyrics(id, 99); } });
-    player.addEventListener('timeupdate', () => { if (player.dataset.card) syncLyrics(player.dataset.card, player.currentTime); });
+    player.addEventListener('pause', () => { const id = player.dataset.card; if (id && snipEnd && snipEnd.id === id) setClipState(id, 'idle'); });
+    player.addEventListener('timeupdate', () => {
+      if (!player.dataset.card) return;
+      if (snipEnd && snipEnd.id === player.dataset.card && player.currentTime >= snipEnd.to) { player.pause(); return; }
+      syncLyrics(player.dataset.card, player.currentTime);
+    });
   }
 
   /* word bubbles: tap an Italian lyric word → English meaning + how to say it */
-  function showBubble(btn, word, en, say) {
+  function showBubble(btn, word, en, say, toItalian) {
     const b = $('wordBubble');
-    b.replaceChildren(el('strong', null, word.replace(/^[…'"¿¡]+|[,.!?;:…]+$/g, '')), document.createTextNode(' = ' + en));
-    if (say) b.appendChild(el('span', 'wb-say', 'How do you say it? ' + say));
+    const w = word.replace(/^[…"¿¡]+|[,.!?;:…]+$/g, '').replace(/^'(?![a-z])/i, '');
+    if (toItalian) {
+      // English song: show the ITALIAN for the word, and how to say the Italian.
+      b.replaceChildren(el('strong', null, w), document.createTextNode(' → 🇮🇹 '), el('span', 'wb-it', en));
+      if (say) b.appendChild(el('span', 'wb-say', 'Say it in Italian: ' + say));
+    } else {
+      b.replaceChildren(el('strong', null, w), document.createTextNode(' = ' + en));
+      if (say) b.appendChild(el('span', 'wb-say', 'How do you say it? ' + say));
+    }
     b.hidden = false;
     const app = $('app').getBoundingClientRect();
     const r = btn.getBoundingClientRect();
@@ -280,18 +375,19 @@
 
   function buildLyrics(card, compact) {
     const box = el('div', 'lyrics' + (compact ? ' compact' : ''));
-    box.setAttribute('aria-label', 'Lyrics: tap a word to see what it means');
+    const toIt = card.lyricsLang === 'en';
+    box.setAttribute('aria-label', toIt ? 'Lyrics: tap a word to see it in Italian' : 'Lyrics: tap a word to see what it means');
     box.dataset.on = '-2';
     const list = el('div', 'ly-list');
     card.lyrics.forEach((ln) => {
       const line = el('p', 'ly-line');
-      line.lang = 'it';
+      line.lang = toIt ? 'en' : 'it';
       if (!ln.w.length) { line.classList.add('ly-break'); line.textContent = '♪ ♪ ♪'; line.setAttribute('aria-label', 'music'); }
       ln.w.forEach(([word, en, say], i) => {
         const b = el('button', 'w', word);
         b.type = 'button';
-        b.setAttribute('aria-label', word + ': ' + en);
-        b.addEventListener('click', (e) => { e.stopPropagation(); showBubble(b, word, en, say); });
+        b.setAttribute('aria-label', word + (toIt ? ', in Italian: ' : ': ') + en);
+        b.addEventListener('click', (e) => { e.stopPropagation(); showBubble(b, word, en, say, toIt); });
         line.appendChild(b);
         if (i < ln.w.length - 1) line.appendChild(document.createTextNode(' '));
       });
@@ -332,7 +428,7 @@
     btn.setAttribute('aria-label', 'Play or pause ' + card.title);
     btn.addEventListener('click', () => toggleClip(card));
     const foot = el('div', 'song-foot');
-    foot.append(buildCredit(card), el('span', 'song-hint', 'Swipe up when you\u2019re ready ↑'));
+    foot.append(buildCredit(card), el('span', 'song-hint', songHint(card, false)));
     inner.append(vibe, disc, title, scene, lyr, btn, foot);
     frame.appendChild(inner);
     art.appendChild(frame);
@@ -345,7 +441,7 @@
     art.dataset.index = String(i);
     art.dataset.id = card.id;
     art.dataset.type = card.type;
-    art.setAttribute('aria-label', 'Card ' + (i + 1) + ' of ' + state.cards.length + (card.type === 'song' ? ': song break' : ''));
+    art.setAttribute('aria-label', 'Card ' + (i + 1) + ' of ' + state.cards.length + (card.type === 'song' ? ': song' : ''));
 
     const bg = el('img', 'card-bg');
     bg.alt = ''; bg.setAttribute('aria-hidden', 'true');
@@ -362,9 +458,23 @@
     img.width = 720; img.height = 1280;
     img.src = card.image + '?v=3';
     frame.appendChild(img);
+    if (card.video) {
+      // Short muted 9:16 loop (poster = the photo underneath). Only the card on screen plays; see playVideoOn().
+      const v = document.createElement('video');
+      v.className = 'card-photo card-video';
+      v.muted = true; v.defaultMuted = true; v.setAttribute('muted', '');
+      v.playsInline = true; v.setAttribute('playsinline', ''); v.setAttribute('webkit-playsinline', '');
+      v.loop = true; v.preload = 'none';
+      v.setAttribute('disablepictureinpicture', ''); v.setAttribute('disableremoteplayback', '');
+      v.setAttribute('aria-hidden', 'true'); v.tabIndex = -1;
+      v.poster = card.image + '?v=3';
+      v.src = card.video + '?v=8';
+      v.addEventListener('error', () => v.remove());
+      frame.appendChild(v);
+    }
     frame.appendChild(el('div', 'card-shade'));
 
-    if (card.clip) {
+    if (card.clip && card.type !== 'lyricq') {
       const box = el('div', 'song-box');
       const pill = el('button', 'clip-pill');
       pill.type = 'button';
@@ -385,18 +495,77 @@
     const vibe = el('div', 'vibe-row');
     vibe.appendChild(el('span', 'vibe-tag', (card.emoji || '✨') + ' ' + (card.vibe || '')));
     if (card.song) vibe.appendChild(el('span', 'song-sticker', '🎶 ' + card.song));
+    if (card.songTitle) vibe.appendChild(el('span', 'song-sticker', '🎶 ' + card.songTitle));
     body.appendChild(vibe);
     if (card.scene) body.appendChild(el('p', 'scene', card.scene));
-    body.appendChild(el('p', 'en-label', 'Say it in Italian'));
-    body.appendChild(el('p', 'en-line', card.en));
+    let groupLabel = 'Choose the Italian for: ' + card.en;
+    if (card.kind === 'asks') {
+      // Nonna asks (video-call bubble). English only on request; she answers in Italian.
+      const nb = el('div', 'nonna-bubble');
+      nb.append(el('span', 'nb-who', '👵 Nonna'));
+      const q = el('p', 'nb-text', card.ask); q.lang = 'it';
+      nb.appendChild(q);
+      const mean = el('button', 'nb-mean', 'What does it mean?');
+      mean.type = 'button';
+      mean.setAttribute('aria-expanded', 'false');
+      const en = el('span', 'nb-en', '= ' + card.askEn);
+      en.hidden = true;
+      mean.addEventListener('click', () => { en.hidden = !en.hidden; mean.setAttribute('aria-expanded', String(!en.hidden)); mean.textContent = en.hidden ? 'What does it mean?' : 'Hide meaning'; sound('tap'); });
+      nb.append(mean, en);
+      body.appendChild(nb);
+      body.appendChild(el('p', 'en-label', 'Answer Nonna in Italian'));
+      groupLabel = 'Choose your Italian answer to: ' + card.ask;
+    } else if (card.kind === 'says') {
+      // Nonna dice: what she wants (English) → pick the Italian she says. The bubble shows it big once found.
+      const nb = el('div', 'nonna-bubble nb-reveal');
+      nb.hidden = true;
+      nb.append(el('span', 'nb-who', '👵 Nonna dice…'));
+      const q = el('p', 'nb-text', card.captions[card.correct]); q.lang = 'it';
+      nb.appendChild(q);
+      body.appendChild(nb);
+      body.appendChild(el('p', 'en-label', 'What does Nonna say in Italian?'));
+      body.appendChild(el('p', 'en-line', card.en));
+      groupLabel = 'Choose what Nonna says in Italian for: ' + card.en;
+    } else if (card.type === 'lyricq') {
+      const toIt = card.songLang === 'en';
+      if (card.line) {
+        const lq = el('div', 'lyric-q');
+        const line = el('p', 'lq-line');
+        line.lang = toIt ? 'en' : 'it';
+        const parts = card.line.split('___');
+        if (parts.length > 1) {
+          line.append(document.createTextNode(parts[0]), el('span', 'lq-blank', '?'), document.createTextNode(parts[1]));
+          line.setAttribute('aria-label', card.line.replace('___', 'blank'));
+        } else if (card.hl && card.line.indexOf(card.hl) >= 0) {
+          const k = card.line.indexOf(card.hl);
+          line.append(document.createTextNode(card.line.slice(0, k)), el('mark', 'lq-hl', card.hl), document.createTextNode(card.line.slice(k + card.hl.length)));
+        } else line.textContent = card.line;
+        lq.appendChild(line);
+        if (card.snip) {
+          const rb = el('button', 'replay-btn', '🔁 Hear it again');
+          rb.type = 'button';
+          rb.setAttribute('aria-pressed', 'false');
+          rb.setAttribute('aria-label', 'Hear this line again');
+          rb.addEventListener('click', () => playSnippet(card));
+          lq.appendChild(rb);
+        }
+        body.appendChild(lq);
+      }
+      body.appendChild(el('p', 'en-label', card.step === 'use' ? 'Say it in Italian' : toIt ? 'Find the Italian' : 'Listen & notice'));
+      body.appendChild(el('p', 'en-line', card.en));
+      groupLabel = card.en;
+    } else {
+      body.appendChild(el('p', 'en-label', 'Say it in Italian'));
+      body.appendChild(el('p', 'en-line', card.en));
+    }
 
     const row = el('div', 'caption-row');
     row.setAttribute('role', 'group');
-    row.setAttribute('aria-label', 'Choose the Italian for: ' + card.en);
+    row.setAttribute('aria-label', groupLabel);
     card.captions.forEach((text, ci) => {
       const b = el('button', 'caption-btn', text);
       b.type = 'button';
-      b.lang = 'it';
+      b.lang = card.answerLang === 'en' ? 'en' : 'it';
       b.dataset.idx = String(ci);
       b.addEventListener('click', () => pick(card, ci, art));
       row.appendChild(b);
@@ -418,7 +587,28 @@
     const fb = art.querySelector('.feedback');
     fb.hidden = false;
     fb.className = 'feedback ok';
-    fb.replaceChildren(document.createTextNode('✨ Brava!'), el('span', 'fb-sub', '🆕 New phrase: ' + card.note));
+    fb.replaceChildren(document.createTextNode('✨ Brava!'), el('span', 'fb-sub', '🆕 ' + (card.type === 'lyricq' && card.step !== 'use' ? '' : 'New phrase: ') + card.note));
+    const nb = art.querySelector('.nb-reveal');
+    if (nb) nb.hidden = false;
+  }
+  // Small celebration on every correct pick (a quick sparkle burst from the answer).
+  function sparkle(btn) {
+    if (reduceMotion() || !btn) return;
+    const app = $('app').getBoundingClientRect();
+    const r = btn.getBoundingClientRect();
+    const box = el('div', 'sparkles');
+    box.style.left = (r.left - app.left + r.width / 2) + 'px';
+    box.style.top = (r.top - app.top + r.height / 2) + 'px';
+    const glyphs = ['✨', '⭐', '💖', '🎉', '✨', '💛', '⭐', '✨'];
+    glyphs.forEach((g, k) => {
+      const sp = el('i', null, g);
+      const ang = (k / glyphs.length) * Math.PI * 2;
+      sp.style.setProperty('--dx', Math.round(Math.cos(ang) * 70) + 'px');
+      sp.style.setProperty('--dy', Math.round(Math.sin(ang) * 50 - 30) + 'px');
+      box.appendChild(sp);
+    });
+    $('app').appendChild(box);
+    setTimeout(() => box.remove(), 900);
   }
 
   function pick(card, ci, art) {
@@ -432,6 +622,7 @@
       state.ok[card.id] = true;
       showCorrect(card, art);
       sound('ok');
+      sparkle(btns[ci]);
       updateNav();
       saveProgress();
       const idx = state.cards.findIndex((c) => c.id === card.id);
@@ -463,6 +654,7 @@
     const c = state.cards[i];
     if (player && player.dataset.card && (!c || player.dataset.card !== c.id)) stopClip();
     hideBubble();
+    playVideoOn(i);
     if (c && c.type === 'song') {
       state.ok[c.id] = true; // song break counts in the progress dots once seen
       if ($('screenPlay').classList.contains('active')) playClip(c, true);
@@ -491,7 +683,7 @@
     });
     $('dots').setAttribute('aria-valuenow', String(done));
     $('dots').setAttribute('aria-valuetext', done + ' of ' + n + ' done, on card ' + (state.index + 1));
-    $('topTitle').textContent = state.session.title + ' · ' + (state.index + 1) + '/' + n;
+    $('topTitle').textContent = (isSongSet(state.session) ? '🎶 ' : '') + state.session.title + ' · ' + (state.index + 1) + '/' + n;
     $('btnPrev').disabled = state.index <= 0;
   }
   function setIndex(i) {
@@ -530,7 +722,7 @@
     cancelAutoAdvance();
     stopClip(); hideBubble();
     const s = sessionById(id);
-    saved.selected = s.id;
+    if (!isSongSet(s)) saved.selected = s.id;
     let p = saved.progress[s.id];
     if (fresh || !p) p = { index: 0, ok: {}, attempted: {}, firstTry: 0 };
     state.session = s;
@@ -560,7 +752,7 @@
 
   function goHome() {
     cancelAutoAdvance();
-    stopClip(); hideBubble();
+    stopClip(); hideBubble(); pauseVideos();
     if (state.session && $('screenPlay').classList.contains('active')) saveProgress();
     showScreen($('screenHome'));
     renderHome();
@@ -577,22 +769,33 @@
     saved.best[s.id] = Math.max(saved.best[s.id] || 0, score);
     saved.done[s.id] = true;
     delete saved.progress[s.id];
-    const nextS = DATA.sessions[DATA.sessions.indexOf(s) + 1];
+    const song = isSongSet(s);
+    const list = song ? SONGS : DATA.sessions;
+    const nextS = list[list.indexOf(s) + 1];
     let unlockedNow = false;
-    if (nextS && !saved.unlocked[nextS.id]) { saved.unlocked[nextS.id] = true; unlockedNow = true; saved.justUnlocked = nextS.id; }
-    if (nextS) saved.selected = nextS.id;
+    if (!song && nextS && !saved.unlocked[nextS.id]) { saved.unlocked[nextS.id] = true; unlockedNow = true; saved.justUnlocked = nextS.id; }
+    if (!song && nextS) saved.selected = nextS.id;
     persist();
 
+    $('endTitle').textContent = song ? 'Brava, Arianna! 🎶' : 'Brava, Arianna! 🎉';
     $('endScore').textContent = score + ' of ' + n + ' on the first try!';
     const stars = score >= n ? 3 : score >= Math.ceil(n * 0.7) ? 2 : 1;
     $('endStars').textContent = '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
-    $('endBlurb').textContent = score >= n ? 'Perfetto! Every single one. Ci vediamo presto! 💖'
+    $('endBlurb').textContent = song ? (score >= n ? 'Perfetto! You learned “' + s.title + '”! 🎶' : 'You learned “' + s.title + '”! Sing it to Nonna 🎶')
+      : score >= n ? 'Perfetto! Every single one. Ci vediamo presto! 💖'
       : 'All ' + n + ' questions done. Ci vediamo presto! 💖';
     $('unlockBox').hidden = !unlockedNow;
-    $('btnNextSession').hidden = !nextS;
-    if (nextS) $('btnNextSession').textContent = 'Start ' + nextS.title + ' ▶';
-    $('btnReplay').className = nextS ? 'soft-btn' : 'primary-btn';
-    $('btnReplay').textContent = '↺ Replay ' + s.title;
+    if (unlockedNow) {
+      const nq = nextS.cards.filter(isQ).length;
+      $('unlockText').replaceChildren(el('strong', null, nextS.title + ' unlocked!'), el('br'), document.createTextNode(nq + ' new cards are waiting ' + nextS.emoji));
+    }
+    // Next step: next session / next song; after the last session, the songs.
+    endNext = nextS ? () => startSession(nextS.id, !!saved.done[nextS.id]) : (!song && SONGS.length ? showSongs : null);
+    $('btnNextSession').hidden = !endNext;
+    $('btnNextSession').textContent = nextS ? (song ? 'Next song: ' + nextS.title + ' ▶' : 'Start ' + nextS.title + ' ▶') : '🎶 Try the Canzoni ▶';
+    $('btnSongs').hidden = !song;
+    $('btnReplay').className = endNext ? 'soft-btn' : 'primary-btn';
+    $('btnReplay').textContent = '↺ Replay ' + (song ? 'this song' : s.title);
     showScreen($('screenEnd'));
     $('endTitle').focus({ preventScroll: true });
     sound('win');
@@ -600,11 +803,11 @@
     confetti();
   }
 
+  let endNext = null;
   function confetti() {
     const box = $('confetti');
     box.replaceChildren();
-    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) return;
+    if (reduceMotion()) return;
     const colors = ['#ff8fb1', '#ffd6e7', '#9fd6f5', '#fff3b0', '#f4c93d', '#6fd3a0', '#c9b6ff'];
     for (let i = 0; i < 90; i++) {
       const p = document.createElement('i');
@@ -667,10 +870,8 @@
     $('btnHome').addEventListener('click', goHome);
     $('btnEndHome').addEventListener('click', goHome);
     $('btnReplay').addEventListener('click', () => { primeAudio(); startSession(state.session.id, true); });
-    $('btnNextSession').addEventListener('click', () => {
-      const nextS = DATA.sessions[DATA.sessions.indexOf(state.session) + 1];
-      if (nextS) startSession(nextS.id, false);
-    });
+    $('btnNextSession').addEventListener('click', () => { primeAudio(); if (endNext) endNext(); });
+    $('btnSongs').addEventListener('click', showSongs);
     $('btnShare').addEventListener('click', share);
     $('btnMute').addEventListener('click', () => {
       saved.muted = !saved.muted;

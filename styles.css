@@ -189,6 +189,38 @@ button:disabled { cursor: default; }
 .sess-btn.unlocked-pop { animation: unlockPop 0.9s ease 2; }
 @keyframes unlockPop { 0%, 100% { transform: scale(1); } 40% { transform: scale(1.06) rotate(-1.5deg); } 70% { transform: scale(0.98) rotate(1deg); } }
 
+/* Canzoni tile: full width under the 2x2 session grid */
+.sess-btn.sess-songs {
+  grid-column: 1 / -1; min-height: 52px; flex-direction: row; gap: 10px;
+  background: linear-gradient(120deg, #fff6c9, #ffe3ef 60%, #e3f3fd); border-color: rgba(244, 201, 61, 0.55);
+}
+.sess-songs .s-name { font-size: 1.02rem; }
+.sess-songs .s-sub { font-size: 0.76rem; }
+
+/* ---------- Canzoni list ---------- */
+.songs {
+  flex: 1; min-height: 0; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 14px calc(16px + var(--safe-r)) calc(16px + var(--safe-b)) calc(16px + var(--safe-l));
+  text-align: center;
+}
+.songs-title { margin: 0; font-size: 1.7rem; font-weight: 900; color: var(--pink-deep); letter-spacing: -0.02em; outline: none; }
+.songs-blurb { margin: 0 0 4px; font-size: 0.92rem; font-weight: 700; color: var(--ink-soft); }
+.song-list { display: flex; flex-direction: column; gap: 8px; }
+.song-row {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  min-height: 58px; padding: 8px 12px; border-radius: 18px; text-align: left;
+  background: rgba(255, 255, 255, 0.9); border: 2px solid rgba(199, 56, 114, 0.14);
+  box-shadow: 0 4px 14px rgba(199, 56, 114, 0.1);
+}
+.song-row:active { transform: scale(0.98); }
+.sr-emoji { flex: 0 0 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font-size: 1.3rem; background: linear-gradient(135deg, #ffd6e7, #fff3b0); }
+.sr-text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.sr-title { font-weight: 900; font-size: 1rem; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sr-artist { font-size: 0.76rem; font-weight: 700; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sr-state { flex: 0 0 auto; padding: 4px 9px; border-radius: 999px; font-size: 0.74rem; font-weight: 800; color: var(--sky-deep); background: #e3f3fd; }
+.sr-state.done { color: #5b4708; background: #fff3a6; }
+
 /* ---------- Feed ---------- */
 #screenPlay { position: relative; background: #1d1830; }
 .feed {
@@ -299,6 +331,43 @@ button:disabled { cursor: default; }
 }
 @keyframes pop { 0% { transform: scale(0.95); } 60% { transform: scale(1.03); } 100% { transform: scale(1); } }
 @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 60% { transform: translateX(6px); } }
+
+/* Nonna's speech bubble (video-call style) */
+.nonna-bubble {
+  position: relative; align-self: flex-start; max-width: 100%;
+  margin: 2px 0 2px; padding: 7px 14px 9px; border-radius: 20px 20px 20px 6px;
+  background: rgba(255, 255, 255, 0.95); color: var(--ink);
+  box-shadow: 0 6px 18px rgba(30, 20, 50, 0.28), inset 0 0 0 2px #ffd6e7;
+  display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 8px;
+}
+.nb-who { flex: 0 0 100%; font-size: 0.72rem; font-weight: 900; letter-spacing: 0.04em; color: var(--pink-deep); }
+.nb-text { margin: 0; font-size: 1.42rem; font-weight: 900; line-height: 1.2; color: var(--ink); }
+.nb-mean { min-height: 30px; padding: 2px 0; font-size: 0.78rem; font-weight: 800; color: var(--sky-deep); text-decoration: underline; text-underline-offset: 2px; }
+.nb-en { flex: 0 0 100%; font-size: 0.9rem; font-weight: 800; color: var(--sky-deep); }
+.nb-reveal { animation: pop 0.35s ease; }
+
+/* Song questions: the lyric line + replay */
+.lyric-q { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; margin: 2px 0; }
+.lq-line {
+  margin: 0; padding: 8px 12px; border-radius: 16px; max-width: 100%;
+  background: rgba(255, 255, 255, 0.93); color: var(--ink);
+  font-size: 1.02rem; font-weight: 800; line-height: 1.35; font-style: italic;
+  box-shadow: 0 4px 14px rgba(30, 20, 50, 0.22);
+}
+.lq-line::before { content: "♪ "; color: var(--pink-deep); font-style: normal; }
+.lq-blank { display: inline-block; min-width: 54px; margin: 0 2px; text-align: center; font-style: normal; color: var(--pink-deep); border-bottom: 3px dashed var(--pink-deep); }
+.lq-hl { padding: 0 3px; border-radius: 6px; background: #fff1a0; color: var(--pink-deep); font-style: normal; }
+.replay-btn {
+  min-height: 40px; padding: 6px 14px; border-radius: 999px;
+  background: linear-gradient(120deg, #ffe3ef, #fff6c9); color: var(--pink-deep);
+  font-size: 0.86rem; font-weight: 900; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), inset 0 0 0 2px rgba(255, 255, 255, 0.9);
+}
+.replay-btn[aria-pressed="true"] { background: var(--pink-deep); color: #fff; }
+
+/* little celebration burst on a correct pick */
+.sparkles { position: absolute; z-index: 45; width: 0; height: 0; pointer-events: none; }
+.sparkles i { position: absolute; left: -9px; top: -10px; font-size: 1.1rem; font-style: normal; animation: spark 0.85s ease-out forwards; }
+@keyframes spark { 0% { opacity: 0; transform: translate(0, 0) scale(0.4); } 25% { opacity: 1; } 100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1.15); } }
 
 .feedback {
   margin: 8px 0 0;
@@ -488,7 +557,14 @@ button:disabled { cursor: default; }
   :root { --top-h: 48px; }
   .hero-art { transform: scale(0.8); margin: -12px 0 -14px; }
   .home-hello { font-size: 1.8rem; }
-  .sess-btn { min-height: 62px; }
+  .sess-btn { min-height: 56px; padding: 7px 8px; }
+  .sess-btn.sess-songs { min-height: 46px; }
+  .picker { gap: 8px; }
+  .home-bottom { gap: 8px; }
+  .nb-text { font-size: 1.24rem; }
+  .nonna-bubble { padding: 5px 12px 7px; }
+  .lq-line { font-size: 0.95rem; padding: 6px 10px; }
+  .replay-btn { min-height: 36px; }
   .en-line { font-size: 1.18rem; }
   .scene { font-size: 0.8rem; }
   .caption-btn { min-height: 46px; font-size: 0.98rem; padding-top: 7px; padding-bottom: 7px; }
@@ -505,3 +581,4 @@ button:disabled { cursor: default; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition: none !important; scroll-behavior: auto !important; }
 }
+.wb-it { color: #1d5e3d; font-weight: 900; }
