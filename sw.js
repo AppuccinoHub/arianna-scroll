@@ -1,10 +1,10 @@
 /* Italian with Arianna: tiny offline helper.
    HTML = network-first (always fresh when online), other app files = cache-first with background refresh.
    Only touches the root app; /classic/ and /preview/ are left alone. */
-const VERSION = 'arianna-v10';
+const VERSION = 'arianna-v10.1';
 const CORE = [
-  './', 'index.html', 'styles.css?v=10', 'data.js?v=10', 'app.js?v=10',
-  'images/avatar.jpg?v=10', 'manifest.webmanifest', 'favicon.png', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png'
+  './', 'index.html', 'styles.css?v=10.1', 'data.js?v=10.1', 'app.js?v=10.1',
+  'images/avatar.jpg?v=10.1', 'manifest.webmanifest', 'favicon.png', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png'
 ];
 
 self.addEventListener('install', (e) => {

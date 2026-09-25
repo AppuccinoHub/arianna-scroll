@@ -643,10 +643,10 @@ window.ARIANNA_APP = {
           scene: "She asks you the same thing!",
           ask: "E tu, di dove sei?",
           askEn: "And you, where are you from?",
-          captions: ["Sono americano!", "Sono australiana!", "Sono americana!"],
+          captions: ["Sono canadese!", "Sono inglese!", "Sono americana!"],
           correct: 2,
-          note: "Sono americana = I'm American (girl) · americano = boy · australiana = Australian",
-          nudge: "Almost 🇺🇸 you're from America, and you're a girl. Try again.",
+          note: "Sono americana = I'm American (girls say americana) · canadese = Canadian · inglese = English",
+          nudge: "Almost 🇺🇸 you're from America! Try again.",
           image: "images/b06-beach-friends.jpg"
         },
         {
