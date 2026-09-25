@@ -220,6 +220,10 @@ button:disabled { cursor: default; }
 .sr-artist { font-size: 0.76rem; font-weight: 700; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sr-state { flex: 0 0 auto; padding: 4px 9px; border-radius: 999px; font-size: 0.74rem; font-weight: 800; color: var(--sky-deep); background: #e3f3fd; }
 .sr-state.done { color: #5b4708; background: #fff3a6; }
+.song-row.locked { background: #f6f2f8; border-style: dashed; box-shadow: none; }
+.song-row.locked .sr-emoji { background: #ece6f0; filter: grayscale(0.3); }
+.song-row.locked .sr-title { color: #6f6680; }
+.sr-need { color: var(--pink-deep); white-space: normal; }
 
 /* ---------- Feed ---------- */
 #screenPlay { position: relative; background: #1d1830; }
@@ -379,6 +383,7 @@ button:disabled { cursor: default; }
 .feedback.ok { background: linear-gradient(120deg, #d9f5e7, #fff3b0); color: #1f4a36; }
 .feedback.soft { background: linear-gradient(120deg, #fff3ea, #ffe3ef); color: #7a3f12; }
 .feedback .fb-sub { display: block; margin-top: 2px; font-size: 0.82rem; font-weight: 700; }
+.feedback .fb-tip { margin-top: 4px; padding-top: 4px; border-top: 1px dashed rgba(0,0,0,0.12); font-weight: 600; }
 
 .song-box {
   position: absolute; z-index: 3;
@@ -540,6 +545,9 @@ button:disabled { cursor: default; }
   box-shadow: var(--shadow);
   animation: toastIn 0.25s ease;
 }
+.toast.toast-song { background: linear-gradient(135deg, #ff5fa2, #8f6bff); font-size: 1rem; animation: toastIn 0.25s ease, songPop 0.6s ease 0.25s 1; }
+@keyframes songPop { 0%, 100% { transform: translate(-50%, 0) scale(1); } 40% { transform: translate(-50%, 0) scale(1.07); } }
+@media (prefers-reduced-motion: reduce) { .toast.toast-song { animation: none; } }
 @keyframes toastIn { from { opacity: 0; transform: translate(-50%, -8px); } to { opacity: 1; transform: translate(-50%, 0); } }
 .confetti { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 25; }
 .confetti i {

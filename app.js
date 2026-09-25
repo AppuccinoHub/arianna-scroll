@@ -18,21 +18,86 @@
     let d = null;
     try { d = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (_) { d = null; }
     d = d && typeof d === 'object' ? d : {};
+    const firstV9 = !('correct' in d);
     d.muted = !!d.muted;                      // sound ON by default
     d.unlocked = d.unlocked || {};
     d.progress = d.progress || {};
     d.best = d.best || {};
     d.done = d.done || {};
     d.selected = d.selected || 's1';
+    d.correct = Math.max(0, parseInt(d.correct, 10) || 0);   // correct answers, all sessions + songs
+    d.songsOpen = d.songsOpen && typeof d.songsOpen === 'object' ? d.songsOpen : {};
+    d.songsEarned = Math.max(0, parseInt(d.songsEarned, 10) || 0); // songs opened by correct answers so far
+    // Already played before song unlocks existed? Credit her best first-try scores and every song she finished.
+    if (firstV9) {
+      try {
+        d.correct = Object.keys(d.best).reduce((n, k) => n + (parseInt(d.best[k], 10) || 0), 0);
+        Object.keys(d.done).forEach((k) => { if (/^k\d+$/.test(k)) d.songsOpen[k] = 'done'; });
+      } catch (_) { d.correct = 0; }
+    }
     return d;
   }
   const saved = load();
   function persist() { try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (_) {} }
-  const isUnlocked = (id) => id === DATA.sessions[0].id || !!saved.unlocked[id] || SONGS.some((s) => s.id === id);
+  /* ---------- Canzoni unlocks: song 1 is open; +1 song (in list order) per 5 correct answers.
+     A song reached as an in-session song break opens too. Never let this break the app. ---------- */
+  const PER_SONG = 5;
+  const songOpen = (id) => { try { return SONGS.length > 0 && (SONGS[0].id === id || !!saved.songsOpen[id]); } catch (_) { return true; } };
+  const songForCard = (card) => SONGS.find((k) => k.cards[0] && k.cards[0].id === card.id);
+  function lockedSongs() { return SONGS.filter((k) => !songOpen(k.id)); }
+  // How many more correct answers until this locked song opens (songs open in list order).
+  function songNeeds(id) {
+    try {
+      const pos = lockedSongs().findIndex((k) => k.id === id);
+      if (pos < 0) return 0;
+      return Math.max(1, PER_SONG * (saved.songsEarned + pos + 1) - saved.correct);
+    } catch (_) { return PER_SONG; }
+  }
+  function openSong(k, why) {
+    if (!k || songOpen(k.id)) return false;
+    saved.songsOpen[k.id] = why || 'earned';
+    return true;
+  }
+  // Called on every correct answer: count it, open the next song(s) that are due.
+  function countCorrect() {
+    const opened = [];
+    try {
+      saved.correct += 1;
+      while (Math.floor(saved.correct / PER_SONG) > saved.songsEarned) {
+        saved.songsEarned += 1;
+        const next = lockedSongs()[0];
+        if (next && openSong(next, 'earned')) opened.push(next);
+      }
+      persist();
+    } catch (_) {}
+    return opened;
+  }
+  function celebrateSong(list) {
+    try {
+      if (!list || !list.length) return;
+      state.newSongs = (state.newSongs || []).concat(list.map((k) => k.title));
+      const t = list.map((k) => '“' + k.title + '”').join(' + ');
+      setTimeout(() => {
+        toast('🎶 New song unlocked! ' + t + ' is in Canzoni', 3200);
+        $('toast').classList.add('toast-song');
+        sound('unlock');
+        songBurst();
+      }, 250);
+    } catch (_) {}
+  }
+  const isUnlocked = (id) => id === DATA.sessions[0].id || !!saved.unlocked[id] || songOpen(id);
+  // Catch up quietly (e.g. credit carried over from before song unlocks existed).
+  try {
+    while (Math.floor(saved.correct / PER_SONG) > saved.songsEarned) {
+      saved.songsEarned += 1;
+      const next = lockedSongs()[0];
+      if (next) openSong(next, 'earned');
+    }
+  } catch (_) {}
   const prevTitle = (s) => { const i = DATA.sessions.indexOf(s); return i > 0 ? DATA.sessions[i - 1].title : DATA.sessions[0].title; };
 
   /* ---------- play state ---------- */
-  const state = { session: null, cards: [], index: 0, firstTry: 0, attempted: {}, ok: {} };
+  const state = { session: null, cards: [], index: 0, firstTry: 0, attempted: {}, ok: {}, newSongs: [] };
   let advanceTimer = null;
   function cancelAutoAdvance() {
     if (advanceTimer) clearTimeout(advanceTimer);
@@ -93,7 +158,7 @@
   }
   function toast(text, ms) {
     const t = $('toast');
-    t.textContent = text; t.hidden = false;
+    t.textContent = text; t.hidden = false; t.classList.remove('toast-song');
     clearTimeout(toast._t);
     toast._t = setTimeout(() => { t.hidden = true; }, ms || 2200);
   }
@@ -142,8 +207,9 @@
     if (SONGS.length) {
       const k = el('button', 'sess-btn sess-songs');
       k.type = 'button';
-      const doneSongs = SONGS.filter((x) => saved.done[x.id]).length;
-      const ksub = doneSongs ? '⭐ ' + doneSongs + ' / ' + SONGS.length + ' songs learned' : SONGS.length + ' songs · open anytime';
+      const openN = SONGS.filter((x) => songOpen(x.id)).length;
+      const nextLocked = lockedSongs()[0];
+      const ksub = openN + ' / ' + SONGS.length + ' songs open' + (nextLocked ? ' · next in ' + songNeeds(nextLocked.id) + ' ✔' : ' 🎉');
       k.append(el('span', 's-name', '🎶 Canzoni'), el('span', 's-sub', ksub));
       k.setAttribute('aria-label', 'Canzoni, songs: ' + ksub);
       k.addEventListener('click', () => { sound('tap'); primeAudio(); showSongs(); });
@@ -165,6 +231,10 @@
   /* ---------- Canzoni list ---------- */
   function showSongs() {
     cancelAutoAdvance(); stopClip(); hideBubble();
+    const openN = SONGS.filter((x) => songOpen(x.id)).length;
+    $('songsBlurb').textContent = openN < SONGS.length
+      ? openN + ' of ' + SONGS.length + ' songs open. Every ' + PER_SONG + ' correct answers unlock a new one! 🔓'
+      : 'All ' + SONGS.length + ' songs open! Listen, sing, then 3 quick questions. 🎧';
     const list = $('songList');
     list.replaceChildren();
     SONGS.forEach((k) => {
@@ -172,8 +242,21 @@
       b.type = 'button';
       b.dataset.song = k.id;
       const n = k.cards.filter((c) => c.type !== 'song').length;
-      const st = saved.done[k.id] ? '⭐ ' + (saved.best[k.id] || 0) + '/' + n : saved.progress[k.id] ? '▶ keep going' : 'new';
+      const open = songOpen(k.id);
       const txt = el('span', 'sr-text');
+      if (!open) {
+        const need = songNeeds(k.id);
+        const msg = need + ' more correct answer' + (need === 1 ? '' : 's') + ' to unlock';
+        b.classList.add('locked');
+        txt.append(el('span', 'sr-title', k.title), el('span', 'sr-artist sr-need', msg));
+        b.append(el('span', 'sr-emoji', '🔒'), txt);
+        b.setAttribute('aria-label', k.title + ' by ' + k.artist + ': locked. ' + msg);
+        b.addEventListener('click', () => { sound('wrong'); toast('🔒 ' + msg + ' “' + k.title + '”. Answer cards in any session! 💛', 2600); });
+        list.appendChild(b);
+        return;
+      }
+      const isNew = saved.songsOpen[k.id] && !saved.done[k.id] && !saved.progress[k.id];
+      const st = saved.done[k.id] ? '⭐ ' + (saved.best[k.id] || 0) + '/' + n : saved.progress[k.id] ? '▶ keep going' : isNew ? '✨ new!' : 'new';
       txt.append(el('span', 'sr-title', k.title), el('span', 'sr-artist', k.artist));
       b.append(el('span', 'sr-emoji', k.emoji), txt, el('span', 'sr-state' + (saved.done[k.id] ? ' done' : ''), st));
       b.setAttribute('aria-label', k.title + ' by ' + k.artist + ': ' + st);
@@ -502,7 +585,7 @@
     if (card.kind === 'asks') {
       // Nonna asks (video-call bubble). English only on request; she answers in Italian.
       const nb = el('div', 'nonna-bubble');
-      nb.append(el('span', 'nb-who', '👵 Nonna'));
+      nb.append(el('span', 'nb-who', card.who || '👵 Nonna'));
       const q = el('p', 'nb-text', card.ask); q.lang = 'it';
       nb.appendChild(q);
       const mean = el('button', 'nb-mean', 'What does it mean?');
@@ -513,7 +596,7 @@
       mean.addEventListener('click', () => { en.hidden = !en.hidden; mean.setAttribute('aria-expanded', String(!en.hidden)); mean.textContent = en.hidden ? 'What does it mean?' : 'Hide meaning'; sound('tap'); });
       nb.append(mean, en);
       body.appendChild(nb);
-      body.appendChild(el('p', 'en-label', 'Answer Nonna in Italian'));
+      body.appendChild(el('p', 'en-label', card.who ? 'Answer in Italian' : 'Answer Nonna in Italian'));
       groupLabel = 'Choose your Italian answer to: ' + card.ask;
     } else if (card.kind === 'says') {
       // Nonna dice: what she wants (English) → pick the Italian she says. The bubble shows it big once found.
@@ -588,6 +671,7 @@
     fb.hidden = false;
     fb.className = 'feedback ok';
     fb.replaceChildren(document.createTextNode('✨ Brava!'), el('span', 'fb-sub', '🆕 ' + (card.type === 'lyricq' && card.step !== 'use' ? '' : 'New phrase: ') + card.note));
+    if (card.tip) fb.appendChild(el('span', 'fb-sub fb-tip', '💡 Tip: ' + card.tip));
     const nb = art.querySelector('.nb-reveal');
     if (nb) nb.hidden = false;
   }
@@ -625,6 +709,7 @@
       sparkle(btns[ci]);
       updateNav();
       saveProgress();
+      celebrateSong(countCorrect());
       const idx = state.cards.findIndex((c) => c.id === card.id);
       cancelAutoAdvance();
       if (clipPlaying(card)) { addEnjoy(art); return; }
@@ -634,7 +719,7 @@
         if (state.index !== idx) return; // she already moved on (↓ / swipe)
         if (clipPlaying(card)) return; // started the song during the pause
         goNext();
-      }, AUTO_ADVANCE_MS);
+      }, card.tip ? AUTO_ADVANCE_MS + 2300 : AUTO_ADVANCE_MS);
     } else {
       btns.forEach((b) => b.classList.remove('wrong'));
       const b = btns[ci];
@@ -657,6 +742,9 @@
     playVideoOn(i);
     if (c && c.type === 'song') {
       state.ok[c.id] = true; // song break counts in the progress dots once seen
+      if (!isSongSet(state.session)) {
+        try { const k = songForCard(c); if (openSong(k, 'break')) { persist(); celebrateSong([k]); } } catch (_) {}
+      }
       if ($('screenPlay').classList.contains('active')) playClip(c, true);
     }
   }
@@ -722,6 +810,7 @@
     cancelAutoAdvance();
     stopClip(); hideBubble();
     const s = sessionById(id);
+    if (isSongSet(s) && !songOpen(s.id)) { showSongs(); return; }
     if (!isSongSet(s)) saved.selected = s.id;
     let p = saved.progress[s.id];
     if (fresh || !p) p = { index: 0, ok: {}, attempted: {}, firstTry: 0 };
@@ -731,6 +820,7 @@
     state.ok = Object.assign({}, p.ok);
     state.attempted = Object.assign({}, p.attempted);
     state.firstTry = p.firstTry || 0;
+    state.newSongs = [];
     saveProgress();
     showScreen($('screenPlay'));
     $('feed').replaceChildren(...state.cards.map(buildCard));
@@ -771,7 +861,7 @@
     delete saved.progress[s.id];
     const song = isSongSet(s);
     const list = song ? SONGS : DATA.sessions;
-    const nextS = list[list.indexOf(s) + 1];
+    const nextS = song ? list.slice(list.indexOf(s) + 1).find((k) => songOpen(k.id)) : list[list.indexOf(s) + 1];
     let unlockedNow = false;
     if (!song && nextS && !saved.unlocked[nextS.id]) { saved.unlocked[nextS.id] = true; unlockedNow = true; saved.justUnlocked = nextS.id; }
     if (!song && nextS) saved.selected = nextS.id;
@@ -784,6 +874,8 @@
     $('endBlurb').textContent = song ? (score >= n ? 'Perfetto! You learned “' + s.title + '”! 🎶' : 'You learned “' + s.title + '”! Sing it to Nonna 🎶')
       : score >= n ? 'Perfetto! Every single one. Ci vediamo presto! 💖'
       : 'All ' + n + ' questions done. Ci vediamo presto! 💖';
+    const newSongs = (state.newSongs || []).filter((t, i, a) => a.indexOf(t) === i);
+    if (newSongs.length) $('endBlurb').textContent += ' 🎶 New in Canzoni: ' + newSongs.join(', ') + '!';
     $('unlockBox').hidden = !unlockedNow;
     if (unlockedNow) {
       const nq = nextS.cards.filter(isQ).length;
@@ -801,6 +893,24 @@
     sound('win');
     if (unlockedNow) sound('unlock');
     confetti();
+  }
+
+  function songBurst() {
+    const box = $('confetti');
+    if (reduceMotion()) return;
+    const colors = ['#ff8fb1', '#9fd6f5', '#fff3b0', '#f4c93d', '#6fd3a0', '#c9b6ff'];
+    for (let i = 0; i < 36; i++) {
+      const p = document.createElement('i');
+      p.style.left = Math.random() * 100 + '%';
+      p.style.background = colors[i % colors.length];
+      p.style.setProperty('--dx', (Math.random() * 100 - 50).toFixed(0) + 'px');
+      p.style.animationDuration = (1.8 + Math.random() * 1.2).toFixed(2) + 's';
+      p.style.animationDelay = (Math.random() * 0.3).toFixed(2) + 's';
+      if (i % 3 === 0) p.style.borderRadius = '50%';
+      box.appendChild(p);
+    }
+    clearTimeout(confetti._t);
+    confetti._t = setTimeout(() => box.replaceChildren(), 3400);
   }
 
   let endNext = null;

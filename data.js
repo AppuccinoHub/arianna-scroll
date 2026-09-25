@@ -49,6 +49,11 @@ const CLIPS = {
     trackViewUrl: "https://music.apple.com/us/album/nel-blu-dipinto-di-blu-aka-volare/201492972?i=201494417&uo=4",
     track: "Nel blu dipinto di blu (Volare)", artist: "Domenico Modugno", label: "Volare"
   },
+  italiano: {
+    url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/4c/a9/cd/4ca9cd79-0752-a2b3-5ff1-742956529063/mzaf_3941072632085591655.plus.aac.p.m4a",
+    trackViewUrl: "https://music.apple.com/us/album/litaliano/1329256164?i=1329256166&uo=4",
+    track: "L'italiano", artist: "Toto Cutugno", label: "L'italiano"
+  },
   shivers: {
     url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/a8/9f/a5/a89fa5e9-8a3b-77bb-e081-866067d3f213/mzaf_13889707114574366771.plus.aac.p.m4a",
     trackViewUrl: "https://music.apple.com/us/album/shivers/1581087024?i=1581087034&uo=4",
@@ -119,6 +124,16 @@ const LYRICS = {
   ],
   /* English song: each word shows its ITALIAN + how to say the Italian. The "I love it when you do it like that /
      when you're close up" part is ♪ (romantic), so the hook line starts at "give me the shivers". */
+  blue: [
+    { t: [3.54, 18.34], w: [["I'm", "sono (io sono = I am)", "SOH-noh"], ["blue,", "blu", "bloo"], ["da", "just a fun sound (no meaning!)", "dah"], ["ba", "just a fun sound", "bah"], ["dee", "just a fun sound", "dee"], ["da", "just a fun sound", "dah"], ["ba", "just a fun sound", "bah"], ["di", "just a fun sound", "dee"]] }
+  ],
+  italiano: [
+    { t: 2.82, w: [["Buongiorno", "good morning (hello!)", "bwon-JOR-noh"], ["Italia,", "Italy", "ee-TAH-lyah"], ["con", "with", "kohn"], ["i", "the", "ee"], ["tuoi", "your", "TWOH-ee"], ["artisti", "artists", "ar-TEE-stee"]] },
+    { t: 6.6, w: [["con", "with", "kohn"], ["troppa", "too much", "TROHP-pah"], ["America", "America", "ah-MEH-ree-kah"], ["sui", "on the", "SOO-ee"], ["manifesti", "posters", "mah-nee-FEH-stee"]] },
+    { t: 10.68, w: [["con", "with", "kohn"], ["le", "the", "leh"], ["canzoni,", "songs", "kahn-TSOH-nee"], ["con", "with", "kohn"], ["amore,", "love", "ah-MOH-reh"], ["con", "with", "kohn"], ["il", "the", "eel"], ["cuore", "heart", "KWOH-reh"]] },
+    { t: 18.72, w: [["Buongiorno", "good morning (hello!)", "bwon-JOR-noh"], ["Italia,", "Italy", "ee-TAH-lyah"], ["buongiorno", "good morning", "bwon-JOR-noh"], ["Maria", "Maria (a name)", "mah-REE-ah"]] },
+    { t: 22.62, w: [["con", "with", "kohn"], ["gli", "the", "lyee"], ["occhi", "eyes", "OHK-kee"], ["pieni", "full", "PYEH-nee"], ["di", "of", "dee"], ["malinconia", "a soft, dreamy sadness", "mah-leen-koh-NEE-ah"]] }
+  ],
   shivers: [
     { t: 0.0, w: [["I", "io", "EE-oh"], ["wanna", "voglio (I want to)", "VOH-lyoh"], ["stay", "restare", "reh-STAH-reh"], ["up", "sveglia (stay up = restare sveglia)", "ZVEH-lyah"], ["all", "tutto", "TOOT-toh"], ["day", "il giorno", "eel JOR-noh"], ["and", "e", "eh"], ["all", "tutta", "TOOT-tah"], ["night", "la notte", "lah NOHT-teh"]] },
     { t: 3.44, w: [["Yeah,", "sì", "see"], ["you", "tu", "too"], ["got", "mi fai (you got me singing = mi fai cantare)", "mee FAH-ee"], ["me", "mi (me)", "mee"], ["singing", "cantare", "kahn-TAH-reh"], ["like…", "tipo…", "TEE-poh"]] },
@@ -217,6 +232,28 @@ const SONGQ = {
       captions: ["Mi piace cantare!", "Mi piace volare!", "Ti piace cantare?"], correct: 0,
       note: "Mi piace cantare = I like singing 🎤", nudge: "Almost 🎤 you like to SING, and it's about you. Try again." }
   ]),
+  blue: quiz("k9", CLIPS.blue, [
+    { step: "notice", en: "“I'm” in Italian is…", line: "I'm blue, da ba dee da ba di", hl: "I'm", snip: [3.3, 6.2],
+      captions: ["Sono", "Ho", "Sei"], correct: 0,
+      note: "I'm = sono (Sono Arianna! Sono americana!)", nudge: "Almost 💙 think of “Sono Arianna”. Try again." },
+    { step: "notice", en: "Which color is missing? Pick it in Italian!", line: "I'm ___, da ba dee da ba di", snip: [18.1, 21.2],
+      captions: ["giallo", "blu", "rosa"], correct: 1,
+      note: "blu = blue 💙 (giallo = yellow · rosa = pink)", nudge: "Listen again 🎧 it's the song's name! Try again." },
+    { step: "use", scene: "A friend asks about your favorite color.", en: "My favorite color is blue!",
+      captions: ["Il tuo colore preferito è il blu!", "Il mio colore preferito è il rosso!", "Il mio colore preferito è il blu!"], correct: 2,
+      note: "Il mio colore preferito è il blu = my favorite color is blue", nudge: "Almost 💙 it's YOUR favorite, and it's blue. Try again." }
+  ]),
+  italiano: quiz("k10", CLIPS.italiano, [
+    { step: "notice", en: "What does “gli occhi” mean?", line: "con gli occhi pieni di malinconia", hl: "occhi", snip: [22.4, 26.0],
+      answerLang: "en", captions: ["the ears", "the hands", "the eyes"], correct: 2,
+      note: "gli occhi = the eyes 👀", nudge: "Almost 💛 you see with them! Try again." },
+    { step: "notice", en: "Which word is missing?", line: "con le ___, con amore, con il cuore", snip: [10.5, 14.2],
+      captions: ["canzoni", "scarpe", "stelle"], correct: 0,
+      note: "le canzoni = the songs 🎶 (una canzone = a song)", nudge: "Listen again 🎧 what do singers sing? Try again." },
+    { step: "use", scene: "You land in Rome and step off the plane. Say it like Toto!", en: "Good morning, Italy!",
+      captions: ["Buonanotte, Italia!", "Buongiorno, Italia!", "Arrivederci, Italia!"], correct: 1,
+      note: "Buongiorno, Italia! = good morning, Italy! ☀️", nudge: "Almost ☀️ you just arrived, and it's morning. Try again." }
+  ]),
   shivers: quiz("k8", CLIPS.shivers, [
     { step: "notice", en: "“dance” in Italian is…", line: "Oh baby, you wanna dance 'til the sunlight cracks", hl: "dance", snip: [11.1, 14.9],
       captions: ["cantare", "ballare", "dormire"], correct: 1,
@@ -230,13 +267,81 @@ const SONGQ = {
   ])
 };
 
+/* Song cards used both as in-session song breaks and in Canzoni (same card, same questions). */
+const SONGCARDS = {
+  m01: {
+    id: "m01", type: "song", emoji: "🎶", vibe: "Song break · Nonna's favorite",
+    scene: "Nonna's favorite song! Listen, sing along, tap any word.",
+    title: "Mamma Maria", artist: "Ricchi e Poveri",
+    image: "images/m01-vinyl-pink.jpg",
+    clip: CLIPS.mammaMaria,
+    lyrics: LYRICS.mammaMaria
+  },
+  k4: { id: "k4", type: "song", emoji: "🌅", vibe: "Song break · Sanremo, 1981", image: "images/k-sara-vernazza.jpg",
+    scene: "Everybody in Italy knows this one! Sing along.", title: "Sarà perché ti amo", artist: "Ricchi e Poveri",
+    clip: CLIPS.saraPerche, lyrics: LYRICS.saraPerche },
+  k7: { id: "k7", type: "song", emoji: "🕊️", vibe: "Song break · 1958 classic", image: "images/k-volare-sky.jpg",
+    scene: "The most famous Italian song ever! Sing “Volare!”", title: "Volare (Nel blu dipinto di blu)", artist: "Domenico Modugno",
+    clip: CLIPS.volare, lyrics: LYRICS.volare },
+  k10: { id: "k10", type: "song", emoji: "🇮🇹", vibe: "Song break · Sanremo, 1983", image: "images/k-italiano-flag.jpg",
+    scene: "“Buongiorno Italia!” Toto says good morning to all of Italy. Tap any word!", title: "L'italiano", artist: "Toto Cutugno",
+    clip: CLIPS.italiano, lyrics: LYRICS.italiano }
+};
+
 window.ARIANNA_APP = {
   version: 1,
   shareUrl: "https://appuccinohub.github.io/arianna-scroll/",
   sessions: [
     {
-      id: "s1", title: "Session 1", emoji: "🌸", blurb: "Ciao, piacere, per favore + a song break",
+      id: "s1", title: "Session 1", emoji: "🌸", blurb: "Level 1 · ciao, grazie, prego + 2 song breaks",
       cards: [
+        {
+          id: "p02",
+          tip: "Say Buongiorno in the morning, until about lunchtime. Later in the day, say Buonasera!", type: "karaoke", emoji: "🎤", vibe: "Karaoke · with Nonna",
+          scene: "Morning with Nonna. Say good morning first!",
+          en: "Good morning, Nonna!",
+          captions: ["Buongiorno, nonna!", "Buonanotte, nonna!", "Arrivederci, nonna!"],
+          correct: 0,
+          note: "Buongiorno = good morning",
+          nudge: "Almost ☀️ it's morning, not bedtime. Try again.",
+          image: "images/c02-karaoke-nonna.jpg"
+        },
+        {
+          id: "a01",
+          type: "vlog",
+          emoji: "🥐",
+          vibe: "Vlog · the bakery",
+          scene: "You walk into a bakery. Greet the baker politely.",
+          en: "Hello! (polite)",
+          captions: ["Grazie!", "Salve!", "Arrivederci!"],
+          correct: 1,
+          note: "Salve = hello (polite, any time of day)",
+          tip: "Salve is great with grown-ups you don't know. With friends, just say Ciao!",
+          nudge: "Almost 💛 you just walked IN, so say hello. Try again.",
+          image: "images/a01-bakery.jpg"
+        },
+        {
+          id: "p07", type: "dance", emoji: "💙", vibe: "Dance · party",
+          song: "Blue (Da Ba Dee) · Eiffel 65",
+          scene: "Evening party, first dance. Say hi to the whole room.",
+          en: "Good evening, everyone! I'm Arianna.",
+          captions: ["Buonanotte a tutti! Sono Arianna.", "Buonasera a tutti! Sono Arianna.", "Buonasera a tutti! Sei Arianna."],
+          correct: 1,
+          note: "Buonasera a tutti = good evening, everyone",
+          nudge: "Almost 🌙 the party's just starting, and it's YOU. Try again.",
+          image: "images/c07-disco-blue.jpg",
+          clip: CLIPS.blue
+        },
+        {
+          id: "t09", type: "photo", emoji: "🌙", vibe: "Photo dump · bedtime story",
+          scene: "Story time with Nonna. Lights out!",
+          en: "Good night, Nonna!",
+          captions: ["Buongiorno, nonna!", "Buonasera, nonna!", "Buonanotte, nonna!"],
+          correct: 2,
+          note: "Buonanotte = good night (at bedtime)",
+          nudge: "Almost 🌙 it's time to sleep. Try again.",
+          image: "images/t09-photo-bedtime.jpg"
+        },
         {
           id: "p01", type: "dance", emoji: "💃", vibe: "Dance · intro video",
           scene: "Your intro video. Big smile, first beat.",
@@ -248,35 +353,6 @@ window.ARIANNA_APP = {
           image: "images/c01-dance-intro.jpg"
         },
         {
-          id: "p02", type: "karaoke", emoji: "🎤", vibe: "Karaoke · with Nonna",
-          scene: "Morning with Nonna. Say good morning first!",
-          en: "Good morning, Nonna!",
-          captions: ["Buongiorno, nonna!", "Buonanotte, nonna!", "Arrivederci, nonna!"],
-          correct: 0,
-          note: "Buongiorno = good morning",
-          nudge: "Almost ☀️ it's morning, not bedtime. Try again.",
-          image: "images/c02-karaoke-nonna.jpg"
-        },
-        {
-          id: "m01", type: "song", emoji: "🎶", vibe: "Song break · Nonna's favorite",
-          scene: "Nonna's favorite song! Listen, sing along, tap any word.",
-          title: "Mamma Maria", artist: "Ricchi e Poveri",
-          image: "images/m01-vinyl-pink.jpg",
-          clip: CLIPS.mammaMaria,
-          lyrics: LYRICS.mammaMaria
-        },
-        ...SONGQ.mammaMaria,
-        {
-          id: "p03", type: "vlog", emoji: "📹", vibe: "Vlog · in the piazza",
-          scene: "Filming in the piazza. Flip the camera on your cousin.",
-          en: "How are you?",
-          captions: ["Come ti chiami?", "Dove sei?", "Come stai?"],
-          correct: 2,
-          note: "Come stai? = how are you?",
-          nudge: "Nice try 💛 you're asking how she IS. One more go.",
-          image: "images/c03-vlog-piazza.jpg"
-        },
-        {
           id: "p04", type: "dance", emoji: "👯", vibe: "Dance · duet",
           scene: "Duet with a new friend. First time meeting!",
           en: "Nice to meet you!",
@@ -285,6 +361,191 @@ window.ARIANNA_APP = {
           note: "Piacere = nice to meet you",
           nudge: "Soft miss 🍋 that one's for manners. Try again.",
           image: "images/c04-dance-duet.jpg"
+        },
+        SONGCARDS.m01,
+        ...SONGQ.mammaMaria,
+        {
+          id: "t03", type: "vlog", emoji: "🛶", vibe: "Vlog · Venice",
+          scene: "Filming by the canal. Someone asks where you're from.",
+          en: "I'm American!",
+          captions: ["Sono americano!", "Sono americana!", "Sei americana!"],
+          correct: 1,
+          note: "Sono americana = I'm American (girls say americana)",
+          nudge: "So close 🛶 it's about YOU, and girls end it with -a. Try again.",
+          image: "images/t03-vlog-venice.jpg"
+        },
+        {
+          id: "s08", type: "vlog", emoji: "🍦", vibe: "Vlog · gelato run",
+          scene: "At the gelato counter. Your turn to order!",
+          en: "A gelato, please!",
+          captions: ["Un gelato, per favore!", "Un gelato, prego!", "Un gelato, piacere!"],
+          correct: 0,
+          note: "Per favore = please",
+          nudge: "Almost 🍦 you're asking for something, so say please. Try again.",
+          image: "images/s08-vlog-gelato-order.jpg"
+        },
+        {
+          id: "a02",
+          type: "vlog",
+          emoji: "💧",
+          vibe: "Vlog · café stop",
+          scene: "Hot day in the piazza. Ask the waiter for some water.",
+          en: "A water, please!",
+          captions: ["Un'acqua, piacere!", "Un'acqua, prego!", "Un'acqua, per piacere!"],
+          correct: 2,
+          note: "Per piacere = please (just like per favore)",
+          tip: "3 ways to say please: per favore, per piacere, per cortesia (extra polite).",
+          nudge: "Almost 💧 you're asking for something. Which one means please? Try again.",
+          image: "images/a02-water.jpg"
+        },
+        {
+          id: "a03",
+          type: "photo",
+          emoji: "🎁",
+          vibe: "Photo dump · a surprise",
+          scene: "Your best friend gives you a surprise present!",
+          en: "Thank you so much!",
+          captions: ["Prego!", "Per favore!", "Grazie mille!"],
+          correct: 2,
+          note: "Grazie mille = thanks a million! (Molte grazie works too)",
+          nudge: "So close 🎁 you're saying THANK YOU. Try again.",
+          image: "images/a03-gift.jpg"
+        },
+        {
+          id: "t05",
+          tip: "Someone says Grazie? You answer Prego!", type: "karaoke", emoji: "🎤", vibe: "Karaoke · duet",
+          scene: "You pass the mic. Your friend says “Grazie!”",
+          en: "You're welcome!",
+          captions: ["Prego!", "Piacere!", "Per favore!"],
+          correct: 0,
+          note: "Prego = you're welcome",
+          nudge: "Soft miss 🎤 she said thanks, so answer her. Try again.",
+          image: "images/t05-karaoke-lesson.jpg"
+        },
+        {
+          id: "r01",
+          type: "dance",
+          emoji: "🔁",
+          vibe: "Review · new friend",
+          scene: "Review time! You meet a new friend after school.",
+          en: "Hi! I'm Arianna. Nice to meet you!",
+          captions: ["Ciao! Sono Arianna. Piacere!", "Ciao! Sei Arianna. Piacere!", "Ciao! Sono Arianna. Prego!"],
+          correct: 0,
+          note: "Sono Arianna = I'm Arianna · Piacere = nice to meet you",
+          nudge: "Almost 💛 it's YOU, and you're happy to meet her. Try again.",
+          image: "images/s10-vlog-school-wave.jpg"
+        },
+        SONGCARDS.k4,
+        ...SONGQ.saraPerche,
+        {
+          id: "a04",
+          type: "vlog",
+          emoji: "🚪",
+          vibe: "Vlog · manners",
+          scene: "Nonna's friend is at the door. Invite her in!",
+          en: "Please, come in!",
+          captions: ["Grazie!", "Piacere!", "Prego!"],
+          correct: 2,
+          note: "Prego! = please, come in / go ahead (Prego's 2nd job!)",
+          tip: "Prego has 2 jobs: “you're welcome” AND “please, come in / go ahead”.",
+          nudge: "Almost 🚪 it's the same word as “you're welcome”! Try again.",
+          image: "images/a04-door.jpg"
+        },
+        {
+          id: "a05",
+          type: "photo",
+          emoji: "🥦",
+          vibe: "Dinner · seconds?",
+          scene: "Nonna offers you more broccoli, but you're full!",
+          en: "No, thank you!",
+          captions: ["No, grazie!", "Sì, grazie!", "No, prego!"],
+          correct: 0,
+          note: "Sì = yes · No = no · No, grazie = no, thank you",
+          nudge: "Almost 🥦 you're full, so it's NO, and you say thanks. Try again.",
+          image: "images/a05-broccoli.jpg"
+        },
+        {
+          id: "a06",
+          type: "vlog",
+          emoji: "🚌",
+          vibe: "Vlog · on the bus",
+          scene: "Oops! The bus stops fast and you bump into a lady.",
+          en: "Sorry! (to a grown-up)",
+          captions: ["Mi scusi!", "Salve!", "Prego!"],
+          correct: 0,
+          note: "Mi scusi = sorry / excuse me (polite)",
+          tip: "Grown-ups you don't know: Mi scusi. Family and friends: Scusa!",
+          nudge: "Almost 💛 you bumped into her, so say sorry. Try again.",
+          image: "images/a06-bus.jpg"
+        },
+        {
+          id: "a07",
+          type: "vlog",
+          emoji: "🧣",
+          vibe: "Vlog · in the street",
+          scene: "You pick up a lady's scarf. She says: “Grazie mille!”",
+          en: "Don't mention it! (polite)",
+          captions: ["Mi scusi!", "Si figuri!", "Buonanotte!"],
+          correct: 1,
+          note: "Si figuri = don't mention it (polite)",
+          tip: "With friends and family, say Figurati!",
+          nudge: "Almost 🧣 she thanked you. Tell her it was nothing! Try again.",
+          image: "images/a07-scarf.jpg"
+        },
+        {
+          id: "a08",
+          type: "photo",
+          emoji: "🥛",
+          vibe: "Kitchen · oops!",
+          scene: "Oops! You spill your milk at Nonna's table.",
+          en: "Sorry, Nonna!",
+          captions: ["Salve, nonna!", "Prego, nonna!", "Scusa, nonna!"],
+          correct: 2,
+          note: "Scusa = sorry (with family and friends)",
+          nudge: "Almost 🥛 you spilled it, so say sorry. Try again.",
+          image: "images/a08-spill.jpg"
+        },
+        {
+          id: "a09",
+          type: "vlog",
+          emoji: "🍝",
+          vibe: "Vlog · restaurant",
+          scene: "The waiter talks super fast. You didn't catch it!",
+          en: "Can you repeat, please? (polite)",
+          captions: ["Posso ripetere, per cortesia?", "Può ripetere, piacere?", "Può ripetere, per cortesia?"],
+          correct: 2,
+          note: "Può ripetere? = can you repeat? · per cortesia = please (polite)",
+          nudge: "Almost 💛 you want HIM to say it again, and say please. Try again.",
+          image: "images/a09-waiter.jpg"
+        },
+        {
+          id: "a10",
+          type: "vlog",
+          emoji: "👋",
+          vibe: "Review · leaving the bakery",
+          scene: "You've got your pastries. Time to leave the bakery!",
+          en: "Thanks a lot, goodbye!",
+          captions: ["Grazie mille, buonanotte!", "Grazie mille, arrivederci!", "Prego, arrivederci!"],
+          correct: 1,
+          note: "Arrivederci = goodbye (polite)",
+          tip: "Ciao is for friends and family. With grown-ups you don't know, say Arrivederci!",
+          nudge: "Almost 👋 say thanks, then goodbye. Try again.",
+          image: "images/a10-pastries.jpg"
+        }
+      ]
+    },
+    {
+      id: "s2", title: "Session 2", emoji: "🍋", blurb: "Level 2 · names, where you're from, age + 2 song breaks",
+      cards: [
+        {
+          id: "t07", type: "vlog", emoji: "💕", vibe: "Vlog · with Nonna",
+          scene: "Vlogging with Nonna. Ask how she is.",
+          en: "Hi, Nonna! How are you?",
+          captions: ["Ciao, nonna! Come ti chiami?", "Ciao, nonna! Come stai?", "Arrivederci, nonna! Come stai?"],
+          correct: 1,
+          note: "Come stai? = how are you?",
+          nudge: "Nice try 💕 you're saying hi and asking how she IS. Try again.",
+          image: "images/t07-vlog-nonna.jpg"
         },
         {
           id: "p05", type: "vlog", emoji: "🚗", vibe: "Road trip · 1950s vibes",
@@ -300,6 +561,36 @@ window.ARIANNA_APP = {
           lyrics: LYRICS.carosone
         },
         {
+          id: "b01",
+          type: "dance",
+          emoji: "🛝",
+          vibe: "Park · new friend",
+          scene: "A new girl joins your dance group. Ask her name!",
+          en: "What's your name?",
+          captions: ["Come stai?", "Come ti chiami?", "Come mi chiamo?"],
+          correct: 1,
+          note: "Come ti chiami? = what's your name? (friends and family)",
+          nudge: "Almost 💛 you want her NAME. Try again.",
+          image: "images/b01-park.jpg"
+        },
+        {
+          id: "b02",
+          kind: "asks",
+          who: "👧 New friend",
+          type: "dance",
+          emoji: "👋",
+          vibe: "Park · new friend",
+          scene: "Now she asks you!",
+          ask: "E tu, come ti chiami?",
+          askEn: "And you, what's your name?",
+          captions: ["Mi chiami Arianna!", "Mi chiamo Arianna!", "Ti chiami Arianna!"],
+          correct: 1,
+          note: "Mi chiamo… = my name is…",
+          tip: "Literally “I call myself”, from chiamarsi (to be called).",
+          nudge: "Almost 💛 it's YOUR name: mi chiamo. Try again.",
+          image: "images/b02-friends.jpg"
+        },
+        {
           id: "p06", type: "dance", emoji: "💃", vibe: "Dance · trend",
           song: "Malatìa · Ciccio Merolla",
           scene: "The Neapolitan hit is on. Caption your dance.",
@@ -312,63 +603,6 @@ window.ARIANNA_APP = {
           clip: CLIPS.malatia
         },
         {
-          id: "p07", type: "dance", emoji: "💙", vibe: "Dance · party",
-          song: "Blue (Da Ba Dee) · Eiffel 65",
-          scene: "Evening party, first dance. Say hi to the whole room.",
-          en: "Good evening, everyone! I'm Arianna.",
-          captions: ["Buonanotte a tutti! Sono Arianna.", "Buonasera a tutti! Sono Arianna.", "Buonasera a tutti! Sei Arianna."],
-          correct: 1,
-          note: "Buonasera a tutti = good evening, everyone",
-          nudge: "Almost 🌙 the party's just starting, and it's YOU. Try again.",
-          image: "images/c07-disco-blue.jpg",
-          clip: CLIPS.blue
-        },
-        {
-          id: "s08", type: "vlog", emoji: "🍦", vibe: "Vlog · gelato run",
-          scene: "At the gelato counter. Your turn to order!",
-          en: "A gelato, please!",
-          captions: ["Un gelato, per favore!", "Un gelato, prego!", "Un gelato, piacere!"],
-          correct: 0,
-          note: "Per favore = please",
-          nudge: "Almost 🍦 you're asking for something, so say please. Try again.",
-          image: "images/s08-vlog-gelato-order.jpg"
-        },
-        {
-          id: "s09", type: "photo", emoji: "🎂", vibe: "Photo dump · birthday",
-          scene: "Birthday pic with the cake. Caption it!",
-          en: "I'm twelve years old!",
-          captions: ["Sono dodici anni!", "Hai dodici anni!", "Ho dodici anni!"],
-          correct: 2,
-          note: "Ho dodici anni = I'm 12 (in Italian you HAVE your years)",
-          nudge: "So close 🎂 in Italian you HAVE your age, and it's yours. Try again.",
-          image: "images/s09-photo-birthday.jpg"
-        },
-        {
-          id: "s10", type: "vlog", emoji: "👋", vibe: "Vlog · after school",
-          scene: "School's out. Wave bye to your friends.",
-          en: "Bye! See you tomorrow!",
-          captions: ["Ciao! A domani!", "Ciao! Buongiorno!", "Piacere! A domani!"],
-          correct: 0,
-          note: "A domani = see you tomorrow",
-          nudge: "Almost 👋 you're leaving, so it's a goodbye. Try again.",
-          image: "images/s10-vlog-school-wave.jpg"
-        }
-      ]
-    },
-    {
-      id: "s2", title: "Session 2", emoji: "🍋", blurb: "Mi piace, sono americana, mia nonna",
-      cards: [
-        {
-          id: "t01", type: "dance", emoji: "💃", vibe: "Dance · in the park",
-          scene: "Dancing in the park with your best friend.",
-          en: "I like dancing!",
-          captions: ["Ti piace ballare?", "Non mi piace ballare!", "Mi piace ballare!"],
-          correct: 2,
-          note: "Mi piace… = I like…",
-          nudge: "Almost 💃 you DO like it, and it's about you. Try again.",
-          image: "images/t01-dance-park.jpg"
-        },
-        {
           id: "t02", type: "dance", emoji: "🎉", vibe: "Dance · party hats",
           scene: "Party-hat dance with a new friend. Introduce yourself!",
           en: "Nice to meet you! My name is Arianna.",
@@ -378,15 +612,130 @@ window.ARIANNA_APP = {
           nudge: "Close 🎉 you're meeting her, and it's YOUR name. Try again.",
           image: "images/t02-dance-duet.jpg"
         },
+        SONGCARDS.k7,
+        ...SONGQ.volare,
         {
-          id: "t03", type: "vlog", emoji: "🛶", vibe: "Vlog · Venice",
-          scene: "Filming by the canal. Someone asks where you're from.",
-          en: "I'm American!",
-          captions: ["Sono americano!", "Sono americana!", "Sei americana!"],
+          id: "b03",
+          kind: "asks",
+          who: "👵 Nonna's friend",
+          type: "photo",
+          emoji: "🤝",
+          vibe: "Meeting Nonna's friend",
+          scene: "Nonna introduces you to her friend, Signora Rosa.",
+          ask: "Piacere, Arianna!",
+          askEn: "Nice to meet you, Arianna!",
+          captions: ["Mi piace!", "Piacere mio!", "Prego mio!"],
           correct: 1,
-          note: "Sono americana = I'm American (girls say americana)",
-          nudge: "So close 🛶 it's about YOU, and girls end it with -a. Try again.",
-          image: "images/t03-vlog-venice.jpg"
+          note: "Piacere mio = the pleasure is mine",
+          nudge: "Almost 💛 she's happy to meet you. Say it back! Try again.",
+          image: "images/b03-handshake.jpg"
+        },
+        {
+          id: "b04",
+          type: "vlog",
+          emoji: "🏫",
+          vibe: "School · new teacher",
+          scene: "First day with a new teacher. Ask her name politely.",
+          en: "What's your name? (polite)",
+          captions: ["Come ti chiami?", "Come sta?", "Come si chiama?"],
+          correct: 2,
+          note: "Come si chiama? = what's your name? (polite, for grown-ups)",
+          tip: "Not sure if formal or informal? Use formal. But with Nonna and family, use tu: Come ti chiami? / Di dove sei?",
+          nudge: "Almost 💛 she's a grown-up you just met, so be polite. Try again.",
+          image: "images/b04-teacher.jpg"
+        },
+        {
+          id: "b05",
+          type: "photo",
+          emoji: "🏖️",
+          vibe: "Beach · new friend",
+          scene: "At the beach you meet a girl your age with a new accent.",
+          en: "Where are you from?",
+          captions: ["Di dove sei?", "Dove sei?", "Di dov'è?"],
+          correct: 0,
+          note: "Di dove sei? = where are you from? (friends and family)",
+          nudge: "Almost 🏖️ she's your age, so use tu, and ask where she's FROM. Try again.",
+          image: "images/b05-beach.jpg"
+        },
+        {
+          id: "b06",
+          kind: "asks",
+          who: "👧 New friend",
+          type: "photo",
+          emoji: "🇺🇸",
+          vibe: "Beach · new friend",
+          scene: "She asks you the same thing!",
+          ask: "E tu, di dove sei?",
+          askEn: "And you, where are you from?",
+          captions: ["Sono americano!", "Sono australiana!", "Sono americana!"],
+          correct: 2,
+          note: "Sono americana = I'm American (girl) · americano = boy · australiana = Australian",
+          nudge: "Almost 🇺🇸 you're from America, and you're a girl. Try again.",
+          image: "images/b06-beach-friends.jpg"
+        },
+        {
+          id: "b07",
+          type: "vlog",
+          emoji: "🏨",
+          vibe: "Hotel · check-in",
+          scene: "The hotel lady has an accent you don't know. Ask her politely.",
+          en: "Where are you from? (polite)",
+          captions: ["Dov'è?", "Di dov'è?", "Di dove sei?"],
+          correct: 1,
+          note: "Di dov'è? = where are you from? (polite) · Dov'è? = where is it?",
+          nudge: "Almost 🏨 she's a grown-up, so be polite, and ask where she's FROM. Try again.",
+          image: "images/b07-hotel.jpg"
+        },
+        {
+          id: "r02",
+          kind: "asks",
+          who: "👩 The neighbor",
+          type: "vlog",
+          emoji: "🔁",
+          vibe: "Review · the neighbor",
+          scene: "Review! Nonna's neighbor stops you one morning.",
+          ask: "Buongiorno! Come ti chiami?",
+          askEn: "Good morning! What's your name?",
+          captions: ["Buonanotte! Mi chiamo Arianna.", "Buongiorno! Mi chiamo Arianna.", "Buongiorno! Ti chiami Arianna."],
+          correct: 1,
+          note: "Buongiorno = good morning · Mi chiamo… = my name is…",
+          nudge: "Almost ☀️ it's morning, and it's YOUR name. Try again.",
+          image: "images/r02-neighbor.jpg"
+        },
+        SONGCARDS.k10,
+        ...SONGQ.italiano,
+        {
+          id: "b08",
+          type: "photo",
+          emoji: "🎈",
+          vibe: "Party · new friend",
+          scene: "At your cousin's birthday party you meet a new girl. Ask how old she is!",
+          en: "How old are you?",
+          captions: ["Quanti anni hai?", "Quanti anni sei?", "Come ti chiami?"],
+          correct: 0,
+          note: "Quanti anni hai? = how old are you? (literally: how many years do you have?)",
+          nudge: "Almost 🎈 in Italian you HAVE years. Try again.",
+          image: "images/b08-party.jpg"
+        },
+        {
+          id: "s09", type: "photo", emoji: "🎂", vibe: "Photo dump · birthday",
+          scene: "Birthday video call! Nonna asks the big question.",
+          kind: "asks", ask: "Quanti anni hai?", askEn: "How old are you?",
+          captions: ["Sono dodici anni!", "Hai dodici anni!", "Ho dodici anni!"],
+          correct: 2,
+          note: "Ho dodici anni = I'm 12 (in Italian you HAVE your years)",
+          nudge: "So close 🎂 in Italian you HAVE your age, and it's yours. Try again.",
+          image: "images/s09-photo-birthday.jpg"
+        },
+        {
+          id: "t01", type: "dance", emoji: "💃", vibe: "Dance · in the park",
+          scene: "Dancing in the park with your best friend.",
+          en: "I like dancing!",
+          captions: ["Ti piace ballare?", "Non mi piace ballare!", "Mi piace ballare!"],
+          correct: 2,
+          note: "Mi piace… = I like…",
+          nudge: "Almost 💃 you DO like it, and it's about you. Try again.",
+          image: "images/t01-dance-park.jpg"
         },
         {
           id: "t04", type: "photo", emoji: "🍦", vibe: "Photo dump · gelato",
@@ -399,36 +748,6 @@ window.ARIANNA_APP = {
           image: "images/t04-photo-gelato.jpg"
         },
         {
-          id: "t05", type: "karaoke", emoji: "🎤", vibe: "Karaoke · duet",
-          scene: "You pass the mic. Your friend says “Grazie!”",
-          en: "You're welcome!",
-          captions: ["Prego!", "Piacere!", "Per favore!"],
-          correct: 0,
-          note: "Prego = you're welcome",
-          nudge: "Soft miss 🎤 she said thanks, so answer her. Try again.",
-          image: "images/t05-karaoke-lesson.jpg"
-        },
-        {
-          id: "t06", type: "photo", emoji: "👵", vibe: "Photo dump · Nonna",
-          scene: "Cuddles with Nonna on the porch. Who's this?",
-          en: "This is my grandma!",
-          captions: ["Questo è mio nonno!", "Questa è tua nonna!", "Questa è mia nonna!"],
-          correct: 2,
-          note: "Questa è mia nonna = this is my grandma",
-          nudge: "Almost 👵 it's YOUR grandma. Try again.",
-          image: "images/t06-photo-nonna.jpg"
-        },
-        {
-          id: "t07", type: "vlog", emoji: "💕", vibe: "Vlog · with Nonna",
-          scene: "Vlogging with Nonna. Ask how she is.",
-          en: "Hi, Nonna! How are you?",
-          captions: ["Ciao, nonna! Come ti chiami?", "Ciao, nonna! Come stai?", "Arrivederci, nonna! Come stai?"],
-          correct: 1,
-          note: "Come stai? = how are you?",
-          nudge: "Nice try 💕 you're saying hi and asking how she IS. Try again.",
-          image: "images/t07-vlog-nonna.jpg"
-        },
-        {
           id: "t08", type: "photo", emoji: "🍨", vibe: "Photo dump · gelato break",
           scene: "Gelato break with your friend. She holds hers out: want a taste?",
           en: "Yes, please!",
@@ -439,14 +758,14 @@ window.ARIANNA_APP = {
           image: "images/t08-photo-gelato-friend.jpg"
         },
         {
-          id: "t09", type: "photo", emoji: "🌙", vibe: "Photo dump · bedtime story",
-          scene: "Story time with Nonna. Lights out!",
-          en: "Good night, Nonna!",
-          captions: ["Buongiorno, nonna!", "Buonasera, nonna!", "Buonanotte, nonna!"],
+          id: "t06", type: "photo", emoji: "👵", vibe: "Photo dump · Nonna",
+          scene: "Cuddles with Nonna on the porch. Who's this?",
+          en: "This is my grandma!",
+          captions: ["Questo è mio nonno!", "Questa è tua nonna!", "Questa è mia nonna!"],
           correct: 2,
-          note: "Buonanotte = good night (at bedtime)",
-          nudge: "Almost 🌙 it's time to sleep. Try again.",
-          image: "images/t09-photo-bedtime.jpg"
+          note: "Questa è mia nonna = this is my grandma",
+          nudge: "Almost 👵 it's YOUR grandma. Try again.",
+          image: "images/t06-photo-nonna.jpg"
         },
         {
           id: "t10", type: "vlog", emoji: "🌅", vibe: "Vlog · beach sunset",
@@ -693,31 +1012,30 @@ window.ARIANNA_APP = {
   ],
   /* Canzoni 🎶: open from the start. Each song = its own mini sequence (listen → 2 notice → 1 use). */
   songs: [
-    { id: "k1", title: "Mamma Maria", artist: "Ricchi e Poveri", emoji: "🎶", cards: null /* filled below: Session 1 card m01 + its 3 questions */ },
-    { id: "k2", title: "Malatìa", artist: "Ciccio Merolla", emoji: "🌋", cards: [
-      { id: "k2", type: "song", emoji: "🌋", vibe: "Canzoni · Naples, 2022", imageFrom: "p06",
-        scene: "The Neapolitan hit! Listen, sing along, tap any word.", title: "Malatìa", artist: "Ciccio Merolla",
-        clip: CLIPS.malatia, lyrics: LYRICS.malatia }].concat(SONGQ.malatia) },
+    { id: "k1", title: "Mamma Maria", artist: "Ricchi e Poveri", emoji: "🎶", cards: [SONGCARDS.m01].concat(SONGQ.mammaMaria) },
+    { id: "k4", title: "Sarà perché ti amo", artist: "Ricchi e Poveri", emoji: "🌅", cards: [SONGCARDS.k4].concat(SONGQ.saraPerche) },
+    { id: "k7", title: "Volare", artist: "Domenico Modugno", emoji: "🕊️", cards: [SONGCARDS.k7].concat(SONGQ.volare) },
     { id: "k3", title: "Tu vuò fà l'americano", artist: "Renato Carosone", emoji: "🚗", cards: [
       { id: "k3", type: "song", emoji: "🚗", vibe: "Canzoni · Naples, 1956", imageFrom: "p05",
         scene: "A 1950s classic from Naples. Tap any word!", title: "Tu vuò fà l'americano", artist: "Renato Carosone",
         clip: CLIPS.carosone, lyrics: LYRICS.carosone }].concat(SONGQ.carosone) },
-    { id: "k4", title: "Sarà perché ti amo", artist: "Ricchi e Poveri", emoji: "🌅", cards: [
-      { id: "k4", type: "song", emoji: "🌅", vibe: "Canzoni · Sanremo, 1981", image: "images/k-sara-vernazza.jpg",
-        scene: "Everybody in Italy knows this one! Sing along.", title: "Sarà perché ti amo", artist: "Ricchi e Poveri",
-        clip: CLIPS.saraPerche, lyrics: LYRICS.saraPerche }].concat(SONGQ.saraPerche) },
+    { id: "k9", title: "Blue (Da Ba Dee)", artist: "Eiffel 65", emoji: "💙", cards: [
+      { id: "k9", type: "song", emoji: "💙", vibe: "Canzoni · Italian band, English song", imageFrom: "p07", lyricsLang: "en",
+        scene: "Eiffel 65 are from Turin, Italy! Tap a word to see it in ITALIAN.", title: "Blue (Da Ba Dee)", artist: "Eiffel 65",
+        clip: CLIPS.blue, lyrics: LYRICS.blue }].concat(SONGQ.blue) },
     { id: "k5", title: "Pedro", artist: "Jaxomy, Agatino Romero & Raffaella Carrà", emoji: "🪩", cards: [
       { id: "k5", type: "song", emoji: "🪩", vibe: "Canzoni · the viral remix", image: "images/k-pedro-dance.jpg",
         scene: "Raffaella Carrà's 1980 hit, remixed for TikTok. Tap any word!", title: "Pedro", artist: "Jaxomy, Agatino Romero & Raffaella Carrà",
         clip: CLIPS.pedro, lyrics: LYRICS.pedro }].concat(SONGQ.pedro) },
+    { id: "k10", title: "L'italiano", artist: "Toto Cutugno", emoji: "🇮🇹", cards: [SONGCARDS.k10].concat(SONGQ.italiano) },
     { id: "k6", title: "Ciao ciao", artist: "La Rappresentante di Lista", emoji: "👋", cards: [
       { id: "k6", type: "song", emoji: "👋", vibe: "Canzoni · Sanremo, 2022", image: "images/k-ciao-sunset.jpg",
         scene: "Wave ciao ciao with your hands, your feet… Tap any word!", title: "Ciao ciao", artist: "La Rappresentante di Lista",
         clip: CLIPS.ciaoCiao, lyrics: LYRICS.ciaoCiao }].concat(SONGQ.ciaoCiao) },
-    { id: "k7", title: "Volare", artist: "Domenico Modugno", emoji: "🕊️", cards: [
-      { id: "k7", type: "song", emoji: "🕊️", vibe: "Canzoni · 1958 classic", image: "images/k-volare-sky.jpg",
-        scene: "The most famous Italian song ever! Sing “Volare!”", title: "Volare (Nel blu dipinto di blu)", artist: "Domenico Modugno",
-        clip: CLIPS.volare, lyrics: LYRICS.volare }].concat(SONGQ.volare) },
+    { id: "k2", title: "Malatìa", artist: "Ciccio Merolla", emoji: "🌋", cards: [
+      { id: "k2", type: "song", emoji: "🌋", vibe: "Canzoni · Naples, 2022", imageFrom: "p06",
+        scene: "The Neapolitan hit! Listen, sing along, tap any word.", title: "Malatìa", artist: "Ciccio Merolla",
+        clip: CLIPS.malatia, lyrics: LYRICS.malatia }].concat(SONGQ.malatia) },
     { id: "k8", title: "Shivers", artist: "Ed Sheeran", emoji: "🎸", cards: [
       { id: "k8", type: "song", emoji: "🎸", vibe: "Canzoni · English song", image: "images/k-shivers-guitar.jpg", lyricsLang: "en",
         scene: "An English song! Tap any word to see it in ITALIAN.", title: "Shivers", artist: "Ed Sheeran",
@@ -729,7 +1047,6 @@ window.ARIANNA_APP = {
    and the song questions always use the same picture. */
 (function linkImages(app) {
   const byId = (id) => app.sessions.flatMap((s) => s.cards).find((c) => c.id === id);
-  app.songs[0].cards = [byId("m01")].concat(SONGQ.mammaMaria);
   const all = app.sessions.flatMap((s) => s.cards).concat(app.songs.flatMap((s) => s.cards));
   all.forEach((c) => { if (c.imageFrom && byId(c.imageFrom)) c.image = byId(c.imageFrom).image; });
   const songCard = (id) => all.find((c) => c.type === "song" && c.id === id);
