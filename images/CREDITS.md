@@ -24,3 +24,5 @@ All card photos are from [Pexels](https://www.pexels.com/) under the [Pexels Lic
 | `t08-photo-gelato-friend.jpg` | [ENESFİLM](https://www.pexels.com/@enesfilm/) | [#8713083](https://www.pexels.com/photo/a-person-holding-ice-cream-on-cone-8713083/) (small cone stamp softened) |
 | `t09-photo-bedtime.jpg` | [Mikhail Nilov](https://www.pexels.com/@mikhail-nilov/) | [#8307817](https://www.pexels.com/photo/elderly-woman-reading-book-with-kids-8307817/) |
 | `t10-vlog-beach-sunset.jpg` | [Skyler Ewing](https://www.pexels.com/@skyler-ewing-266953/) | [#4938150](https://www.pexels.com/photo/happy-girl-having-fun-at-sunset-4938150/) |
+
+avatar.jpg: family photo supplied by the owner; not for reuse.
