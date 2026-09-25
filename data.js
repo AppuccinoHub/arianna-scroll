@@ -21,6 +21,11 @@ const CLIPS = {
     url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/5c/2a/4f/5c2a4f09-ac01-be90-d6b2-a0b94bd82b7e/mzaf_3916619128344794117.plus.aac.p.m4a",
     trackViewUrl: "https://music.apple.com/us/album/blue-da-ba-dee-gabry-ponte-video-edit/257424513?i=257425447&uo=4",
     track: "Blue (Da Ba Dee)", artist: "Eiffel 65", label: "Blue (Da Ba Dee)"
+  },
+  malatia: {
+    url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview122/v4/5b/e1/c7/5be1c7b3-29a0-71b7-6854-c213f2f2927d/mzaf_4934275594369123828.plus.aac.p.m4a",
+    trackViewUrl: "https://music.apple.com/us/album/malat%C3%ACa/1645392748?i=1645392949&uo=4",
+    track: "Malatìa", artist: "Ciccio Merolla", label: "Malatìa"
   }
 };
 
@@ -124,7 +129,8 @@ window.ARIANNA_APP = {
           correct: 0,
           note: "Sono = I am · Ballo = I dance",
           nudge: "Close 💛 it's about you, and you're saying hi. Try again.",
-          image: "images/c06-dance-malatia.jpg"
+          image: "images/c06-dance-malatia.jpg",
+          clip: CLIPS.malatia
         },
         {
           id: "p07", type: "dance", emoji: "💙", vibe: "Dance · party",
