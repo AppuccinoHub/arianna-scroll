@@ -671,13 +671,14 @@
       // Nonna dice: what she wants (English) → pick the Italian she says. The bubble shows it big once found.
       const nb = el('div', 'nonna-bubble nb-reveal');
       nb.hidden = true;
-      nb.append(el('span', 'nb-who', '👵 Nonna dice…'));
+      const who = card.who || '👵 Nonna', whoName = who.replace(/^\S+\s+/, '');   // v11.3: the relative in the picture (Papà, Zia…)
+      nb.append(el('span', 'nb-who', who + ' dice…'));
       const q = el('p', 'nb-text', card.captions[card.correct]); q.lang = 'it';
       nb.appendChild(q);
       body.appendChild(nb);
-      body.appendChild(el('p', 'en-label', 'What does Nonna say in Italian?'));
+      body.appendChild(el('p', 'en-label', 'What does ' + whoName + ' say in Italian?'));
       body.appendChild(el('p', 'en-line', card.en));
-      groupLabel = 'Choose what Nonna says in Italian for: ' + card.en;
+      groupLabel = 'Choose what ' + whoName + ' says in Italian for: ' + card.en;
     } else if (card.type === 'lyricq') {
       const toIt = card.songLang === 'en';
       if (card.line) {

@@ -84,22 +84,22 @@ All from Pexels (Pexels License: free to use, no attribution required; credited 
 | `k-italiano-flag.jpg` | [Jona Scheuber](https://www.pexels.com/@jona-scheuber-1283906658/) | [#24394715](https://www.pexels.com/photo/flag-of-italy-near-building-with-tower-24394715/) |
 | `r02-neighbor.jpg` | [Mehmet Turgut  Kirkgoz](https://www.pexels.com/@tkirkgoz/) | [#11455900](https://www.pexels.com/photo/woman-standing-in-house-with-open-doors-11455900/) |
 
+## v11.3 family illustrations
 
-## v11.2 replacements (no grandmother/family photos; southern Italy)
+Original illustrations generated for Arianna Scroll (fictional characters, not based on any real person or photo). Each landscape illustration (1280×720) is shown whole, nothing cropped, on a blurred 9:16 background (720×1280 JPG).
 
-All from Pexels (Pexels License: free to use, no attribution required; credited here anyway). Cropped to 720×1280 (9:16). Location is as named on the Pexels photo page. No people shown, except blurred/partial shoppers at the edge of `u07b`. u01, u07, n01, n04, n11 are now still photos (their old family/grandmother video clips were removed).
-
-| File | Card | Photographer | Pexels | Location |
-|---|---|---|---|---|
-| `c02b-buongiorno-naples-cappuccino.jpg` | p02 | Cristiano De Luca | [#10279573](https://www.pexels.com/photo/chocolate-sprinkles-on-bread-and-a-cup-of-coffee-10279573/) | Naples, Campania, Italy |
-| `t09b-naples-night-vesuvius.jpg` | t09 | Flavio Cavallaro | [#32037805](https://www.pexels.com/photo/peaceful-night-view-of-mount-vesuvius-and-boats-32037805/) | Napoli, Campania, Italy |
-| `a04b-naples-door.jpg` | a04 | Ezgi Kaya | [#33322671](https://www.pexels.com/photo/historic-italian-architecture-in-naples-33322671/) | Naples, Italy |
-| `t07b-naples-balconies.jpg` | t07 | Luca Musella | [#30652764](https://www.pexels.com/photo/historic-balcony-architecture-in-naples-30652764/) | Napoli, Campania, Italy |
-| `t06b-scopello-balcony.jpg` | t06 | esrageziyor | [#17467023](https://www.pexels.com/photo/a-table-with-chairs-on-a-balcony-in-a-seaside-town-resort-17467023/) | Scopello, Sicily, Italy |
-| `u01b-positano-terrace.jpg` | u01 | Meghan Marron | [#13418034](https://www.pexels.com/photo/terrace-on-sea-coast-13418034/) | Positano, Campania, Italy |
-| `u07b-naples-cuoppo.jpg` | u07 | Francesco Querente | [#36548399](https://www.pexels.com/photo/street-food-stall-selling-pizza-and-cuoppo-in-naples-36548399/) | Naples, Italy |
-| `u11b-naples-hearts.jpg` | u11 | Antonio Vacca | [#36754326](https://www.pexels.com/photo/charming-street-in-naples-with-heart-decorations-36754326/) | Naples, Italy |
-| `n01b-naples-pizza-oven.jpg` | n01, n07 | Rene Strgar | [#13946695](https://www.pexels.com/photo/a-pizza-taken-from-an-oven-13946695/) | Naples, Campania, Italy |
-| `n04b-positano-table.jpg` | n04 | Lokke Kokaleinen | [#5042248](https://www.pexels.com/photo/restaurant-balcony-with-mountain-view-5042248/) | Positano, Campania, Italy |
-| `n10b-procida-house.jpg` | n10 | Josh Withers | [#26976092](https://www.pexels.com/photo/exterior-of-a-townhouse-26976092/) | Procida, Campania, Italy |
-| `n11b-naples-bay-moon.jpg` | n11 | Rodrigo Armendariz | [#17204944](https://www.pexels.com/photo/yacht-and-motorboats-on-sea-coast-at-dusk-17204944/) | Naples bay, Campania, Italy |
+| File | Card | Shows |
+|---|---|---|
+| `p02-family.jpg` | p02 | Arianna with her nonna |
+| `t09-family.jpg` | t09 | Arianna with her nonna |
+| `a04-family.jpg` | a04 | Arianna with her nonno |
+| `t07-family.jpg` | t07 | Arianna with her nonna |
+| `t06-family.jpg` | t06 | Arianna with her nonna |
+| `u01-family.jpg` | u01 | Arianna with her nonna |
+| `u07-family.jpg` | u07 | Arianna with her cugina |
+| `u11-family.jpg` | u11 | Arianna with her nonna |
+| `n01-family.jpg` | n01 | Arianna with her papà |
+| `n07-family.jpg` | n07 | Arianna with her fratello |
+| `n04-family.jpg` | n04 | Arianna with her zio and cugino |
+| `n10-family.jpg` | n10 | Arianna with her zia and her Bichon Frise |
+| `n11-family.jpg` | n11 | Arianna with her mamma |

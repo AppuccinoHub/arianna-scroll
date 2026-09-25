@@ -273,14 +273,14 @@ window.ARIANNA_APP = {
       cards: [
         {
           id: "p02",
-          tip: "Buongiorno = good morning / good afternoon. Italians always greet each other in the morning.", type: "karaoke", emoji: "🎤", vibe: "Karaoke · with Nonna",
+          tip: "Buongiorno = good morning / good afternoon. Italians always greet each other in the morning.", type: "karaoke", emoji: "🎤", vibe: "Breakfast · with Nonna",
           scene: "Morning with Nonna. Say good morning first!",
           en: "Good morning, Nonna!",
           captions: ["Buongiorno, nonna!", "Buonanotte, nonna!", "Arrivederci, nonna!"],
           correct: 0,
           note: "Buongiorno = good morning",
           nudge: "Almost ☀️ it's morning, not bedtime. Try again.",
-          image: "images/c02b-buongiorno-naples-cappuccino.jpg"
+          image: "images/p02-family.jpg"
         },
         {
           id: "a01",
@@ -316,7 +316,7 @@ window.ARIANNA_APP = {
           correct: 2,
           note: "Buonanotte = good night (at bedtime)",
           nudge: "Almost 🌙 it's time to sleep. Try again.",
-          image: "images/t09b-naples-night-vesuvius.jpg"
+          image: "images/t09-family.jpg"
         },
         {
           id: "p01", type: "dance", emoji: "💃", vibe: "Dance · intro video",
@@ -418,14 +418,14 @@ window.ARIANNA_APP = {
           type: "vlog",
           emoji: "🚪",
           vibe: "Vlog · manners",
-          scene: "Nonna's friend is at the door. Invite her in!",
+          scene: "Your nonno (grandpa) is at the door. Invite him in!",
           en: "Please, come in!",
           captions: ["Grazie!", "Piacere!", "Prego!"],
           correct: 2,
           note: "Prego! = please, come in / go ahead (Prego's 2nd job!)",
           tip: "Prego has 2 jobs: “you're welcome” AND “please, come in / go ahead”.",
           nudge: "Almost 🚪 it's the same word as “you're welcome”! Try again.",
-          image: "images/a04b-naples-door.jpg"
+          image: "images/a04-family.jpg"
         },
         {
           id: "a05",
@@ -515,13 +515,13 @@ window.ARIANNA_APP = {
       cards: [
         {
           id: "t07", type: "vlog", emoji: "💕", vibe: "Vlog · with Nonna",
-          scene: "Vlogging with Nonna. Ask how she is.",
+          scene: "Video call with Nonna. Ask how she is.",
           en: "Hi, Nonna! How are you?",
           captions: ["Ciao, nonna! Come ti chiami?", "Ciao, nonna! Come stai?", "Arrivederci, nonna! Come stai?"],
           correct: 1,
           note: "Come stai? = how are you?",
           nudge: "Nice try 💕 you're saying hi and asking how she IS. Try again.",
-          image: "images/t07b-naples-balconies.jpg"
+          image: "images/t07-family.jpg"
         },
         {
           id: "p05", type: "vlog", emoji: "🚗", vibe: "Road trip · 1950s vibes",
@@ -735,13 +735,13 @@ window.ARIANNA_APP = {
         },
         {
           id: "t06", type: "photo", emoji: "👵", vibe: "Photo dump · Nonna",
-          scene: "You show a friend your photos from Nonna's balcony. Who's this?",
+          scene: "You show a friend a photo of Nonna on your phone. Who's this?",
           en: "This is my grandma!",
           captions: ["Questo è mio nonno!", "Questa è tua nonna!", "Questa è mia nonna!"],
           correct: 2,
           note: "Questa è mia nonna = this is my grandma",
           nudge: "Almost 👵 it's YOUR grandma. Try again.",
-          image: "images/t06b-scopello-balcony.jpg"
+          image: "images/t06-family.jpg"
         },
         {
           id: "t10", type: "vlog", emoji: "🌅", vibe: "Vlog · beach sunset",
@@ -759,14 +759,14 @@ window.ARIANNA_APP = {
       id: "s3", title: "Session 3", emoji: "💬", blurb: "Parliamo! Talk with Nonna",
       cards: [
         {
-          id: "u01", kind: "asks", type: "vlog", emoji: "📱", vibe: "Video call · Nonna",
-          scene: "Video call with Nonna! She waves hello.",
+          id: "u01", kind: "asks", type: "vlog", emoji: "📱", vibe: "Balcony · with Nonna",
+          scene: "On Nonna's balcony by the sea. She says hello.",
           ask: "Ciao, tesoro! Come stai?", askEn: "Hi, sweetie! How are you?",
           captions: ["Mi chiamo Arianna!", "Bene, grazie, nonna!", "A domani, nonna!"],
           correct: 1,
           note: "Come stai? = how are you? · Bene, grazie = good, thanks",
           nudge: "Almost 💛 Nonna asked how you ARE. Try again.",
-          image: "images/u01b-positano-terrace.jpg"
+          image: "images/u01-family.jpg"
         },
         {
           id: "u02", kind: "asks", type: "vlog", emoji: "🍽️", vibe: "Video call · after lunch",
@@ -819,14 +819,14 @@ window.ARIANNA_APP = {
           image: "images/u06-tiramisu.jpg"
         },
         {
-          id: "u07", kind: "asks", type: "vlog", emoji: "🥣", vibe: "Kitchen · snack time",
-          scene: "You skipped your snack and your tummy is rumbling.",
+          id: "u07", kind: "asks", who: "👧 Cugina", type: "vlog", emoji: "🥣", vibe: "Kitchen · snack time",
+          scene: "Your cugina (cousin) asks if you ate. Your tummy is rumbling!",
           ask: "Hai mangiato?", askEn: "Did you eat?",
           captions: ["Sì, grazie!", "No, ho fame!", "Piacere!"],
           correct: 1,
           note: "No, ho fame = no, I'm hungry (in Italian you HAVE hunger)",
           nudge: "Close 💛 you haven't eaten, and your tummy is rumbling. Try again.",
-          image: "images/u07b-naples-cuoppo.jpg"
+          image: "images/u07-family.jpg"
         },
         {
           id: "u08", kind: "asks", type: "dance", emoji: "🩰", vibe: "Dance class",
@@ -866,7 +866,7 @@ window.ARIANNA_APP = {
           correct: 2,
           note: "Ti voglio bene = I love you (for family)",
           nudge: "Almost 💕 tell her you love her. Try again.",
-          image: "images/u11b-naples-hearts.jpg"
+          image: "images/u11-family.jpg"
         }
       ]
     },
@@ -874,14 +874,14 @@ window.ARIANNA_APP = {
       id: "s4", title: "Session 4", emoji: "👵", blurb: "Nonna dice… Understand Nonna",
       cards: [
         {
-          id: "n01", kind: "says", type: "vlog", emoji: "👋", vibe: "Kitchen · Nonna calls",
-          scene: "Nonna is cooking and waves you over.",
+          id: "n01", kind: "says", who: "👨 Papà", type: "vlog", emoji: "👋", vibe: "Kitchen · Papà calls",
+          scene: "Papà (Dad) is cooking and waves you over.",
           en: "Come here!",
           captions: ["Vieni qui!", "Vai a casa!", "Dormi qui!"],
           correct: 0,
           note: "Vieni qui! = come here! (vieni = come · qui = here)",
-          nudge: "Almost 💛 she wants you to COME to her. Try again.",
-          image: "images/n01b-naples-pizza-oven.jpg"
+          nudge: "Almost 💛 he wants you to COME to him. Try again.",
+          image: "images/n01-family.jpg"
         },
         {
           id: "n02", kind: "says", type: "photo", emoji: "🪑", vibe: "Dinner · your seat",
@@ -904,14 +904,14 @@ window.ARIANNA_APP = {
           image: "images/v-s4-wash-hands.jpg", video: "videos/v-s4-wash-hands.mp4"
         },
         {
-          id: "n04", kind: "says", type: "vlog", emoji: "🍽️", vibe: "Dinner time",
-          scene: "The table is set. Nonna calls everyone.",
+          id: "n04", kind: "says", who: "👨 Zio", type: "vlog", emoji: "🍽️", vibe: "Dinner time",
+          scene: "Your zio (uncle) calls everyone to the table. Your cugino (cousin) is already there.",
           en: "Come to the table!",
           captions: ["Vieni a tavola!", "Vieni a letto!", "Vai a scuola!"],
           correct: 0,
           note: "Vieni a tavola! = come to the table! (dinner's ready)",
           nudge: "Almost 🍽️ it's time to eat. Try again.",
-          image: "images/n04b-positano-table.jpg"
+          image: "images/n04-family.jpg"
         },
         {
           id: "n05", kind: "says", type: "vlog", emoji: "🍝", vibe: "Dinner · spaghetti",
@@ -934,14 +934,14 @@ window.ARIANNA_APP = {
           image: "images/n06-cookies.jpg"
         },
         {
-          id: "n07", kind: "says", type: "photo", emoji: "🥖", vibe: "Kitchen · busy hands",
-          scene: "Nonna's hands are covered in dough. She points at something.",
+          id: "n07", kind: "says", who: "👦 Fratello", type: "photo", emoji: "🥖", vibe: "Kitchen · busy hands",
+          scene: "Your fratello (brother) has dough on his hands. He points at something.",
           en: "Get that thing!",
           captions: ["Prendi quella cosa!", "Mangia quella cosa!", "Aspetta!"],
           correct: 0,
           note: "Prendi quella cosa! = get that thing!",
-          nudge: "Close 🥖 she wants you to GET that thing. Try again.",
-          image: "images/n01b-naples-pizza-oven.jpg"
+          nudge: "Close 🥖 he wants you to GET that thing. Try again.",
+          image: "images/n07-family.jpg"
         },
         {
           id: "n08", kind: "says", type: "photo", emoji: "🧥", vibe: "Going out",
@@ -964,24 +964,24 @@ window.ARIANNA_APP = {
           image: "images/v-s4-door.jpg", video: "videos/v-s4-door.mp4"
         },
         {
-          id: "n10", kind: "says", type: "photo", emoji: "😘", vibe: "Hello, Nonna!",
-          scene: "You arrive at Nonna's house. She opens her arms.",
+          id: "n10", kind: "says", who: "👩 Zia", type: "photo", emoji: "😘", vibe: "Hello, Zia!",
+          scene: "You arrive at your zia's (aunt's) house. She opens her arms, and her little white dog runs to say hi!",
           en: "Come here, give me a kiss!",
           captions: ["Vieni qui, dammi un bacio!", "Vieni qui, dammi la mano!", "Vai lì, dammi un bacio!"],
           correct: 0,
           note: "Dammi un bacio! = give me a kiss! 😘",
           nudge: "Close 😘 come HERE, and it's a kiss. Try again.",
-          image: "images/n10b-procida-house.jpg"
+          image: "images/n10-family.jpg"
         },
         {
-          id: "n11", kind: "says", type: "vlog", emoji: "🌙", vibe: "Bedtime",
-          scene: "It's late. You're falling asleep, and Nonna whispers…",
+          id: "n11", kind: "says", who: "👩 Mamma", type: "vlog", emoji: "🌙", vibe: "Bedtime",
+          scene: "It's late. You're falling asleep, and Mamma (Mom) whispers…",
           en: "Sweet dreams!",
           captions: ["Buongiorno!", "Sogni d'oro!", "Buon appetito!"],
           correct: 1,
           note: "Sogni d'oro! = sweet dreams! (literally “golden dreams”) 🌙",
           nudge: "Almost 🌙 it's bedtime, not breakfast or lunch. Try again.",
-          image: "images/n11b-naples-bay-moon.jpg"
+          image: "images/n11-family.jpg"
         }
       ]
     }
