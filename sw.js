@@ -1,9 +1,9 @@
 /* Italian with Arianna: tiny offline helper.
    HTML = network-first (always fresh when online), other app files = cache-first with background refresh.
    Only touches the root app; /classic/ and /preview/ are left alone. */
-const VERSION = 'arianna-v1';
+const VERSION = 'arianna-v3';
 const CORE = [
-  './', 'index.html', 'styles.css?v=2', 'data.js?v=2', 'app.js?v=2',
+  './', 'index.html', 'styles.css?v=3', 'data.js?v=3', 'app.js?v=3',
   'manifest.webmanifest', 'favicon.png', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png'
 ];
 
@@ -23,7 +23,7 @@ self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
-  if (url.origin !== location.origin) return;               // YouTube etc: straight to network
+  if (url.origin !== location.origin) return;               // Apple Music previews etc: straight to network
   const scope = new URL(self.registration.scope);
   if (!url.pathname.startsWith(scope.pathname)) return;
   const rel = url.pathname.slice(scope.pathname.length);

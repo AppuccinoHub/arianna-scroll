@@ -21,6 +21,6 @@ All card photos are from [Pexels](https://www.pexels.com/) under the [Pexels Lic
 | `t05-karaoke-lesson.jpg` | [Pavel Danilyuk](https://www.pexels.com/@pavel-danilyuk/) | [#7521357](https://www.pexels.com/photo/a-woman-and-girl-singing-together-7521357/) |
 | `t06-photo-nonna.jpg` | [Janice Butler](https://www.pexels.com/@janice-butler-771719529/) | [#27520970](https://www.pexels.com/photo/granddaughter-and-grandmother-on-porch-27520970/) |
 | `t07-vlog-nonna.jpg` | [Priscilla  Cezar](https://www.pexels.com/@priscilla-cezar-2157245929/) | [#36883134](https://www.pexels.com/photo/grandmother-and-granddaughter-smiling-together-36883134/) |
-| `t08-photo-gelato-friend.jpg` | [RDNE Stock project](https://www.pexels.com/@rdne/) | [#6182417](https://www.pexels.com/photo/woman-in-brown-long-sleeve-shirt-sitting-beside-woman-in-black-pants-6182417/) |
+| `t08-photo-gelato-friend.jpg` | [ENESFİLM](https://www.pexels.com/@enesfilm/) | [#8713083](https://www.pexels.com/photo/a-person-holding-ice-cream-on-cone-8713083/) (small cone stamp softened) |
 | `t09-photo-bedtime.jpg` | [Mikhail Nilov](https://www.pexels.com/@mikhail-nilov/) | [#8307817](https://www.pexels.com/photo/elderly-woman-reading-book-with-kids-8307817/) |
 | `t10-vlog-beach-sunset.jpg` | [Skyler Ewing](https://www.pexels.com/@skyler-ewing-266953/) | [#4938150](https://www.pexels.com/photo/happy-girl-having-fun-at-sunset-4938150/) |

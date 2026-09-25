@@ -34,9 +34,9 @@
     if (advanceTimer) clearTimeout(advanceTimer);
     advanceTimer = null;
   }
-  // The Mamma Maria card: once the song has been started, never auto-advance (let it play).
-  function songPlaying(art) {
-    return !!(art && art.querySelector('iframe.yt-frame'));
+  // Once a song clip has been started on a card, never auto-advance (let it play).
+  function clipPlaying(card) {
+    return !!(card && card.clip && player && !player.paused && player.dataset.card === card.id);
   }
   function saveProgress() {
     if (!state.session) return;
@@ -104,6 +104,7 @@
     $('dots').hidden = !play;
     if (!play) $('topTitle').textContent = 'Italian with Arianna';
     if (screen !== $('screenEnd')) { clearTimeout(confetti._t); $('confetti').replaceChildren(); }
+    clearTimeout(toast._t); $('toast').hidden = true;
   }
 
   /* ---------- start screen ---------- */
@@ -127,7 +128,7 @@
       b.append(el('span', 's-name', s.emoji + ' ' + s.title), el('span', 's-sub', sub));
       b.setAttribute('aria-label', s.title + (open ? '' : ', locked. Finish Session 1 to unlock') + (open ? ', ' + sub : ''));
       b.addEventListener('click', () => {
-        if (!open) { sound('wrong'); toast('Finish Session 1 to unlock Session 2 🔒'); return; }
+        if (!open) { sound('wrong'); toast('Finish Session 1 to unlock Session 2 🔒', 2000); return; }
         saved.selected = s.id; persist(); sound('tap'); renderHome();
       });
       if (saved.justUnlocked && s.id === saved.justUnlocked) b.classList.add('unlocked-pop');
@@ -146,59 +147,212 @@
     persist();
   }
 
-  /* ---------- cards ---------- */
-  function buildSongBox(card, art, box) {
-    box.replaceChildren();
-    if (card.yt) {
-      const b = el('button', 'play-song', '▶ Tap to play the song');
-      b.type = 'button';
-      b.addEventListener('click', () => {
-        const f = document.createElement('iframe');
-        f.className = 'yt-frame';
-        f.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(card.yt.id) + '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
-        f.title = card.yt.title + ' (YouTube)';
-        f.allow = 'autoplay; encrypted-media; picture-in-picture';
-        f.referrerPolicy = 'strict-origin-when-cross-origin';
-        f.allowFullscreen = true;
-        const link = el('a', 'listen-link', 'Listen on YouTube ↗');
-        link.href = 'https://www.youtube.com/watch?v=' + card.yt.id;
-        link.target = '_blank'; link.rel = 'noopener';
-        box.replaceChildren(f, link);
-        // Started the song during the pause after "Brava!" → stay here and let it play.
-        if (state.ok[card.id]) { cancelAutoAdvance(); addEnjoy(art); }
-      });
-      box.appendChild(b);
-    } else if (card.listen) {
-      const a = el('a', 'listen-link', '▶ Listen on YouTube ↗');
-      a.href = card.listen.url; a.target = '_blank'; a.rel = 'noopener';
-      box.appendChild(a);
+  /* ---------- song clips (Apple Music 30 s previews, one shared <audio>) ---------- */
+  const player = document.getElementById('songPlayer');
+  let primed = false;
+  function primeAudio() {
+    // Called from the Start tap: play the shared element once (muted) so iOS allows later programmatic play().
+    if (primed || !player) return;
+    const first = DATA.sessions.flatMap((s) => s.cards).find((c) => c.clip);
+    if (!first) return;
+    primed = true;
+    try {
+      player.muted = true;
+      if (!player.dataset.card) { player.src = first.clip.url; player.dataset.card = ''; }
+      const pr = player.play();
+      const done = () => { if (!player.dataset.card) { player.pause(); try { player.currentTime = 0; } catch (_) {} } player.muted = false; };
+      if (pr && pr.then) pr.then(done).catch(() => { player.muted = false; primed = false; });
+      else done();
+    } catch (_) { player.muted = false; primed = false; }
+  }
+  const artFor = (id) => document.querySelector('#feed .feed-card[data-id="' + id + '"]');
+  const cardById = (id) => state.cards.find((c) => c.id === id);
+  function setClipState(id, st) {
+    const art = id && artFor(id);
+    if (!art) return;
+    art.dataset.clip = st; // idle | playing | paused | blocked | ended | muted
+    art.classList.toggle('is-playing', st === 'playing');
+    const card = cardById(id);
+    const big = art.querySelector('.song-toggle');
+    if (big) {
+      big.textContent = st === 'playing' ? '❚❚ Pause' : st === 'blocked' ? 'Tap to play 🎶' : st === 'ended' ? '↺ Play again' : st === 'muted' ? '🔇 Sound is off · tap to play' : '▶ Play';
+      big.setAttribute('aria-pressed', String(st === 'playing'));
+      big.classList.toggle('big-blocked', st === 'blocked' || st === 'muted');
     }
+    const pill = art.querySelector('.clip-pill');
+    if (pill && card) {
+      pill.querySelector('.clip-ico').textContent = st === 'playing' ? '❚❚' : '▶';
+      pill.setAttribute('aria-pressed', String(st === 'playing'));
+      pill.setAttribute('aria-label', (st === 'playing' ? 'Pause ' : 'Play ') + card.clip.label + ' (30-second clip)');
+    }
+    const hint = art.querySelector('.song-hint');
+    if (hint) hint.textContent = st === 'ended' ? 'That was the clip! Swipe up when you\u2019re ready ↑' : 'Swipe up when you\u2019re ready ↑';
+    const lyr = art.querySelector('.lyrics');
+    if (lyr && art.dataset.type !== 'song') lyr.hidden = !(st === 'playing' || st === 'paused');
+  }
+  function playClip(card, auto) {
+    if (!player || !card || !card.clip) return;
+    if (saved.muted) {
+      if (auto) { setClipState(card.id, 'muted'); return; }
+      saved.muted = false; persist(); updateMuteUI();
+    }
+    if (player.dataset.card && player.dataset.card !== card.id) stopClip();
+    if (player.dataset.card !== card.id) {
+      player.src = card.clip.url;
+      player.dataset.card = card.id;
+    }
+    player.muted = false;
+    let pr;
+    try { pr = player.play(); } catch (e) { setClipState(card.id, 'blocked'); return; }
+    if (pr && pr.catch) pr.catch((e) => { if (player.dataset.card === card.id && player.paused) setClipState(card.id, 'blocked'); });
+    // Started the clip during the pause after "Brava!" → stay here and let it play.
+    if (state.ok[card.id] && card.type !== 'song' && state.cards[state.index] === card) { cancelAutoAdvance(); addEnjoy(artFor(card.id)); }
+  }
+  function toggleClip(card) {
+    if (player.dataset.card === card.id && !player.paused) player.pause();
+    else playClip(card, false);
+  }
+  function stopClip() {
+    if (!player) return;
+    const id = player.dataset.card;
+    if (!id) return; // nothing loaded (e.g. the silent iOS unlock is still running)
+    try { player.pause(); } catch (_) {}
+    if (id) { player.removeAttribute('src'); try { player.load(); } catch (_) {} }
+    player.dataset.card = '';
+    if (id) { setClipState(id, 'idle'); syncLyrics(id, -1); }
   }
   function addEnjoy(art) {
-    const fb = art.querySelector('.feedback');
-    if (!fb || fb.querySelector('.enjoy')) return;
+    const fb = art && art.querySelector('.feedback');
+    if (!fb || fb.hidden || fb.querySelector('.enjoy')) return;
     fb.appendChild(el('span', 'fb-sub enjoy', '🎶 Enjoy the song, tap ↓ when you\u2019re ready'));
   }
-  function stopSongsExcept(keep) {
-    document.querySelectorAll('#feed .feed-card').forEach((art, i) => {
-      if (i === keep || !art.querySelector('iframe.yt-frame')) return;
-      const card = state.cards[i];
-      const box = art.querySelector('.song-box');
-      if (card && box) buildSongBox(card, art, box);
-    });
+  function syncLyrics(id, t) {
+    const art = artFor(id);
+    const box = art && art.querySelector('.lyrics');
+    if (!box) return;
+    const card = cardById(id);
+    let k = -1;
+    if (t >= 0) card.lyrics.forEach((ln, i) => { if (ln.t <= t + 0.15) k = i; });
+    if (String(k) === box.dataset.on) return;
+    box.dataset.on = String(k);
+    const lines = box.querySelectorAll('.ly-line');
+    lines.forEach((l, i) => { l.classList.toggle('on', i === k); l.classList.toggle('past', i < k); });
+    const list = box.querySelector('.ly-list');
+    const cur = lines[Math.max(0, k)];
+    if (list && cur) list.style.transform = 'translateY(' + (-Math.max(0, cur.offsetTop - (box.clientHeight - cur.offsetHeight) / 2)) + 'px)';
+  }
+  let rafId = 0;
+  function lyricLoop() {
+    cancelAnimationFrame(rafId);
+    const id = player.dataset.card;
+    if (!id || player.paused) return;
+    syncLyrics(id, player.currentTime);
+    rafId = requestAnimationFrame(lyricLoop);
+  }
+  if (player) {
+    player.addEventListener('playing', () => { if (player.dataset.card) { setClipState(player.dataset.card, 'playing'); lyricLoop(); } });
+    player.addEventListener('pause', () => { const id = player.dataset.card; if (id && !player.ended) setClipState(id, 'paused'); });
+    player.addEventListener('ended', () => { const id = player.dataset.card; if (id) { setClipState(id, 'ended'); syncLyrics(id, 99); } });
+    player.addEventListener('timeupdate', () => { if (player.dataset.card) syncLyrics(player.dataset.card, player.currentTime); });
   }
 
+  /* word bubbles: tap an Italian lyric word → English meaning + how to say it */
+  function showBubble(btn, word, en, say) {
+    const b = $('wordBubble');
+    b.replaceChildren(el('strong', null, word.replace(/^[…'"¿¡]+|[,.!?;:…]+$/g, '')), document.createTextNode(' = ' + en));
+    if (say) b.appendChild(el('span', 'wb-say', 'How do you say it? ' + say));
+    b.hidden = false;
+    const app = $('app').getBoundingClientRect();
+    const r = btn.getBoundingClientRect();
+    const bw = Math.min(260, app.width - 20);
+    b.style.width = bw + 'px';
+    let x = r.left + r.width / 2 - app.left - bw / 2;
+    x = Math.max(10, Math.min(x, app.width - bw - 10));
+    b.style.left = x + 'px';
+    const h = b.offsetHeight;
+    let y = r.top - app.top - h - 10;
+    if (y < 10) y = r.bottom - app.top + 10;
+    b.style.top = y + 'px';
+    clearTimeout(showBubble._t);
+    showBubble._t = setTimeout(hideBubble, 4500);
+  }
+  function hideBubble() { const b = $('wordBubble'); if (b) b.hidden = true; }
+
+  function buildLyrics(card, compact) {
+    const box = el('div', 'lyrics' + (compact ? ' compact' : ''));
+    box.setAttribute('aria-label', 'Lyrics: tap a word to see what it means');
+    box.dataset.on = '-2';
+    const list = el('div', 'ly-list');
+    card.lyrics.forEach((ln) => {
+      const line = el('p', 'ly-line');
+      line.lang = 'it';
+      if (!ln.w.length) { line.classList.add('ly-break'); line.textContent = '♪ ♪ ♪'; line.setAttribute('aria-label', 'music'); }
+      ln.w.forEach(([word, en, say], i) => {
+        const b = el('button', 'w', word);
+        b.type = 'button';
+        b.setAttribute('aria-label', word + ': ' + en);
+        b.addEventListener('click', (e) => { e.stopPropagation(); showBubble(b, word, en, say); });
+        line.appendChild(b);
+        if (i < ln.w.length - 1) line.appendChild(document.createTextNode(' '));
+      });
+      list.appendChild(line);
+    });
+    box.appendChild(list);
+    return box;
+  }
+  function buildCredit(card) {
+    const a = el('a', 'clip-credit', 'Preview via Apple Music');
+    a.href = card.clip.trackViewUrl; a.target = '_blank'; a.rel = 'noopener';
+    return a;
+  }
+
+  function buildSongCard(card, i, art) {
+    const frame = el('div', 'card-visual song-frame');
+    const inner = el('div', 'song-inner');
+    const vibe = el('div', 'vibe-row');
+    vibe.appendChild(el('span', 'vibe-tag song-vibe', card.emoji + ' ' + card.vibe));
+    const disc = el('div', 'disc-wrap');
+    disc.setAttribute('aria-hidden', 'true');
+    const rec = el('div', 'record');
+    const label = el('img', 'record-label');
+    label.src = card.image + '?v=3'; label.alt = ''; label.decoding = 'async';
+    rec.appendChild(label);
+    disc.appendChild(rec);
+    const eq = el('div', 'eq');
+    for (let k = 0; k < 7; k++) eq.appendChild(el('span'));
+    disc.appendChild(eq);
+    disc.appendChild(el('span', 'note n1', '♪'));
+    disc.appendChild(el('span', 'note n2', '♫'));
+    disc.appendChild(el('span', 'note n3', '♪'));
+    const title = el('h3', 'song-title', card.title + ' · ' + card.artist);
+    const scene = el('p', 'song-scene', card.scene);
+    const lyr = buildLyrics(card, false);
+    const btn = el('button', 'song-toggle', '▶ Play');
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Play or pause ' + card.title);
+    btn.addEventListener('click', () => toggleClip(card));
+    const foot = el('div', 'song-foot');
+    foot.append(buildCredit(card), el('span', 'song-hint', 'Swipe up when you\u2019re ready ↑'));
+    inner.append(vibe, disc, title, scene, lyr, btn, foot);
+    frame.appendChild(inner);
+    art.appendChild(frame);
+    return art;
+  }
+
+  /* ---------- cards ---------- */
   function buildCard(card, i) {
     const art = el('article', 'feed-card');
     art.dataset.index = String(i);
     art.dataset.id = card.id;
-    art.setAttribute('aria-label', 'Card ' + (i + 1) + ' of ' + state.cards.length);
+    art.dataset.type = card.type;
+    art.setAttribute('aria-label', 'Card ' + (i + 1) + ' of ' + state.cards.length + (card.type === 'song' ? ': song break' : ''));
 
     const bg = el('img', 'card-bg');
     bg.alt = ''; bg.setAttribute('aria-hidden', 'true');
     bg.decoding = 'async'; bg.loading = i < 2 ? 'eager' : 'lazy';
-    bg.src = card.image + '?v=1';
+    bg.src = card.image + '?v=3';
     art.appendChild(bg);
+    if (card.type === 'song') return buildSongCard(card, i, art);
 
     const frame = el('div', 'card-visual');
     const img = el('img', 'card-photo');
@@ -206,13 +360,23 @@
     img.decoding = 'async';
     img.loading = i < 2 ? 'eager' : 'lazy';
     img.width = 720; img.height = 1280;
-    img.src = card.image + '?v=1';
+    img.src = card.image + '?v=3';
     frame.appendChild(img);
     frame.appendChild(el('div', 'card-shade'));
 
-    if (card.yt || card.listen) {
+    if (card.clip) {
       const box = el('div', 'song-box');
-      buildSongBox(card, art, box);
+      const pill = el('button', 'clip-pill');
+      pill.type = 'button';
+      pill.append(el('span', 'clip-ico', '▶'), el('span', 'clip-name', card.clip.label + ' 🎶'));
+      const mini = el('span', 'eq mini');
+      for (let k = 0; k < 4; k++) mini.appendChild(el('span'));
+      pill.appendChild(mini);
+      pill.setAttribute('aria-label', 'Play ' + card.clip.label + ' (30-second clip)');
+      pill.setAttribute('aria-pressed', 'false');
+      pill.addEventListener('click', () => toggleClip(card));
+      box.append(pill, buildCredit(card));
+      if (card.lyrics) { const ly = buildLyrics(card, true); ly.hidden = true; box.appendChild(ly); }
       frame.appendChild(box);
     }
 
@@ -272,12 +436,12 @@
       saveProgress();
       const idx = state.cards.findIndex((c) => c.id === card.id);
       cancelAutoAdvance();
-      if (card.yt && songPlaying(art)) { addEnjoy(art); return; }
+      if (clipPlaying(card)) { addEnjoy(art); return; }
       advanceTimer = setTimeout(() => {
         advanceTimer = null;
         if (!$('screenPlay').classList.contains('active')) return;
         if (state.index !== idx) return; // she already moved on (↓ / swipe)
-        if (card.yt && songPlaying(art)) return; // started the song during the pause
+        if (clipPlaying(card)) return; // started the song during the pause
         goNext();
       }, AUTO_ADVANCE_MS);
     } else {
@@ -292,8 +456,18 @@
     }
   }
 
-  const allDone = () => state.cards.every((c) => state.ok[c.id]);
-  const firstOpen = () => state.cards.findIndex((c) => !state.ok[c.id]);
+  const isQ = (c) => c.type !== 'song';
+  const allDone = () => state.cards.every((c) => !isQ(c) || state.ok[c.id]);
+  const firstOpen = () => state.cards.findIndex((c) => isQ(c) && !state.ok[c.id]);
+  function onCardShown(i) {
+    const c = state.cards[i];
+    if (player && player.dataset.card && (!c || player.dataset.card !== c.id)) stopClip();
+    hideBubble();
+    if (c && c.type === 'song') {
+      state.ok[c.id] = true; // song break counts in the progress dots once seen
+      if ($('screenPlay').classList.contains('active')) playClip(c, true);
+    }
+  }
   function goNext() {
     if (state.index < state.cards.length - 1) { scrollToIndex(state.index + 1, true); return; }
     if (allDone()) { finish(); return; }
@@ -324,7 +498,7 @@
     if (i === state.index) return;
     state.index = i;
     $('swipeHint').hidden = true;
-    stopSongsExcept(i);
+    onCardShown(i);
     updateNav();
     saveProgress();
   }
@@ -354,6 +528,7 @@
 
   function startSession(id, fresh) {
     cancelAutoAdvance();
+    stopClip(); hideBubble();
     const s = sessionById(id);
     saved.selected = s.id;
     let p = saved.progress[s.id];
@@ -373,6 +548,7 @@
     requestAnimationFrame(() => {
       const c = $('feed').children[idx];
       $('feed').scrollTo({ top: c ? c.offsetTop : 0, behavior: 'auto' });
+      onCardShown(idx);
       updateNav();
     });
     if (!saved.hinted) {
@@ -384,7 +560,7 @@
 
   function goHome() {
     cancelAutoAdvance();
-    stopSongsExcept(-1);
+    stopClip(); hideBubble();
     if (state.session && $('screenPlay').classList.contains('active')) saveProgress();
     showScreen($('screenHome'));
     renderHome();
@@ -394,9 +570,9 @@
   /* ---------- end screen ---------- */
   function finish() {
     cancelAutoAdvance();
-    stopSongsExcept(-1);
+    stopClip(); hideBubble();
     const s = state.session;
-    const n = state.cards.length;
+    const n = state.cards.filter(isQ).length;
     const score = state.firstTry;
     saved.best[s.id] = Math.max(saved.best[s.id] || 0, score);
     saved.done[s.id] = true;
@@ -411,7 +587,7 @@
     const stars = score >= n ? 3 : score >= Math.ceil(n * 0.7) ? 2 : 1;
     $('endStars').textContent = '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
     $('endBlurb').textContent = score >= n ? 'Perfetto! Every single one. Ci vediamo presto! 💖'
-      : 'All ' + n + ' cards done. Ci vediamo presto! 💖';
+      : 'All ' + n + ' questions done. Ci vediamo presto! 💖';
     $('unlockBox').hidden = !unlockedNow;
     $('btnNextSession').hidden = !nextS;
     if (nextS) $('btnNextSession').textContent = 'Start ' + nextS.title + ' ▶';
@@ -478,17 +654,19 @@
     renderHome();
 
     $('btnStart').addEventListener('click', () => {
+      primeAudio();
       if (!saved.muted) { try { ctx(); } catch (_) {} }
       startSession(saved.selected, false);
     });
     $('btnStartOver').addEventListener('click', () => {
+      primeAudio();
       if (!saved.muted) { try { ctx(); } catch (_) {} }
       delete saved.progress[saved.selected];
       startSession(saved.selected, true);
     });
     $('btnHome').addEventListener('click', goHome);
     $('btnEndHome').addEventListener('click', goHome);
-    $('btnReplay').addEventListener('click', () => startSession(state.session.id, true));
+    $('btnReplay').addEventListener('click', () => { primeAudio(); startSession(state.session.id, true); });
     $('btnNextSession').addEventListener('click', () => {
       const nextS = DATA.sessions[DATA.sessions.indexOf(state.session) + 1];
       if (nextS) startSession(nextS.id, false);
@@ -498,6 +676,7 @@
       saved.muted = !saved.muted;
       persist();
       updateMuteUI();
+      if (saved.muted && player && !player.paused) player.pause();
       if ($('screenHome').classList.contains('active')) renderHome();
       if (!saved.muted) sound('tap');
     });
@@ -510,7 +689,8 @@
       }
       scrollToIndex(state.index + 1, true);
     });
-    $('feed').addEventListener('scroll', onFeedScroll, { passive: true });
+    $('feed').addEventListener('scroll', () => { hideBubble(); onFeedScroll(); }, { passive: true });
+    document.addEventListener('click', (e) => { if (!e.target.closest('.w') && !e.target.closest('#wordBubble')) hideBubble(); });
     document.addEventListener('keydown', (e) => {
       if (!$('screenPlay').classList.contains('active') || e.altKey || e.ctrlKey || e.metaKey) return;
       const k = e.key;
