@@ -69,3 +69,30 @@ From [Pexels](https://www.pexels.com/) videos under the [Pexels License](https:/
 | `videos/v-s4-bedtime.mp4` | [Mikhail Nilov](https://www.pexels.com/@mikhail-nilov/) | [#8309000](https://www.pexels.com/video/elderly-woman-kissing-a-girl-lying-on-bed-8309000/) |
 
 avatar.jpg: family photo supplied by the owner; not for reuse.
+
+## Stage 2 photos (Sessions 1–2 Level 1/2 cards, L'italiano)
+
+All from Pexels (Pexels License: free to use, no attribution required; credited here anyway). Cropped to 9:16.
+
+| File | Photographer | Pexels |
+|---|---|---|
+| `a01-bakery.jpg` | [Kunal Lakhotia](https://www.pexels.com/@kunal-lakhotia-781256899/) | [#30427452](https://www.pexels.com/photo/assorted-pastries-in-bakery-display-case-30427452/) |
+| `a02-water.jpg` | [Anna Shakhrai](https://www.pexels.com/@anna-shakhrai-129681881/) | [#29775282](https://www.pexels.com/photo/refreshing-glass-of-ice-water-on-outdoor-table-29775282/) |
+| `a03-gift.jpg` | [Ann H](https://www.pexels.com/@ann-h-45017/) | [#33774246](https://www.pexels.com/photo/elegant-blue-gift-box-with-yellow-ribbon-bow-33774246/) |
+| `a04-door.jpg` | [Ketut Subiyanto](https://www.pexels.com/@ketut-subiyanto/) | [#4473282](https://www.pexels.com/photo/photo-of-girl-putting-wooden-sign-on-doorknob-4473282/) |
+| `a05-broccoli.jpg` | [UMA media](https://www.pexels.com/@uma-media-2149408028/) | [#31930179](https://www.pexels.com/photo/delicious-fresh-broccoli-on-white-plate-31930179/) |
+| `a06-bus.jpg` | [Hanako](https://www.pexels.com/@hanako-2148376889/) | [#30090269](https://www.pexels.com/photo/busy-bus-interior-with-seated-passengers-30090269/) |
+| `a07-scarf.jpg` | [Mohammad Hossein Mirzagol](https://www.pexels.com/@mirzagraphy/) | [#29487988](https://www.pexels.com/photo/elegant-fall-fashion-with-red-scarf-and-hat-29487988/) |
+| `a08-spill.jpg` | [cottonbro studio](https://www.pexels.com/@cottonbro/) | [#7702453](https://www.pexels.com/photo/photo-of-spilled-milk-in-clear-drinking-glass-7702453/) |
+| `a09-waiter.jpg` | [RDNE Stock project](https://www.pexels.com/@rdne/) | [#4921033](https://www.pexels.com/photo/waiter-standing-in-front-of-a-customer-4921033/) |
+| `a10-pastries.jpg` | [Natalia Olivera](https://www.pexels.com/@nataliaolivera/) | [#30666842](https://www.pexels.com/photo/delicious-palmier-pastries-in-a-rustic-brown-paper-bag-30666842/) |
+| `b01-park.jpg` | [Mizuno K](https://www.pexels.com/@mizunokozuki/) | [#12887108](https://www.pexels.com/photo/two-teenage-girls-having-playing-patty-cake-in-the-park-12887108/) |
+| `b02-friends.jpg` | [Mizuno K](https://www.pexels.com/@mizunokozuki/) | [#12887258](https://www.pexels.com/photo/vertical-shot-of-girls-in-park-sitting-on-a-bench-12887258/) |
+| `b03-handshake.jpg` | [Yan Krukau](https://www.pexels.com/@yankrukov/) | [#8837162](https://www.pexels.com/photo/gray-haired-woman-shaking-hands-with-a-person-8837162/) |
+| `b04-teacher.jpg` | [Pavel Danilyuk](https://www.pexels.com/@pavel-danilyuk/) | [#8423069](https://www.pexels.com/photo/woman-holding-a-notebook-8423069/) |
+| `b05-beach.jpg` | [Sam Lu](https://www.pexels.com/@sam-lu-2147922337/) | [#31594523](https://www.pexels.com/photo/women-enjoying-a-sunny-day-at-a-taiwan-beach-31594523/) |
+| `b06-beach-friends.jpg` | [an.je.la🧑🏻‍🩰](https://www.pexels.com/@an-je-la-2162308518/) | [#38133308](https://www.pexels.com/photo/children-holding-hands-at-a-turkish-beach-sunset-38133308/) |
+| `b07-hotel.jpg` | [Mikhail Nilov](https://www.pexels.com/@mikhail-nilov/) | [#7821339](https://www.pexels.com/photo/shiny-metal-call-bell-on-a-reception-desk-7821339/) |
+| `b08-party.jpg` | [Ivan S](https://www.pexels.com/@ivan-s/) | [#8104171](https://www.pexels.com/photo/pretty-girl-looking-at-a-cake-8104171/) |
+| `k-italiano-flag.jpg` | [Jona Scheuber](https://www.pexels.com/@jona-scheuber-1283906658/) | [#24394715](https://www.pexels.com/photo/flag-of-italy-near-building-with-tower-24394715/) |
+| `r02-neighbor.jpg` | [Mehmet Turgut  Kirkgoz](https://www.pexels.com/@tkirkgoz/) | [#11455900](https://www.pexels.com/photo/woman-standing-in-house-with-open-doors-11455900/) |
