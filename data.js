@@ -24,11 +24,6 @@ const CLIPS = {
     trackViewUrl: "https://music.apple.com/us/album/blue-da-ba-dee-gabry-ponte-video-edit/257424513?i=257425447&uo=4",
     track: "Blue (Da Ba Dee)", artist: "Eiffel 65", label: "Blue (Da Ba Dee)"
   },
-  malatia: {
-    url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview122/v4/5b/e1/c7/5be1c7b3-29a0-71b7-6854-c213f2f2927d/mzaf_4934275594369123828.plus.aac.p.m4a",
-    trackViewUrl: "https://music.apple.com/us/album/malat%C3%ACa/1645392748?i=1645392949&uo=4",
-    track: "Malatìa", artist: "Ciccio Merolla", label: "Malatìa"
-  },
   saraPerche: {
     url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/7b/2f/cb/7b2fcb1b-0288-c551-7330-c676d186e06c/mzaf_6433311904750505108.plus.aac.p.m4a",
     trackViewUrl: "https://music.apple.com/us/album/sar%C3%A0-perch%C3%A9-ti-amo/1722506113?i=1722506116&uo=4",
@@ -81,14 +76,6 @@ const LYRICS = {
     { t: 23.1, w: [["Chi", "who", "kee"], ["te", "to you", "teh"], ["li", "them", "lee"], ["dà?", "gives", "dah"], ["La", "the", "lah"], ["borsetta", "purse (little bag)", "bor-SET-tah"], ["di", "of", "dee"], ["mammà!", "Neapolitan / old-style for “mamma”: mom", "mahm-MAH"]] },
     { t: 26.2, w: [["Tu", "you", "too"], ["vuò", "Neapolitan for “vuoi”: you want", "vwoh"], ["fà", "Neapolitan for “fare”: to act / to do", "fah"], ["l'americano", "the American", "lah-meh-ree-KAH-noh"]] },
     { t: 27.86, w: [["'Mericano,", "short for “americano”: American", "meh-ree-KAH-noh"], ["'mericano", "short for “americano”: American", "meh-ree-KAH-noh"]] }
-  ],
-  /* Neapolitan chorus only (its real 4 lines). The two verses in this preview are shown as ♪ (a romantic line and a sad line, not for this app). */
-  malatia: [
-    { t: [10.86, 27.2], w: [["Malatì,", "Neapolitan for “malattia”: sickness (here: I'm crazy about you!)", "mah-lah-TEE"], ["malatì", "Neapolitan for “malattia”: sickness (here: I'm crazy about you!)", "mah-lah-TEE"]] },
-    { t: [12.74, 28.02], w: [["pe'", "Neapolitan for “per”: for", "peh"], ["me", "me", "meh"], ["tu", "you", "too"], ["si'", "Neapolitan for “sei”: you are", "see"], ["na", "Neapolitan for “una”: a", "nah"], ["malatì", "Neapolitan for “malattia”: sickness (here: my obsession)", "mah-lah-TEE"]] },
-    { t: 14.66, w: [["Malatì,", "Neapolitan for “malattia”: sickness (here: I'm crazy about you!)", "mah-lah-TEE"], ["malatì", "Neapolitan for “malattia”: sickness (here: I'm crazy about you!)", "mah-lah-TEE"]] },
-    { t: [0.0, 17.22], w: [["tu", "you", "too"], ["fai", "you make", "FAH-ee"], ["over", "Neapolitan for “davvero”: real (fai over = you make … come true)", "OH-ver"], ["pur'", "Neapolitan for “pure”: even", "poor"], ["'e", "Neapolitan for “le”: the", "eh"], ["bugie", "lies", "boo-JEE-eh"]] },
-    { t: [2.75, 18.34], w: [] }
   ],
   saraPerche: [
     { t: [0.96, 16.6], w: [["E", "and", "eh"], ["vola,", "it flies (vola vola = up, up and away)", "VOH-lah"], ["vola,", "it flies", "VOH-lah"], ["si", "everyone (si sa = everyone knows)", "see"], ["sa", "knows", "sah"]] },
@@ -165,17 +152,6 @@ const SONGQ = {
     { step: "use", scene: "Nonna says she has a surprise for you.", en: "I'm dying to know, Nonna!",
       captions: ["Muoio dalla fame, nonna!", "Muori dalla curiosità, nonna!", "Muoio dalla curiosità, nonna!"], correct: 2,
       note: "Muoio dalla curiosità = I'm dying to know (just like the song!)", nudge: "Almost 🎁 it's YOU who's curious, not hungry. Try again." }
-  ]),
-  malatia: quiz("k2", CLIPS.malatia, [
-    { step: "notice", en: "In Neapolitan, what does “pe' me” mean?", line: "pe' me tu si' na malatì", hl: "pe' me", snip: [10.8, 14.6],
-      answerLang: "en", captions: ["with me", "for me", "for you"], correct: 1,
-      note: "pe' me = per me = for me (Neapolitan)", nudge: "Almost 💛 pe' = per. Try again." },
-    { step: "notice", en: "Which word is missing?", line: "pe' me tu si' na ___", snip: [10.8, 14.6],
-      captions: ["bugie", "sole", "malatì"], correct: 2,
-      note: "malatì = malattia (Neapolitan): here it means “I'm crazy about you!”", nudge: "Listen again 🎧 it's the word she keeps singing. Try again." },
-    { step: "use", scene: "At the gelato shop, it's your turn to order.", en: "For me, a gelato, please!",
-      captions: ["Per me, un gelato, per favore!", "Per te, un gelato, per favore!", "Per me, due gelati, per favore!"], correct: 0,
-      note: "Per me… = for me… (pe' me in Neapolitan)", nudge: "Close 🍦 it's for YOU, and just ONE gelato. Try again." }
   ]),
   carosone: quiz("k3", CLIPS.carosone, [
     { step: "notice", en: "What does “la borsetta” mean?", line: "Chi te li dà? La borsetta di mammà!", hl: "borsetta", snip: [23.0, 26.2],
@@ -297,7 +273,7 @@ window.ARIANNA_APP = {
       cards: [
         {
           id: "p02",
-          tip: "Say Buongiorno in the morning, until about lunchtime. Later in the day, say Buonasera!", type: "karaoke", emoji: "🎤", vibe: "Karaoke · with Nonna",
+          tip: "Buongiorno = good morning or good afternoon. It's always polite to say it every morning, because Italians are really sociable!", type: "karaoke", emoji: "🎤", vibe: "Karaoke · with Nonna",
           scene: "Morning with Nonna. Say good morning first!",
           en: "Good morning, Nonna!",
           captions: ["Buongiorno, nonna!", "Buonanotte, nonna!", "Arrivederci, nonna!"],
@@ -368,10 +344,10 @@ window.ARIANNA_APP = {
           id: "t03", type: "vlog", emoji: "🛶", vibe: "Vlog · Venice",
           scene: "Filming by the canal. Someone asks where you're from.",
           en: "I'm American!",
-          captions: ["Sono americano!", "Sono americana!", "Sei americana!"],
+          captions: ["Sono canadese!", "Sono americana!", "Sono inglese!"],
           correct: 1,
-          note: "Sono americana = I'm American (girls say americana)",
-          nudge: "So close 🛶 it's about YOU, and girls end it with -a. Try again.",
+          note: "Sono americana = I'm American (girls say americana) · canadese = Canadian · inglese = English",
+          nudge: "Almost 🛶 you're from America! Try again.",
           image: "images/t03-vlog-venice.jpg"
         },
         {
@@ -591,16 +567,16 @@ window.ARIANNA_APP = {
           image: "images/b02-friends.jpg"
         },
         {
-          id: "p06", type: "dance", emoji: "💃", vibe: "Dance · trend",
-          song: "Malatìa · Ciccio Merolla",
-          scene: "The Neapolitan hit is on. Caption your dance.",
+          id: "p06", type: "dance", emoji: "🪩", vibe: "Dance · Pedro trend",
+          song: "Pedro · Jaxomy, Agatino Romero & Raffaella Carrà",
+          scene: "The Pedro TikTok dance is on. Caption your dance.",
           en: "Hi, I'm Arianna, and I'm dancing!",
           captions: ["Ciao, sono Arianna e ballo!", "Ciao, sei Arianna e balli!", "Arrivederci, sono Arianna e ballo!"],
           correct: 0,
           note: "Sono = I am · Ballo = I dance",
           nudge: "Close 💛 it's about you, and you're saying hi. Try again.",
-          image: "images/c06-naples-vesuvius.jpg",
-          clip: CLIPS.malatia
+          image: "images/k-pedro-dance.jpg",
+          clip: CLIPS.pedro
         },
         {
           id: "t02", type: "dance", emoji: "🎉", vibe: "Dance · party hats",
@@ -971,9 +947,9 @@ window.ARIANNA_APP = {
           id: "n08", kind: "says", type: "photo", emoji: "🧥", vibe: "Going out",
           scene: "It's cold outside and you're heading out.",
           en: "Put on your jacket!",
-          captions: ["Togli la giacca!", "Metti la giacca!", "Metti le scarpe!"],
+          captions: ["Togliti la giacca!", "Mettiti la giacca!", "Mettiti le scarpe!"],
           correct: 1,
-          note: "Metti la giacca! = put on your jacket! (togli = take off)",
+          note: "Mettiti la giacca! = put on your jacket! (togliti = take it off)",
           nudge: "Almost 🧥 it's cold, so put your jacket ON. Try again.",
           image: "images/n08-jacket.jpg"
         },
@@ -999,12 +975,12 @@ window.ARIANNA_APP = {
         },
         {
           id: "n11", kind: "says", type: "vlog", emoji: "🌙", vibe: "Bedtime",
-          scene: "It's late. Nonna tucks you in.",
-          en: "Go to sleep!",
-          captions: ["Vai a scuola!", "Vai a dormire!", "Vai a giocare!"],
+          scene: "It's late. You're falling asleep, and Nonna whispers…",
+          en: "Sweet dreams!",
+          captions: ["Buona giornata!", "Sogni d'oro!", "Buon appetito!"],
           correct: 1,
-          note: "Vai a dormire! = go to sleep! (dormire = to sleep)",
-          nudge: "Almost 🌙 it's bedtime. Try again.",
+          note: "Sogni d'oro! = sweet dreams! (literally “golden dreams”) 🌙",
+          nudge: "Almost 🌙 it's bedtime, not breakfast or lunch. Try again.",
           image: "images/v-s4-bedtime.jpg", video: "videos/v-s4-bedtime.mp4"
         }
       ]
@@ -1032,10 +1008,6 @@ window.ARIANNA_APP = {
       { id: "k6", type: "song", emoji: "👋", vibe: "Canzoni · Sanremo, 2022", image: "images/k-ciao-sunset.jpg",
         scene: "Wave ciao ciao with your hands, your feet… Tap any word!", title: "Ciao ciao", artist: "La Rappresentante di Lista",
         clip: CLIPS.ciaoCiao, lyrics: LYRICS.ciaoCiao }].concat(SONGQ.ciaoCiao) },
-    { id: "k2", title: "Malatìa", artist: "Ciccio Merolla", emoji: "🌋", cards: [
-      { id: "k2", type: "song", emoji: "🌋", vibe: "Canzoni · Naples, 2022", imageFrom: "p06",
-        scene: "The Neapolitan hit! Listen, sing along, tap any word.", title: "Malatìa", artist: "Ciccio Merolla",
-        clip: CLIPS.malatia, lyrics: LYRICS.malatia }].concat(SONGQ.malatia) },
     { id: "k8", title: "Shivers", artist: "Ed Sheeran", emoji: "🎸", cards: [
       { id: "k8", type: "song", emoji: "🎸", vibe: "Canzoni · English song", image: "images/k-shivers-guitar.jpg", lyricsLang: "en",
         scene: "An English song! Tap any word to see it in ITALIAN.", title: "Shivers", artist: "Ed Sheeran",
