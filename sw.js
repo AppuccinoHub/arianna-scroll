@@ -3,7 +3,7 @@
    Only touches the root app; /classic/ and /preview/ are left alone. */
 const VERSION = 'arianna-v1';
 const CORE = [
-  './', 'index.html', 'styles.css?v=1', 'data.js?v=1', 'app.js?v=1',
+  './', 'index.html', 'styles.css?v=2', 'data.js?v=2', 'app.js?v=2',
   'manifest.webmanifest', 'favicon.png', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png'
 ];
 
