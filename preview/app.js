@@ -14,6 +14,17 @@
     ok: {},
   };
   let audioCtx = null;
+  // Single tap: correct pick → "Brava!" + new-phrase note → auto-advance after ~1.2 s.
+  const AUTO_ADVANCE_MS = 1200;
+  let advanceTimer = null;
+  function cancelAutoAdvance() {
+    if (advanceTimer) clearTimeout(advanceTimer);
+    advanceTimer = null;
+  }
+  // The Mamma Maria card: once the song has been started, never auto-advance (let it play).
+  function songPlaying(art) {
+    return !!(art && art.querySelector('iframe.yt-frame'));
+  }
 
   function showScreen(el) {
     document.querySelectorAll('.screen').forEach((s) => {
@@ -146,11 +157,20 @@
       fb.replaceChildren(document.createTextNode('✨ Brava!'), el('span', 'new-phrase', '🆕 New phrase: ' + card.note));
       beep(true);
       updateNav();
-      setTimeout(() => {
-        const idx = state.cards.findIndex((c) => c.id === card.id);
+      const idx = state.cards.findIndex((c) => c.id === card.id);
+      cancelAutoAdvance();
+      if (card.yt && songPlaying(art)) {
+        fb.appendChild(el('span', 'new-phrase', '🎶 Enjoy the song, tap ↓ when you’re ready'));
+        return;
+      }
+      advanceTimer = setTimeout(() => {
+        advanceTimer = null;
+        if (!$('screenPlay').classList.contains('active')) return;
+        if (state.index !== idx) return; // she already moved on (↓ / swipe)
+        if (card.yt && songPlaying(art)) return; // started the song during the pause
         if (idx < state.cards.length - 1) scrollToIndex(idx + 1, true);
         else if (state.cards.every((c) => state.ok[c.id])) finish();
-      }, 1700);
+      }, AUTO_ADVANCE_MS);
     } else {
       btns.forEach((b) => b.classList.remove('wrong-flash'));
       const b = btns[ci];
@@ -163,6 +183,7 @@
   }
 
   function finish() {
+    cancelAutoAdvance();
     $('endBlurb').textContent = 'All ' + state.cards.length + ' done, ' + state.firstTry + ' on the first try. Ci vediamo presto! 💙';
     showScreen($('screenEnd'));
   }
@@ -172,6 +193,7 @@
     feed.replaceChildren(...state.cards.map(buildCard));
   }
   function beginPlay() {
+    cancelAutoAdvance();
     state.index = 0; state.firstTry = 0; state.attempted = {}; state.ok = {};
     $('headerSubtitle').textContent = 'Arianna · scrolling';
     showScreen($('screenPlay'));
@@ -208,7 +230,7 @@
       if (!state.muted) { try { audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)(); audioCtx.resume(); } catch (_) {} }
       beginPlay();
     });
-    $('btnHome').addEventListener('click', () => { $('headerSubtitle').textContent = 'For You'; showScreen($('screenHome')); });
+    $('btnHome').addEventListener('click', () => { cancelAutoAdvance(); $('headerSubtitle').textContent = 'For You'; showScreen($('screenHome')); });
     $('btnAgain').addEventListener('click', beginPlay);
     $('btnEndHome').addEventListener('click', () => showScreen($('screenHome')));
     $('btnMute').addEventListener('click', () => {
