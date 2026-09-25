@@ -108,15 +108,15 @@ window.ARIANNA_APP = {
           image: "images/c04-dance-duet.jpg"
         },
         {
-          id: "p05", type: "karaoke", emoji: "🎤", vibe: "Karaoke · mic check",
+          id: "p05", type: "vlog", emoji: "🚗", vibe: "Road trip · 1950s vibes",
           song: "Tu vuò fà l'americano · Renato Carosone",
-          scene: "Mic in hand. Someone asks how you are.",
+          scene: "Cruising in a vintage Fiat 500 with Carosone on. A friend leans in: come stai?",
           en: "I'm good, thanks!",
           captions: ["Male, grazie!", "Bene, prego!", "Bene, grazie!"],
           correct: 2,
           note: "Bene, grazie = good, thanks",
           nudge: "Almost 💛 you're GOOD, and you say thanks. Try again.",
-          image: "images/c05-karaoke-mic.jpg",
+          image: "images/c05-fiat500.jpg",
           clip: CLIPS.carosone,
           lyrics: LYRICS.carosone
         },

@@ -8,7 +8,7 @@ All card photos are from [Pexels](https://www.pexels.com/) under the [Pexels Lic
 | `c02-karaoke-nonna.jpg` | [Kampus Production](https://www.pexels.com/@kampus/) | [#6248439](https://www.pexels.com/photo/smiling-grandma-watching-something-with-granddaughter-on-smartphone-6248439/) |
 | `c03-vlog-piazza.jpg` | [Andrea Piacquadio](https://www.pexels.com/@olly/) | [#3769116](https://www.pexels.com/photo/happy-traveler-visiting-old-square-in-city-3769116/) |
 | `c04-dance-duet.jpg` | [cottonbro studio](https://www.pexels.com/@cottonbro/) | [#3662824](https://www.pexels.com/photo/photo-of-girls-dancing-3662824/) |
-| `c05-karaoke-mic.jpg` | [Nicola Barts](https://www.pexels.com/@nicola-barts/) | [#7943978](https://www.pexels.com/photo/girl-singing-karaoke-song-in-the-bedroom-7943978/) |
+| `c05-fiat500.jpg` | [Leonardo Mazzone](https://www.pexels.com/@mypointviews/) | [#34789762](https://www.pexels.com/photo/classic-red-car-parked-in-scenic-rome-street-34789762/) |
 | `c06-dance-malatia.jpg` | [Михаил Крамор](https://www.pexels.com/@vantik93/) | [#12398400](https://www.pexels.com/photo/teenage-girl-in-white-clothes-dancing-12398400/) |
 | `c07-dance-finale.jpg` | [Juliano Astc](https://www.pexels.com/@juliano-astc-1623739/) | [#30586677](https://www.pexels.com/photo/teen-party-with-colorful-light-effects-30586677/) |
 | `s08-vlog-gelato-order.jpg` | [ΘSWΛLD](https://www.pexels.com/@sw-ld-147012990/) | [#31712640](https://www.pexels.com/photo/colorful-ice-cream-display-with-various-cones-31712640/) |

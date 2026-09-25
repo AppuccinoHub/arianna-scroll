@@ -1,9 +1,9 @@
 /* Italian with Arianna: tiny offline helper.
    HTML = network-first (always fresh when online), other app files = cache-first with background refresh.
    Only touches the root app; /classic/ and /preview/ are left alone. */
-const VERSION = 'arianna-v4';
+const VERSION = 'arianna-v5';
 const CORE = [
-  './', 'index.html', 'styles.css?v=4', 'data.js?v=4', 'app.js?v=4',
+  './', 'index.html', 'styles.css?v=5', 'data.js?v=5', 'app.js?v=5',
   'manifest.webmanifest', 'favicon.png', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png'
 ];
 
