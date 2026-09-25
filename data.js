@@ -280,7 +280,7 @@ window.ARIANNA_APP = {
           correct: 0,
           note: "Buongiorno = good morning",
           nudge: "Almost ☀️ it's morning, not bedtime. Try again.",
-          image: "images/c02-karaoke-nonna.jpg"
+          image: "images/c02b-buongiorno-naples-cappuccino.jpg"
         },
         {
           id: "a01",
@@ -316,7 +316,7 @@ window.ARIANNA_APP = {
           correct: 2,
           note: "Buonanotte = good night (at bedtime)",
           nudge: "Almost 🌙 it's time to sleep. Try again.",
-          image: "images/t09-photo-bedtime.jpg"
+          image: "images/t09b-naples-night-vesuvius.jpg"
         },
         {
           id: "p01", type: "dance", emoji: "💃", vibe: "Dance · intro video",
@@ -425,7 +425,7 @@ window.ARIANNA_APP = {
           note: "Prego! = please, come in / go ahead (Prego's 2nd job!)",
           tip: "Prego has 2 jobs: “you're welcome” AND “please, come in / go ahead”.",
           nudge: "Almost 🚪 it's the same word as “you're welcome”! Try again.",
-          image: "images/a04-door.jpg"
+          image: "images/a04b-naples-door.jpg"
         },
         {
           id: "a05",
@@ -521,7 +521,7 @@ window.ARIANNA_APP = {
           correct: 1,
           note: "Come stai? = how are you?",
           nudge: "Nice try 💕 you're saying hi and asking how she IS. Try again.",
-          image: "images/t07-vlog-nonna.jpg"
+          image: "images/t07b-naples-balconies.jpg"
         },
         {
           id: "p05", type: "vlog", emoji: "🚗", vibe: "Road trip · 1950s vibes",
@@ -735,13 +735,13 @@ window.ARIANNA_APP = {
         },
         {
           id: "t06", type: "photo", emoji: "👵", vibe: "Photo dump · Nonna",
-          scene: "Cuddles with Nonna on the porch. Who's this?",
+          scene: "You show a friend your photos from Nonna's balcony. Who's this?",
           en: "This is my grandma!",
           captions: ["Questo è mio nonno!", "Questa è tua nonna!", "Questa è mia nonna!"],
           correct: 2,
           note: "Questa è mia nonna = this is my grandma",
           nudge: "Almost 👵 it's YOUR grandma. Try again.",
-          image: "images/t06-photo-nonna.jpg"
+          image: "images/t06b-scopello-balcony.jpg"
         },
         {
           id: "t10", type: "vlog", emoji: "🌅", vibe: "Vlog · beach sunset",
@@ -766,7 +766,7 @@ window.ARIANNA_APP = {
           correct: 1,
           note: "Come stai? = how are you? · Bene, grazie = good, thanks",
           nudge: "Almost 💛 Nonna asked how you ARE. Try again.",
-          image: "images/v-s3-nonna-call.jpg", video: "videos/v-s3-nonna-call.mp4"
+          image: "images/u01b-positano-terrace.jpg"
         },
         {
           id: "u02", kind: "asks", type: "vlog", emoji: "🍽️", vibe: "Video call · after lunch",
@@ -826,7 +826,7 @@ window.ARIANNA_APP = {
           correct: 1,
           note: "No, ho fame = no, I'm hungry (in Italian you HAVE hunger)",
           nudge: "Close 💛 you haven't eaten, and your tummy is rumbling. Try again.",
-          image: "images/v-s3-nonna-cooking.jpg", video: "videos/v-s3-nonna-cooking.mp4"
+          image: "images/u07b-naples-cuoppo.jpg"
         },
         {
           id: "u08", kind: "asks", type: "dance", emoji: "🩰", vibe: "Dance class",
@@ -866,7 +866,7 @@ window.ARIANNA_APP = {
           correct: 2,
           note: "Ti voglio bene = I love you (for family)",
           nudge: "Almost 💕 tell her you love her. Try again.",
-          image: "images/u11-cuddle.jpg"
+          image: "images/u11b-naples-hearts.jpg"
         }
       ]
     },
@@ -881,7 +881,7 @@ window.ARIANNA_APP = {
           correct: 0,
           note: "Vieni qui! = come here! (vieni = come · qui = here)",
           nudge: "Almost 💛 she wants you to COME to her. Try again.",
-          image: "images/v-s4-kitchen-helper.jpg", video: "videos/v-s4-kitchen-helper.mp4"
+          image: "images/n01b-naples-pizza-oven.jpg"
         },
         {
           id: "n02", kind: "says", type: "photo", emoji: "🪑", vibe: "Dinner · your seat",
@@ -911,7 +911,7 @@ window.ARIANNA_APP = {
           correct: 0,
           note: "Vieni a tavola! = come to the table! (dinner's ready)",
           nudge: "Almost 🍽️ it's time to eat. Try again.",
-          image: "images/v-s4-table.jpg", video: "videos/v-s4-table.mp4"
+          image: "images/n04b-positano-table.jpg"
         },
         {
           id: "n05", kind: "says", type: "vlog", emoji: "🍝", vibe: "Dinner · spaghetti",
@@ -941,7 +941,7 @@ window.ARIANNA_APP = {
           correct: 0,
           note: "Prendi quella cosa! = get that thing!",
           nudge: "Close 🥖 she wants you to GET that thing. Try again.",
-          image: "images/n07-dough.jpg"
+          image: "images/n01b-naples-pizza-oven.jpg"
         },
         {
           id: "n08", kind: "says", type: "photo", emoji: "🧥", vibe: "Going out",
@@ -971,7 +971,7 @@ window.ARIANNA_APP = {
           correct: 0,
           note: "Dammi un bacio! = give me a kiss! 😘",
           nudge: "Close 😘 come HERE, and it's a kiss. Try again.",
-          image: "images/n10-kiss.jpg"
+          image: "images/n10b-procida-house.jpg"
         },
         {
           id: "n11", kind: "says", type: "vlog", emoji: "🌙", vibe: "Bedtime",
@@ -981,7 +981,7 @@ window.ARIANNA_APP = {
           correct: 1,
           note: "Sogni d'oro! = sweet dreams! (literally “golden dreams”) 🌙",
           nudge: "Almost 🌙 it's bedtime, not breakfast or lunch. Try again.",
-          image: "images/v-s4-bedtime.jpg", video: "videos/v-s4-bedtime.mp4"
+          image: "images/n11b-naples-bay-moon.jpg"
         }
       ]
     }

@@ -5,7 +5,6 @@ All card photos are from [Pexels](https://www.pexels.com/) under the [Pexels Lic
 | File | Photographer | Pexels photo |
 |---|---|---|
 | `c01-dance-intro.jpg` | [Михаил Крамор](https://www.pexels.com/@vantik93/) | [#12398401](https://www.pexels.com/photo/photo-of-teens-dancing-12398401/) |
-| `c02-karaoke-nonna.jpg` | [Kampus Production](https://www.pexels.com/@kampus/) | [#6248439](https://www.pexels.com/photo/smiling-grandma-watching-something-with-granddaughter-on-smartphone-6248439/) |
 | `c03-vlog-piazza.jpg` | [Andrea Piacquadio](https://www.pexels.com/@olly/) | [#3769116](https://www.pexels.com/photo/happy-traveler-visiting-old-square-in-city-3769116/) |
 | `c04-dance-duet.jpg` | [cottonbro studio](https://www.pexels.com/@cottonbro/) | [#3662824](https://www.pexels.com/photo/photo-of-girls-dancing-3662824/) |
 | `c05-fiat500.jpg` | [Leonardo Mazzone](https://www.pexels.com/@mypointviews/) | [#34789762](https://www.pexels.com/photo/classic-red-car-parked-in-scenic-rome-street-34789762/) |
@@ -20,10 +19,7 @@ All card photos are from [Pexels](https://www.pexels.com/) under the [Pexels Lic
 | `t03-vlog-venice.jpg` | [Aleksandra S](https://www.pexels.com/@aleksandra-s-282932122/) | [#13297144](https://www.pexels.com/photo/a-woman-in-red-and-white-floral-dress-13297144/) |
 | `t04-photo-gelato.jpg` | [RDNE Stock project](https://www.pexels.com/@rdne/) | [#6182385](https://www.pexels.com/photo/little-girl-in-blue-coat-holding-ice-cream-cone-6182385/) |
 | `t05-karaoke-lesson.jpg` | [Pavel Danilyuk](https://www.pexels.com/@pavel-danilyuk/) | [#7521357](https://www.pexels.com/photo/a-woman-and-girl-singing-together-7521357/) |
-| `t06-photo-nonna.jpg` | [Janice Butler](https://www.pexels.com/@janice-butler-771719529/) | [#27520970](https://www.pexels.com/photo/granddaughter-and-grandmother-on-porch-27520970/) |
-| `t07-vlog-nonna.jpg` | [Priscilla  Cezar](https://www.pexels.com/@priscilla-cezar-2157245929/) | [#36883134](https://www.pexels.com/photo/grandmother-and-granddaughter-smiling-together-36883134/) |
 | `t08-photo-gelato-friend.jpg` | [ENESFİLM](https://www.pexels.com/@enesfilm/) | [#8713083](https://www.pexels.com/photo/a-person-holding-ice-cream-on-cone-8713083/) (small cone stamp softened) |
-| `t09-photo-bedtime.jpg` | [Mikhail Nilov](https://www.pexels.com/@mikhail-nilov/) | [#8307817](https://www.pexels.com/photo/elderly-woman-reading-book-with-kids-8307817/) |
 | `t10-vlog-beach-sunset.jpg` | [Skyler Ewing](https://www.pexels.com/@skyler-ewing-266953/) | [#4938150](https://www.pexels.com/photo/happy-girl-having-fun-at-sunset-4938150/) |
 
 
@@ -39,12 +35,9 @@ Same license and 720×1280 crop as above. Song pictures have no people.
 | `u08-ballet.jpg` | [Budgeron Bach](https://www.pexels.com/@budgeron-bach/) | [#5149647](https://www.pexels.com/photo/graceful-asian-girl-in-tutu-5149647/) |
 | `u09-sugo.jpg` | [Greta Hoffman](https://www.pexels.com/@greta-hoffman/) | [#9475282](https://www.pexels.com/photo/a-person-putting-tomato-sauce-in-a-pasta-9475282/) |
 | `u10-yawn.jpg` | [cottonbro studio](https://www.pexels.com/@cottonbro/) | [#7186637](https://www.pexels.com/photo/a-girl-yawning-7186637/) |
-| `u11-cuddle.jpg` | [cottonbro studio](https://www.pexels.com/@cottonbro/) | [#7117618](https://www.pexels.com/photo/an-elderly-woman-with-her-granddaughter-7117618/) |
 | `n02-sit.jpg` | [Boris Hamer](https://www.pexels.com/@borishamer/) | [#29214427](https://www.pexels.com/photo/young-girl-enjoying-a-meal-outdoors-29214427/) |
 | `n06-cookies.jpg` | [Polina Tankilevitch](https://www.pexels.com/@polina-tankilevitch/) | [#4187550](https://www.pexels.com/photo/person-picking-up-a-newly-baked-cookie-4187550/) |
-| `n07-dough.jpg` | [Priscilla Cezar](https://www.pexels.com/@priscilla-cezar-2157245929/) | [#36883130](https://www.pexels.com/photo/elderly-woman-making-homemade-bread-dough-36883130/) |
 | `n08-jacket.jpg` | [Kadir Polat](https://www.pexels.com/@kadir-polat-304109907/) | [#16156073](https://www.pexels.com/photo/girl-gesturing-ok-on-street-16156073/) |
-| `n10-kiss.jpg` | [cottonbro studio](https://www.pexels.com/@cottonbro/) | [#7118201](https://www.pexels.com/photo/elderly-woman-kissing-a-girl-7118201/) |
 | `k-sara-vernazza.jpg` | [Kateryna Tartachna](https://www.pexels.com/@kateryna-tartachna-398669386/) | [#37550983](https://www.pexels.com/photo/vernazza-bay-at-sunset-with-colorful-buildings-37550983/) |
 | `k-pedro-dance.jpg` | [cottonbro studio](https://www.pexels.com/@cottonbro/) | [#3843290](https://www.pexels.com/photo/miniature-disco-balls-next-to-lit-up-sign-3843290/) |
 | `k-ciao-sunset.jpg` | [William Larsen](https://www.pexels.com/@wx7tech/) | [#17693452](https://www.pexels.com/photo/sunset-sun-over-beach-umbrellas-and-sunbeds-on-beach-17693452/) |
@@ -57,18 +50,13 @@ From [Pexels](https://www.pexels.com/) videos under the [Pexels License](https:/
 
 | File | Videographer | Pexels video |
 |---|---|---|
-| `videos/v-s3-nonna-call.mp4` | [MART PRODUCTION](https://www.pexels.com/@mart-production/) | [#7329839](https://www.pexels.com/video/woman-standing-in-front-of-a-smartphone-7329839/) |
 | `videos/v-s3-call-girl.mp4` | [Monstera Production](https://www.pexels.com/@gabby-k/) | [#5899696](https://www.pexels.com/video/girl-talking-on-a-video-call-5899696/) |
 | `videos/v-s3-pasta-pot.mp4` | [cottonbro studio](https://www.pexels.com/@cottonbro/) | [#4057916](https://www.pexels.com/video/food-woman-texture-pasta-4057916/) |
-| `videos/v-s3-nonna-cooking.mp4` | [ArtHouse Studio](https://www.pexels.com/@arthousestudio/) | [#7219072](https://www.pexels.com/video/vegetables-person-hands-slow-motion-7219072/) |
-| `videos/v-s4-kitchen-helper.mp4` | [Mikhail Nilov](https://www.pexels.com/@mikhail-nilov/) | [#8308766](https://www.pexels.com/video/little-girl-helping-her-grandmother-8308766/) |
 | `videos/v-s4-wash-hands.mp4` | [Kampus Production](https://www.pexels.com/@kampus/) | [#7491046](https://www.pexels.com/video/washing-hands-7491046/) |
-| `videos/v-s4-table.mp4` | [Annushka Ahuja](https://www.pexels.com/@annushka-ahuja/) | [#8051342](https://www.pexels.com/video/family-eating-together-8051342/) |
 | `videos/v-s4-spaghetti.mp4` | [Hanna M](https://www.pexels.com/@hanna-m-2159727359/) | [#36391232](https://www.pexels.com/video/delicious-spaghetti-with-tomato-sauce-and-basil-36391232/) |
 | `videos/v-s4-door.mp4` | [cottonbro studio](https://www.pexels.com/@cottonbro/) | [#5867579](https://www.pexels.com/video/a-woman-looking-out-the-door-5867579/) |
-| `videos/v-s4-bedtime.mp4` | [Mikhail Nilov](https://www.pexels.com/@mikhail-nilov/) | [#8309000](https://www.pexels.com/video/elderly-woman-kissing-a-girl-lying-on-bed-8309000/) |
 
-avatar.jpg: family photo supplied by the owner; not for reuse.
+avatar.jpg: drawn avatar of Arianna (v11.2), made for this app; replaces the earlier family photo.
 
 ## Stage 2 photos (Sessions 1–2 Level 1/2 cards, L'italiano)
 
@@ -79,7 +67,6 @@ All from Pexels (Pexels License: free to use, no attribution required; credited 
 | `a01-bakery.jpg` | [Kunal Lakhotia](https://www.pexels.com/@kunal-lakhotia-781256899/) | [#30427452](https://www.pexels.com/photo/assorted-pastries-in-bakery-display-case-30427452/) |
 | `a02-water.jpg` | [Anna Shakhrai](https://www.pexels.com/@anna-shakhrai-129681881/) | [#29775282](https://www.pexels.com/photo/refreshing-glass-of-ice-water-on-outdoor-table-29775282/) |
 | `a03-gift.jpg` | [Ann H](https://www.pexels.com/@ann-h-45017/) | [#33774246](https://www.pexels.com/photo/elegant-blue-gift-box-with-yellow-ribbon-bow-33774246/) |
-| `a04-door.jpg` | [Ketut Subiyanto](https://www.pexels.com/@ketut-subiyanto/) | [#4473282](https://www.pexels.com/photo/photo-of-girl-putting-wooden-sign-on-doorknob-4473282/) |
 | `a05-broccoli.jpg` | [UMA media](https://www.pexels.com/@uma-media-2149408028/) | [#31930179](https://www.pexels.com/photo/delicious-fresh-broccoli-on-white-plate-31930179/) |
 | `a06-bus.jpg` | [Hanako](https://www.pexels.com/@hanako-2148376889/) | [#30090269](https://www.pexels.com/photo/busy-bus-interior-with-seated-passengers-30090269/) |
 | `a07-scarf.jpg` | [Mohammad Hossein Mirzagol](https://www.pexels.com/@mirzagraphy/) | [#29487988](https://www.pexels.com/photo/elegant-fall-fashion-with-red-scarf-and-hat-29487988/) |
@@ -96,3 +83,23 @@ All from Pexels (Pexels License: free to use, no attribution required; credited 
 | `b08-party.jpg` | [Ivan S](https://www.pexels.com/@ivan-s/) | [#8104171](https://www.pexels.com/photo/pretty-girl-looking-at-a-cake-8104171/) |
 | `k-italiano-flag.jpg` | [Jona Scheuber](https://www.pexels.com/@jona-scheuber-1283906658/) | [#24394715](https://www.pexels.com/photo/flag-of-italy-near-building-with-tower-24394715/) |
 | `r02-neighbor.jpg` | [Mehmet Turgut  Kirkgoz](https://www.pexels.com/@tkirkgoz/) | [#11455900](https://www.pexels.com/photo/woman-standing-in-house-with-open-doors-11455900/) |
+
+
+## v11.2 replacements (no grandmother/family photos; southern Italy)
+
+All from Pexels (Pexels License: free to use, no attribution required; credited here anyway). Cropped to 720×1280 (9:16). Location is as named on the Pexels photo page. No people shown, except blurred/partial shoppers at the edge of `u07b`. u01, u07, n01, n04, n11 are now still photos (their old family/grandmother video clips were removed).
+
+| File | Card | Photographer | Pexels | Location |
+|---|---|---|---|---|
+| `c02b-buongiorno-naples-cappuccino.jpg` | p02 | Cristiano De Luca | [#10279573](https://www.pexels.com/photo/chocolate-sprinkles-on-bread-and-a-cup-of-coffee-10279573/) | Naples, Campania, Italy |
+| `t09b-naples-night-vesuvius.jpg` | t09 | Flavio Cavallaro | [#32037805](https://www.pexels.com/photo/peaceful-night-view-of-mount-vesuvius-and-boats-32037805/) | Napoli, Campania, Italy |
+| `a04b-naples-door.jpg` | a04 | Ezgi Kaya | [#33322671](https://www.pexels.com/photo/historic-italian-architecture-in-naples-33322671/) | Naples, Italy |
+| `t07b-naples-balconies.jpg` | t07 | Luca Musella | [#30652764](https://www.pexels.com/photo/historic-balcony-architecture-in-naples-30652764/) | Napoli, Campania, Italy |
+| `t06b-scopello-balcony.jpg` | t06 | esrageziyor | [#17467023](https://www.pexels.com/photo/a-table-with-chairs-on-a-balcony-in-a-seaside-town-resort-17467023/) | Scopello, Sicily, Italy |
+| `u01b-positano-terrace.jpg` | u01 | Meghan Marron | [#13418034](https://www.pexels.com/photo/terrace-on-sea-coast-13418034/) | Positano, Campania, Italy |
+| `u07b-naples-cuoppo.jpg` | u07 | Francesco Querente | [#36548399](https://www.pexels.com/photo/street-food-stall-selling-pizza-and-cuoppo-in-naples-36548399/) | Naples, Italy |
+| `u11b-naples-hearts.jpg` | u11 | Antonio Vacca | [#36754326](https://www.pexels.com/photo/charming-street-in-naples-with-heart-decorations-36754326/) | Naples, Italy |
+| `n01b-naples-pizza-oven.jpg` | n01, n07 | Rene Strgar | [#13946695](https://www.pexels.com/photo/a-pizza-taken-from-an-oven-13946695/) | Naples, Campania, Italy |
+| `n04b-positano-table.jpg` | n04 | Lokke Kokaleinen | [#5042248](https://www.pexels.com/photo/restaurant-balcony-with-mountain-view-5042248/) | Positano, Campania, Italy |
+| `n10b-procida-house.jpg` | n10 | Josh Withers | [#26976092](https://www.pexels.com/photo/exterior-of-a-townhouse-26976092/) | Procida, Campania, Italy |
+| `n11b-naples-bay-moon.jpg` | n11 | Rodrigo Armendariz | [#17204944](https://www.pexels.com/photo/yacht-and-motorboats-on-sea-coast-at-dusk-17204944/) | Naples bay, Campania, Italy |

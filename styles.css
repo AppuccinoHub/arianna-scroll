@@ -545,7 +545,17 @@ button:disabled { cursor: default; }
   box-shadow: var(--shadow);
   animation: toastIn 0.25s ease;
 }
-.toast.toast-song { background: linear-gradient(135deg, #ff5fa2, #8f6bff); font-size: 1rem; animation: toastIn 0.25s ease, songPop 0.6s ease 0.25s 1; }
+.toast.toast-song { background: linear-gradient(135deg, #d0246c, #6b46d6); font-size: 1rem; animation: toastIn 0.25s ease, songPop 0.6s ease 0.25s 1; }
+/* Phones, on the cards (v11.2): slim banner over the top bar, so it covers as little of the photo as possible.
+   Taps go straight through to the buttons underneath. */
+.toast { pointer-events: none; }
+.toast.toast-hold { opacity: 0; animation: none; }   /* laptop: steps aside while the cards scroll */
+.toast.toast-top {
+  top: calc(var(--safe-t) + 3px);
+  max-width: calc(100% - 12px);
+  padding: 7px 14px; border-radius: 14px; line-height: 1.28;
+  box-shadow: 0 6px 18px rgba(43, 33, 64, 0.3);
+}
 @keyframes songPop { 0%, 100% { transform: translate(-50%, 0) scale(1); } 40% { transform: translate(-50%, 0) scale(1.07); } }
 @media (prefers-reduced-motion: reduce) { .toast.toast-song { animation: none; } }
 @keyframes toastIn { from { opacity: 0; transform: translate(-50%, -8px); } to { opacity: 1; transform: translate(-50%, 0); } }
@@ -745,7 +755,7 @@ button:disabled { cursor: default; }
 
   /* Pop-ups (v11.1): app.js places them at the top of the white words panel, never over the picture */
   .toast { font-size: 1.05rem; padding: 12px 20px; }
-  .toast.toast-song { font-size: 1.12rem; padding: 14px 22px; }
+  .toast.toast-song { font-size: 1.12rem; padding: 12px 22px; }
 
   /* Arrows sit in the right margin, clear of the panel */
   .side-nav { right: calc(14px + var(--safe-r)); top: 50%; transform: translateY(-50%); gap: 12px; }

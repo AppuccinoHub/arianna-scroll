@@ -80,6 +80,7 @@
       setTimeout(() => {
         toast('🎶 New song unlocked! ' + t + ' is in Canzoni', 3200);
         $('toast').classList.add('toast-song');
+        placeToast();   // the song pop-up is a little bigger: re-measure
         sound('unlock');
         songBurst();
       }, 250);
@@ -160,34 +161,73 @@
     const t = $('toast');
     t.textContent = text; t.hidden = false; t.classList.remove('toast-song');
     placeToast();
-    clearTimeout(toast._t);
+    clearTimeout(toast._t); clearTimeout(holdToast._t); t.classList.remove('toast-hold');
+    toast._end = Date.now() + (ms || 2200);
     toast._t = setTimeout(() => { t.hidden = true; }, ms || 2200);
   }
   /* Laptop two-column cards: the words panel (right column) of the card on screen, in .app coordinates.
-     Pop-ups and song confetti stay inside it so nothing ever covers the picture. null = phone layout / not on a card. */
+     Pop-ups, word bubbles and song confetti stay inside it so nothing ever covers the picture.
+     Geometry is where the card sits once the scroll settles (so it is right even mid auto-advance).
+     cTop/cBot = top/bottom of the words inside the panel. null = phone layout / not on a card. */
   const LAPTOP_MQ = '(min-width: 900px) and (min-height: 540px)';
+  const isLaptop = () => !!(window.matchMedia && matchMedia(LAPTOP_MQ).matches);
   function panelBox() {
     try {
-      if (!window.matchMedia || !matchMedia(LAPTOP_MQ).matches || $('screenPlay').hidden) return null;
+      if (!isLaptop() || $('screenPlay').hidden) return null;
       const feed = $('feed');
-      const card = feed.children[Math.round(feed.scrollTop / Math.max(1, feed.clientHeight))];
+      const card = feed.children[state.index] || feed.children[Math.round(feed.scrollTop / Math.max(1, feed.clientHeight))];
       const vis = card && card.querySelector('.card-visual');
       if (!vis) return null;
       const cs = getComputedStyle(vis);
       const col1 = parseFloat(cs.gridTemplateColumns), gap = parseFloat(cs.columnGap);
       if (!(col1 > 0) || !(gap >= 0)) return null;
       const a = $('app').getBoundingClientRect(), v = vis.getBoundingClientRect(), f = feed.getBoundingClientRect();
+      const dy = f.top - card.getBoundingClientRect().top;          // settled: card top = feed top
       const left = v.left + col1 + gap - a.left, right = v.right - a.left;
       if (right - left < 200) return null;
-      return { left, right, top: Math.max(v.top, f.top) - a.top, bottom: Math.min(v.bottom, f.bottom) - a.top };
+      let cTop = Infinity, cBot = -Infinity;
+      const sel = vis.classList.contains('song-frame') ? '.song-inner > :not(.disc-wrap)' : '.song-box > *, .card-body > *, .card-inner > .caption-row, .card-inner > .feedback';
+      vis.querySelectorAll(sel).forEach((e) => {
+        const r = e.getBoundingClientRect();
+        if (!r.height || !r.width || r.right <= v.left + col1) return;
+        cTop = Math.min(cTop, Math.max(r.top, v.top)); cBot = Math.max(cBot, Math.min(r.bottom, v.bottom));
+      });
+      const top = v.top + dy - a.top, bottom = v.bottom + dy - a.top;
+      if (cTop === Infinity) { cTop = v.top + v.height / 2; cBot = cTop; }
+      return { left, right, top, bottom, cTop: cTop + dy - a.top, cBot: cBot + dy - a.top, fTop: f.top - a.top, fBot: f.bottom - a.top };
     } catch (_) { return null; }
   }
   function placeToast() {
     const t = $('toast'), p = panelBox();
+    // Phones, on the cards: a slim banner over the top bar instead of over the photo.
+    t.classList.toggle('toast-top', !p && !$('screenPlay').hidden && !isLaptop());
     if (!p) { t.style.left = t.style.top = t.style.maxWidth = ''; return; }
     t.style.left = ((p.left + p.right) / 2) + 'px';   // centered on the words panel (CSS keeps translateX(-50%))
-    t.style.top = (p.top + 16) + 'px';
     t.style.maxWidth = (p.right - p.left - 40) + 'px'; // 20px inside each panel edge, even at the 1.07 "pop"
+    // Hang it from the top bar, over the top of the words panel (or from the bottom edge if the words fill the top),
+    // with clear room above the words; never on the picture.
+    const h = t.offsetHeight * 1.07;
+    const upRoom = p.cTop - (p.fTop + 4 + h), downRoom = (p.fBot - 4 - h) - p.cBot;
+    const up = upRoom >= 24 || (downRoom < 24 && upRoom >= downRoom);
+    t.style.top = Math.round(up ? p.fTop + 4 : p.fBot - 4 - t.offsetHeight) + 'px';
+  }
+  /* Laptop: while the feed is scrolling (auto-advance or a swipe), the pop-up steps aside for a moment
+     so no sliding words pass under it, then comes back on the new card. Its reading time is kept. */
+  function holdToast() {
+    const t = $('toast');
+    if (t.hidden || !panelBox()) return;
+    if (!t.classList.contains('toast-hold')) {
+      t.classList.add('toast-hold');
+      toast._left = Math.max(1200, (toast._end || 0) - Date.now());
+      clearTimeout(toast._t);
+    }
+    clearTimeout(holdToast._t);
+    holdToast._t = setTimeout(() => {
+      t.classList.remove('toast-hold');
+      placeToast();
+      toast._end = Date.now() + toast._left;
+      toast._t = setTimeout(() => { t.hidden = true; }, toast._left);
+    }, 180);
   }
   function showScreen(screen) {
     document.querySelectorAll('.screen').forEach((s) => {
@@ -201,7 +241,7 @@
     if (!play) $('topTitle').textContent = screen === $('screenSongs') ? 'Canzoni 🎶' : 'Italian with Arianna';
     if (!play) pauseVideos();
     if (screen !== $('screenEnd')) { clearTimeout(confetti._t); $('confetti').replaceChildren(); }
-    clearTimeout(toast._t); $('toast').hidden = true;
+    clearTimeout(toast._t); clearTimeout(holdToast._t); $('toast').classList.remove('toast-hold'); $('toast').hidden = true;
   }
 
   /* ---------- start screen ---------- */
@@ -469,10 +509,12 @@
     b.hidden = false;
     const app = $('app').getBoundingClientRect();
     const r = btn.getBoundingClientRect();
-    const bw = Math.min(260, app.width - 20);
+    const pb = panelBox();   // laptop: keep the bubble inside the words panel, never over the picture
+    const lo = pb ? pb.left + 10 : 10, hi = pb ? pb.right - 10 : app.width - 10;
+    const bw = Math.min(260, hi - lo);
     b.style.width = bw + 'px';
     let x = r.left + r.width / 2 - app.left - bw / 2;
-    x = Math.max(10, Math.min(x, app.width - bw - 10));
+    x = Math.max(lo, Math.min(x, hi - bw));
     b.style.left = x + 'px';
     const h = b.offsetHeight;
     let y = r.top - app.top - h - 10;
@@ -1029,7 +1071,7 @@
       }
       scrollToIndex(state.index + 1, true);
     });
-    $('feed').addEventListener('scroll', () => { hideBubble(); onFeedScroll(); }, { passive: true });
+    $('feed').addEventListener('scroll', () => { hideBubble(); holdToast(); onFeedScroll(); }, { passive: true });
     document.addEventListener('click', (e) => { if (!e.target.closest('.w') && !e.target.closest('#wordBubble')) hideBubble(); });
     document.addEventListener('keydown', (e) => {
       if (!$('screenPlay').classList.contains('active') || e.altKey || e.ctrlKey || e.metaKey) return;
