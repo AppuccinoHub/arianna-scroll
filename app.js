@@ -779,7 +779,7 @@
 
     $('endTitle').textContent = song ? 'Brava, Arianna! 🎶' : 'Brava, Arianna! 🎉';
     $('endScore').textContent = score + ' of ' + n + ' on the first try!';
-    const stars = score >= n ? 3 : score >= Math.ceil(n * 0.7) ? 2 : 1;
+    const stars = score >= n ? 3 : score >= (n <= 4 ? n - 1 : Math.ceil(n * 0.7)) ? 2 : 1;
     $('endStars').textContent = '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
     $('endBlurb').textContent = song ? (score >= n ? 'Perfetto! You learned “' + s.title + '”! 🎶' : 'You learned “' + s.title + '”! Sing it to Nonna 🎶')
       : score >= n ? 'Perfetto! Every single one. Ci vediamo presto! 💖'
