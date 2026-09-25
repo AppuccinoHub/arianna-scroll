@@ -9,8 +9,9 @@ All card photos are from [Pexels](https://www.pexels.com/) under the [Pexels Lic
 | `c03-vlog-piazza.jpg` | [Andrea Piacquadio](https://www.pexels.com/@olly/) | [#3769116](https://www.pexels.com/photo/happy-traveler-visiting-old-square-in-city-3769116/) |
 | `c04-dance-duet.jpg` | [cottonbro studio](https://www.pexels.com/@cottonbro/) | [#3662824](https://www.pexels.com/photo/photo-of-girls-dancing-3662824/) |
 | `c05-fiat500.jpg` | [Leonardo Mazzone](https://www.pexels.com/@mypointviews/) | [#34789762](https://www.pexels.com/photo/classic-red-car-parked-in-scenic-rome-street-34789762/) |
-| `c06-dance-malatia.jpg` | [Михаил Крамор](https://www.pexels.com/@vantik93/) | [#12398400](https://www.pexels.com/photo/teenage-girl-in-white-clothes-dancing-12398400/) |
-| `c07-dance-finale.jpg` | [Juliano Astc](https://www.pexels.com/@juliano-astc-1623739/) | [#30586677](https://www.pexels.com/photo/teen-party-with-colorful-light-effects-30586677/) |
+| `c06-naples-vesuvius.jpg` | [Ciro Passaro](https://www.pexels.com/@ciro-passaro-2099608/) | [#14686440](https://www.pexels.com/photo/seaside-city-in-summer-14686440/) |
+| `c07-disco-blue.jpg` | [Tatiane Herder](https://www.pexels.com/@tatianeherder/) | [#19133822](https://www.pexels.com/photo/illuminating-disco-ball-hanging-under-ceiling-19133822/) |
+| `m01-vinyl-pink.jpg` | [Lisa Fotios](https://www.pexels.com/@fotios-photos/) | [#9853334](https://www.pexels.com/photo/a-vinyl-record-on-a-turntable-9853334/) |
 | `s08-vlog-gelato-order.jpg` | [ΘSWΛLD](https://www.pexels.com/@sw-ld-147012990/) | [#31712640](https://www.pexels.com/photo/colorful-ice-cream-display-with-various-cones-31712640/) |
 | `s09-photo-birthday.jpg` | [Thang Nguyen](https://www.pexels.com/@chipi1189/) | [#35214942](https://www.pexels.com/photo/teen-celebrating-birthday-with-cake-and-balloons-35214942/) |
 | `s10-vlog-school-wave.jpg` | [Nguyễn Tiến Thịnh](https://www.pexels.com/@nguy-n-ti-n-th-nh-2150376175/) | [#32205065](https://www.pexels.com/photo/young-student-sitting-in-school-corridor-32205065/) |

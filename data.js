@@ -83,7 +83,7 @@ window.ARIANNA_APP = {
           id: "m01", type: "song", emoji: "🎶", vibe: "Song break · Nonna's favorite",
           scene: "Nonna's favorite song! Listen, sing along, tap any word.",
           title: "Mamma Maria", artist: "Ricchi e Poveri",
-          image: "images/c02-karaoke-nonna.jpg",
+          image: "images/m01-vinyl-pink.jpg",
           clip: CLIPS.mammaMaria,
           lyrics: LYRICS.mammaMaria
         },
@@ -129,7 +129,7 @@ window.ARIANNA_APP = {
           correct: 0,
           note: "Sono = I am · Ballo = I dance",
           nudge: "Close 💛 it's about you, and you're saying hi. Try again.",
-          image: "images/c06-dance-malatia.jpg",
+          image: "images/c06-naples-vesuvius.jpg",
           clip: CLIPS.malatia
         },
         {
@@ -141,7 +141,7 @@ window.ARIANNA_APP = {
           correct: 1,
           note: "Buonasera a tutti = good evening, everyone",
           nudge: "Almost 🌙 the party's just starting, and it's YOU. Try again.",
-          image: "images/c07-dance-finale.jpg",
+          image: "images/c07-disco-blue.jpg",
           clip: CLIPS.blue
         },
         {
