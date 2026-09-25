@@ -127,7 +127,7 @@ const LYRICS = {
     { t: [5.46, 18.6], w: [] },
     { t: [10.08, 23.7], w: [["give", "dare (give me = dammi)", "DAH-reh"], ["me", "mi (dammi = give me)", "mee"], ["the", "i", "ee"], ["shivers", "i brividi", "ee BREE-vee-dee"]] },
     { t: [11.14, 24.76], w: [["Oh", "oh", "oh"], ["baby,", "tesoro", "teh-ZOH-roh"], ["you", "tu", "too"], ["wanna", "vuoi (you want to)", "VWOH-ee"], ["dance", "ballare", "bahl-LAH-reh"], ["'til", "fino a", "FEE-noh ah"], ["the", "la", "lah"], ["sunlight", "la luce del sole", "lah LOO-cheh del SOH-leh"], ["cracks", "spunta (the sun comes up = spunta il sole)", "SPOON-tah"]] },
-    { t: [14.98, 28.66], w: [["And", "e", "eh"], ["when", "quando", "KWAHN-doh"], ["they", "loro", "LOH-roh"], ["say", "dicono", "DEE-koh-noh"], ["the", "la", "lah"], ["party's", "la festa è", "lah FES-tah eh"], ["over,", "finita", "fee-NEE-tah"], ["then", "allora", "ahl-LOH-rah"], ["we'll", "noi (we will)", "NOH-ee"], ["bring", "portare", "por-TAH-reh"], ["it", "la (it = the party)", "lah"], ["right", "subito", "SOO-bee-toh"], ["back", "indietro (bring it back = riportarla)", "een-DYEH-troh"]] }
+    { t: [14.98, 28.66], w: [["And", "e", "eh"], ["when", "quando", "KWAHN-doh"], ["they", "loro", "LOH-roh"], ["say", "dicono", "DEE-koh-noh"], ["the", "la", "lah"], ["party's", "la festa è", "lah FES-tah eh"], ["over,", "finita", "fee-NEE-tah"], ["then", "allora", "ahl-LOH-rah"], ["we'll", "noi (we will)", "NOH-ee"], ["bring", "portare", "por-TAH-reh"], ["it", "la (it = the party)", "lah"], ["right", "subito", "SOO-bee-toh"], ["back", "indietro", "een-DYEH-troh"]] }
   ]
 };
 
@@ -148,15 +148,15 @@ const SONGQ = {
       note: "rana = frog 🐸", nudge: "Almost 💛 it's a little green animal that jumps. Try again." },
     { step: "notice", en: "Which word is missing?", line: "Sarebbe bello se fossi un ___", snip: [5.8, 8.7],
       captions: ["re", "cane", "gelato"], correct: 0,
-      note: "un re = a king 👑 · se fossi un re = if I were a king", nudge: "Listen again 🎧 he wants to wear a crown! Try again." },
-    { step: "use", scene: "Nonna says she has a surprise for you.", en: "I'm dying to know, Nonna!",
-      captions: ["Muoio dalla fame, nonna!", "Muori dalla curiosità, nonna!", "Muoio dalla curiosità, nonna!"], correct: 2,
-      note: "Muoio dalla curiosità = I'm dying to know (just like the song!)", nudge: "Almost 🎁 it's YOU who's curious, not hungry. Try again." }
+      note: "un re = a king 👑", nudge: "Listen again 🎧 he wants to wear a crown! Try again." },
+    { step: "use", scene: "Mom picks you up from school. Say hi!", en: "Hi, Mom!",
+      captions: ["Grazie, mamma!", "Ciao, nonna!", "Ciao, mamma!"], correct: 2,
+      note: "Ciao, mamma! = hi, Mom! (mamma, just like the song!)", nudge: "Almost 💛 it's Mom, and you're saying hi. Try again." }
   ]),
   carosone: quiz("k3", CLIPS.carosone, [
-    { step: "notice", en: "What does “la borsetta” mean?", line: "Chi te li dà? La borsetta di mammà!", hl: "borsetta", snip: [23.0, 26.2],
-      answerLang: "en", captions: ["the purse", "the bike", "the hat"], correct: 0,
-      note: "la borsetta = the purse 👛 (mammà = mom)", nudge: "Almost 💛 Mom keeps her money in it. Try again." },
+    { step: "notice", en: "What does “mammà” mean?", line: "Chi te li dà? La borsetta di mammà!", hl: "mammà", snip: [23.0, 26.2],
+      answerLang: "en", captions: ["mom", "dad", "grandma"], correct: 0,
+      note: "mammà = mamma = mom 👩", nudge: "Almost 💛 it sounds like mamma! Try again." },
     { step: "notice", en: "Which word is missing?", line: "Tu vuò fà l'___", snip: [0.0, 3.9],
       captions: ["italiano", "americano", "napoletano"], correct: 1,
       note: "l'americano = the American 🇺🇸 · Tu vuò fà l'americano = you want to act American", nudge: "Listen again 🎧 it's in the song's name! Try again." },
@@ -172,7 +172,7 @@ const SONGQ = {
       captions: ["me", "te", "noi"], correct: 0,
       note: "con me = with me", nudge: "Listen again 🎧 fly with… who? Try again." },
     { step: "use", scene: "You want your friend to follow you to the garden.", en: "Come with me!",
-      captions: ["Vengo con te!", "Vieni con te!", "Vieni con me!"], correct: 2,
+      captions: ["Arrivederci!", "Vieni con te!", "Vieni con me!"], correct: 2,
       note: "Vieni con me! = come with me! (con me, like the song)", nudge: "Close 💛 SHE comes with YOU. Try again." }
   ]),
   pedro: quiz("k5", CLIPS.pedro, [
@@ -215,9 +215,9 @@ const SONGQ = {
     { step: "notice", en: "Which color is missing? Pick it in Italian!", line: "I'm ___, da ba dee da ba di", snip: [18.1, 21.2],
       captions: ["giallo", "blu", "rosa"], correct: 1,
       note: "blu = blue 💙 (giallo = yellow · rosa = pink)", nudge: "Listen again 🎧 it's the song's name! Try again." },
-    { step: "use", scene: "A friend asks about your favorite color.", en: "My favorite color is blue!",
-      captions: ["Il tuo colore preferito è il blu!", "Il mio colore preferito è il rosso!", "Il mio colore preferito è il blu!"], correct: 2,
-      note: "Il mio colore preferito è il blu = my favorite color is blue", nudge: "Almost 💙 it's YOUR favorite, and it's blue. Try again." }
+    { step: "use", scene: "A friend asks what color you like.", en: "I like blue!",
+      captions: ["Ti piace il blu?", "Mi piace il rosso!", "Mi piace il blu!"], correct: 2,
+      note: "Mi piace il blu! = I like blue! 💙", nudge: "Almost 💙 it's about YOU, and it's blue. Try again." }
   ]),
   italiano: quiz("k10", CLIPS.italiano, [
     { step: "notice", en: "What does “gli occhi” mean?", line: "con gli occhi pieni di malinconia", hl: "occhi", snip: [22.4, 26.0],
@@ -273,7 +273,7 @@ window.ARIANNA_APP = {
       cards: [
         {
           id: "p02",
-          tip: "Buongiorno = good morning or good afternoon. It's always polite to say it every morning, because Italians are really sociable!", type: "karaoke", emoji: "🎤", vibe: "Karaoke · with Nonna",
+          tip: "Buongiorno = good morning / good afternoon. Italians always greet each other in the morning.", type: "karaoke", emoji: "🎤", vibe: "Karaoke · with Nonna",
           scene: "Morning with Nonna. Say good morning first!",
           en: "Good morning, Nonna!",
           captions: ["Buongiorno, nonna!", "Buonanotte, nonna!", "Arrivederci, nonna!"],
@@ -488,7 +488,7 @@ window.ARIANNA_APP = {
           vibe: "Vlog · restaurant",
           scene: "The waiter talks super fast. You didn't catch it!",
           en: "Can you repeat, please? (polite)",
-          captions: ["Posso ripetere, per cortesia?", "Può ripetere, piacere?", "Può ripetere, per cortesia?"],
+          captions: ["Un'acqua, per cortesia!", "Può ripetere, piacere?", "Può ripetere, per cortesia?"],
           correct: 2,
           note: "Può ripetere? = can you repeat? · per cortesia = please (polite)",
           nudge: "Almost 💛 you want HIM to say it again, and say please. Try again.",
@@ -559,10 +559,10 @@ window.ARIANNA_APP = {
           scene: "Now she asks you!",
           ask: "E tu, come ti chiami?",
           askEn: "And you, what's your name?",
-          captions: ["Mi chiami Arianna!", "Mi chiamo Arianna!", "Ti chiami Arianna!"],
+          captions: ["Sono americana!", "Mi chiamo Arianna!", "Ti chiami Arianna!"],
           correct: 1,
           note: "Mi chiamo… = my name is…",
-          tip: "Literally “I call myself”, from chiamarsi (to be called).",
+          tip: "Literally: “I call myself”.",
           nudge: "Almost 💛 it's YOUR name: mi chiamo. Try again.",
           image: "images/b02-friends.jpg"
         },
@@ -600,7 +600,7 @@ window.ARIANNA_APP = {
           scene: "Nonna introduces you to her friend, Signora Rosa.",
           ask: "Piacere, Arianna!",
           askEn: "Nice to meet you, Arianna!",
-          captions: ["Mi piace!", "Piacere mio!", "Prego mio!"],
+          captions: ["Mi piace!", "Piacere mio!", "Prego!"],
           correct: 1,
           note: "Piacere mio = the pleasure is mine",
           nudge: "Almost 💛 she's happy to meet you. Say it back! Try again.",
@@ -616,7 +616,7 @@ window.ARIANNA_APP = {
           captions: ["Come ti chiami?", "Come sta?", "Come si chiama?"],
           correct: 2,
           note: "Come si chiama? = what's your name? (polite, for grown-ups)",
-          tip: "Not sure if formal or informal? Use formal. But with Nonna and family, use tu: Come ti chiami? / Di dove sei?",
+          tip: "Not sure? Be polite: Come si chiama? With friends and family: Come ti chiami?",
           nudge: "Almost 💛 she's a grown-up you just met, so be polite. Try again.",
           image: "images/b04-teacher.jpg"
         },
@@ -792,10 +792,10 @@ window.ARIANNA_APP = {
           id: "u04", type: "vlog", emoji: "💌", vibe: "Video call · far away",
           scene: "Nonna lives far away. Tell her how you feel.",
           en: "I miss you, Nonna!",
-          captions: ["Ti manco, nonna?", "Mi manchi, nonna!", "Piacere, nonna!"],
+          captions: ["Grazie, nonna!", "Mi manchi, nonna!", "Piacere, nonna!"],
           correct: 1,
           note: "Mi manchi = I miss you",
-          nudge: "So close 💌 YOU miss HER. Try again.",
+          nudge: "Almost 💌 tell her you miss her. Try again.",
           image: "images/u04-call-wave.jpg"
         },
         {
@@ -831,18 +831,18 @@ window.ARIANNA_APP = {
         {
           id: "u08", kind: "asks", type: "dance", emoji: "🩰", vibe: "Dance class",
           scene: "You had dance class today.",
-          ask: "Cosa hai fatto oggi?", askEn: "What did you do today?",
-          captions: ["Ho fame!", "Ho dodici anni!", "Ho ballato!"],
+          ask: "Ti piace ballare?", askEn: "Do you like dancing?",
+          captions: ["Ho fame!", "Ho dodici anni!", "Sì, mi piace ballare!"],
           correct: 2,
-          note: "Cosa hai fatto oggi? = what did you do today? · Ho ballato = I danced",
-          nudge: "Almost 💃 what did you DO today? Try again.",
+          note: "Ti piace ballare? = do you like dancing? · Sì, mi piace ballare! = yes, I like dancing!",
+          nudge: "Almost 💃 she asked if you like dancing. Try again.",
           image: "images/u08-ballet.jpg"
         },
         {
           id: "u09", type: "photo", emoji: "🍅", vibe: "Kitchen · taste test",
           scene: "Nonna lets you taste her tomato sauce (il sugo).",
           en: "It's delicious, Nonna!",
-          captions: ["È buonissimo, nonna!", "È bellissimo, nonna!", "Buonanotte, nonna!"],
+          captions: ["È buonissimo, nonna!", "Scusa, nonna!", "Buonanotte, nonna!"],
           correct: 0,
           note: "È buonissimo = it's delicious (super good!)",
           nudge: "Almost 😋 it TASTES great. Try again.",
@@ -877,7 +877,7 @@ window.ARIANNA_APP = {
           id: "n01", kind: "says", type: "vlog", emoji: "👋", vibe: "Kitchen · Nonna calls",
           scene: "Nonna is cooking and waves you over.",
           en: "Come here!",
-          captions: ["Vieni qui!", "Vai a casa!", "Siediti qui!"],
+          captions: ["Vieni qui!", "Vai a casa!", "Dormi qui!"],
           correct: 0,
           note: "Vieni qui! = come here! (vieni = come · qui = here)",
           nudge: "Almost 💛 she wants you to COME to her. Try again.",
@@ -887,9 +887,9 @@ window.ARIANNA_APP = {
           id: "n02", kind: "says", type: "photo", emoji: "🪑", vibe: "Dinner · your seat",
           scene: "Dinner's ready and there's a chair just for you.",
           en: "Sit down!",
-          captions: ["Svegliati!", "Siediti!", "Alzati!"],
+          captions: ["Balla!", "Siediti!", "Dormi!"],
           correct: 1,
-          note: "Siediti! = sit down! (svegliati = wake up · alzati = stand up)",
+          note: "Siediti! = sit down! 🪑",
           nudge: "Close 🪑 she wants you in the chair. Try again.",
           image: "images/n02-sit.jpg"
         },
@@ -897,10 +897,10 @@ window.ARIANNA_APP = {
           id: "n03", kind: "says", type: "vlog", emoji: "🧼", vibe: "Before dinner",
           scene: "Before dinner, Nonna points to the sink.",
           en: "Wash your hands!",
-          captions: ["Lavati la faccia!", "Asciugati le mani!", "Lavati le mani!"],
+          captions: ["Lavati la faccia!", "Lavati i piedi!", "Lavati le mani!"],
           correct: 2,
           note: "Lavati le mani! = wash your hands! (le mani = hands)",
-          nudge: "Almost 🧼 it's your HANDS, and you WASH them. Try again.",
+          nudge: "Almost 🧼 it's your HANDS. Try again.",
           image: "images/v-s4-wash-hands.jpg", video: "videos/v-s4-wash-hands.mp4"
         },
         {
@@ -936,21 +936,21 @@ window.ARIANNA_APP = {
         {
           id: "n07", kind: "says", type: "photo", emoji: "🥖", vibe: "Kitchen · busy hands",
           scene: "Nonna's hands are covered in dough. She points at something.",
-          en: "Get me that thing!",
-          captions: ["Prendimi quella cosa!", "Prendi questa cosa!", "Dammi quel libro!"],
+          en: "Get that thing!",
+          captions: ["Prendi quella cosa!", "Mangia quella cosa!", "Aspetta!"],
           correct: 0,
-          note: "Prendimi quella cosa! = get me that thing! (prendi + mi = get for me)",
-          nudge: "Close 🥖 she wants THAT thing, for HER. Try again.",
+          note: "Prendi quella cosa! = get that thing!",
+          nudge: "Close 🥖 she wants you to GET that thing. Try again.",
           image: "images/n07-dough.jpg"
         },
         {
           id: "n08", kind: "says", type: "photo", emoji: "🧥", vibe: "Going out",
           scene: "It's cold outside and you're heading out.",
           en: "Put on your jacket!",
-          captions: ["Togliti la giacca!", "Mettiti la giacca!", "Mettiti le scarpe!"],
+          captions: ["Mangia la pasta!", "Metti la giacca!", "Metti le scarpe!"],
           correct: 1,
-          note: "Mettiti la giacca! = put on your jacket! (togliti = take it off)",
-          nudge: "Almost 🧥 it's cold, so put your jacket ON. Try again.",
+          note: "Metti la giacca! = put on your jacket! (la giacca = the jacket)",
+          nudge: "Almost 🧥 it's cold: put on your JACKET. Try again.",
           image: "images/n08-jacket.jpg"
         },
         {
@@ -969,7 +969,7 @@ window.ARIANNA_APP = {
           en: "Come here, give me a kiss!",
           captions: ["Vieni qui, dammi un bacio!", "Vieni qui, dammi la mano!", "Vai lì, dammi un bacio!"],
           correct: 0,
-          note: "Dammi un bacio! = give me a kiss! (da' + mi = give me)",
+          note: "Dammi un bacio! = give me a kiss! 😘",
           nudge: "Close 😘 come HERE, and it's a kiss. Try again.",
           image: "images/n10-kiss.jpg"
         },
@@ -977,7 +977,7 @@ window.ARIANNA_APP = {
           id: "n11", kind: "says", type: "vlog", emoji: "🌙", vibe: "Bedtime",
           scene: "It's late. You're falling asleep, and Nonna whispers…",
           en: "Sweet dreams!",
-          captions: ["Buona giornata!", "Sogni d'oro!", "Buon appetito!"],
+          captions: ["Buongiorno!", "Sogni d'oro!", "Buon appetito!"],
           correct: 1,
           note: "Sogni d'oro! = sweet dreams! (literally “golden dreams”) 🌙",
           nudge: "Almost 🌙 it's bedtime, not breakfast or lunch. Try again.",

@@ -590,3 +590,205 @@ button:disabled { cursor: default; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition: none !important; scroll-behavior: auto !important; }
 }
 .wb-it { color: #1d5e3d; font-weight: 900; }
+
+/* ==========================================================================
+   LAPTOP / CHROMEBOOK (v11): wide screens get a real two-column card.
+   Picture or video fully visible on the LEFT (nothing written on it),
+   all the words + answers in a clean white panel on the RIGHT.
+   Phones never match this query, so the phone layout is untouched.
+   ========================================================================== */
+@media (min-width: 900px) and (min-height: 540px) {
+  .app { max-width: 1440px; }
+  .top-title { font-size: 1.05rem; }
+  .dot { width: 10px; height: 10px; }
+  .dot.here { width: 24px; }
+
+  /* Home, Canzoni, end: centered column instead of stretched */
+  .home { justify-content: center; }
+  .home-top { flex: 0 0 auto; }
+  .home-top, .home-bottom { width: 100%; max-width: 560px; margin: 0 auto; }
+  .home-bottom { padding-top: 22px; }
+  .home-blurb { max-width: 440px; font-size: 1.15rem; }
+  .home-hello { font-size: 2.5rem; }
+  .sess-btn { min-height: 80px; }
+  .sess-btn .s-name { font-size: 1.1rem; }
+  .sess-btn .s-sub { font-size: 0.82rem; }
+  .sess-btn.sess-songs { min-height: 58px; }
+  .sess-btn:hover:not(.locked) { border-color: rgba(199, 56, 114, 0.45); }
+  .songs { padding-top: 24px; }
+  .songs > * { width: 100%; max-width: 640px; margin-left: auto; margin-right: auto; }
+  .songs-title { font-size: 2rem; }
+  .songs-blurb { font-size: 1rem; }
+  .song-row { min-height: 64px; }
+  .song-row:hover:not(.locked) { border-color: rgba(199, 56, 114, 0.45); }
+  .sr-title { font-size: 1.08rem; }
+  .sr-artist { font-size: 0.82rem; }
+  .end-top, .end-bottom { width: 100%; max-width: 520px; margin: 0 auto; }
+  .end-bottom { padding-bottom: 8px; }
+
+  /* ---- Card geometry (cq units = the card itself) ---- */
+  .feed-card {
+    --mh: min(calc(100cqh - 44px), calc(44cqw * 16 / 9));   /* picture height */
+    --mw: calc(var(--mh) * 9 / 16);                          /* picture width: exact 9:16, whole picture shows */
+    --gap: clamp(20px, 2.6cqw, 40px);
+    --pw: clamp(340px, calc(100cqw - var(--mw) - var(--gap) - 150px), 640px);  /* text panel width */
+  }
+  .card-bg { filter: blur(26px) saturate(1.15) brightness(0.8); }
+
+  .card-visual {
+    left: 50%; top: 50%; bottom: auto;
+    transform: translate(-50%, -50%);
+    width: calc(var(--mw) + var(--gap) + var(--pw));
+    height: var(--mh);
+    overflow: visible;
+    background: none;
+    display: grid;
+    grid-template-columns: var(--mw) var(--pw);
+    grid-template-rows: minmax(0, 1fr) auto minmax(0, auto) minmax(0, 1fr);  /* clip pill + words stay together, centered */
+    column-gap: var(--gap);
+  }
+  .card-visual:not(.song-frame)::before {          /* the white text panel */
+    content: ""; grid-area: 1 / 2 / 5 / 3;
+    border-radius: 26px;
+    background: rgba(255, 255, 255, 0.97);
+    box-shadow: 0 18px 50px rgba(20, 10, 40, 0.35);
+  }
+  .card-visual > .card-photo {
+    position: relative; inset: auto;
+    grid-area: 1 / 1 / 5 / 2;
+    width: 100%; height: 100%;
+    object-fit: cover;                               /* frame is exactly 9:16 like every photo/video: nothing cropped */
+    border-radius: 22px;
+    background: linear-gradient(160deg, var(--sky-mid), var(--pink));
+    box-shadow: 0 18px 50px rgba(20, 10, 40, 0.4);
+  }
+  .card-shade { display: none; }
+
+  /* Song clip pill + credit (+ mini lyrics while playing): top of the panel, not on the picture */
+  .song-box {
+    position: relative; z-index: 1;
+    top: auto; left: auto; right: auto;
+    grid-area: 2 / 2 / 3 / 3;
+    padding: 24px 30px 0;
+    flex-direction: row; flex-wrap: wrap; align-items: center; gap: 8px 12px;
+  }
+  .clip-pill { font-size: 0.95rem; box-shadow: 0 3px 10px rgba(43, 33, 64, 0.14), inset 0 0 0 2px #ffd6e7; }
+  .clip-pill:hover { filter: brightness(1.03); }
+  .song-box .clip-credit { color: var(--sky-deep); background: #eaf5fc; font-size: 0.74rem; }
+  .song-box .lyrics.compact { flex: 1 0 100%; max-width: 100%; height: 44px; background: #fff4f8; box-shadow: inset 0 0 0 2px #ffd6e7; }
+  .song-box .lyrics.compact .ly-line { font-size: 1rem; }
+
+  /* All words + answers */
+  .card-inner {
+    position: relative; z-index: 1;
+    left: auto; right: auto; bottom: auto;
+    grid-area: 3 / 2 / 4 / 3;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex; flex-direction: column; justify-content: safe center;
+    padding: 24px 30px;
+    color: var(--ink);
+    scrollbar-width: thin;
+  }
+  .card-body { gap: 8px; padding: 0 0 16px; }
+  .vibe-tag { background: #ffe3ee; color: var(--pink-deep); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .vibe-tag, .song-sticker { font-size: 0.86rem; padding: 5px 12px; }
+  .scene { color: var(--ink-soft); text-shadow: none; font-size: 1.05rem; line-height: 1.4; }
+  .en-label { color: var(--pink-deep); text-shadow: none; font-size: 0.8rem; margin-top: 4px; }
+  .en-line { color: var(--ink); text-shadow: none; font-size: 1.75rem; line-height: 1.2; }
+  .nonna-bubble { background: #fff4f8; box-shadow: inset 0 0 0 2px #ffd6e7; padding: 9px 16px 11px; }
+  .nb-who { font-size: 0.8rem; }
+  .nb-text { font-size: 1.65rem; }
+  .nb-mean { font-size: 0.88rem; }
+  .nb-en { font-size: 1rem; }
+  .lq-line { background: #fff4f8; box-shadow: inset 0 0 0 2px #ffd6e7; font-size: 1.18rem; padding: 10px 14px; }
+  .replay-btn { font-size: 0.92rem; box-shadow: 0 3px 10px rgba(43, 33, 64, 0.14), inset 0 0 0 2px #ffd6e7; }
+  .caption-row { gap: 10px; }
+  .caption-btn {
+    min-height: 58px; padding: 11px 42px 11px 11px;
+    font-size: 1.16rem;
+    box-shadow: 0 4px 12px rgba(43, 33, 64, 0.12);
+  }
+  .caption-btn::before { flex-basis: 34px; height: 34px; font-size: 0.92rem; }
+  .caption-btn:hover:not(:disabled) { box-shadow: 0 8px 20px rgba(199, 56, 114, 0.22); transform: translateY(-1px); }
+  .feedback { margin-top: 12px; padding: 11px 14px; font-size: 1.02rem; box-shadow: none; }
+  .feedback .fb-sub { font-size: 0.94rem; }
+
+  /* ---- Song break (LISTEN): record on the left, lyrics + controls on the right ---- */
+  .song-frame {
+    border-radius: 26px; overflow: hidden;
+    box-shadow: 0 18px 50px rgba(20, 10, 40, 0.35);
+    background: radial-gradient(420px 320px at 12% 12%, #fff3b0, transparent 70%), radial-gradient(520px 420px at 95% 95%, #cfe8f8, transparent 70%), linear-gradient(170deg, #ffe3ef, #fdf1ff 55%, #e6f4ff);
+  }
+  .song-inner {
+    grid-area: 1 / 1 / 5 / 3;
+    display: grid;
+    grid-template-columns: var(--mw) minmax(0, 1fr);
+    grid-template-rows: auto auto auto minmax(120px, 1fr) auto auto;
+    grid-template-areas: "disc vibe" "disc title" "disc scene" "disc lyr" "disc btn" "disc foot";
+    column-gap: var(--gap); row-gap: 10px;
+    align-items: center; justify-items: center;
+    padding: 28px 34px 24px 0;
+  }
+  .song-inner > .vibe-row { grid-area: vibe; }
+  .song-inner > .disc-wrap { grid-area: disc; width: min(calc(var(--mw) - 70px), 320px); }
+  .song-inner > .song-title { grid-area: title; font-size: 1.8rem; }
+  .song-inner > .song-scene { grid-area: scene; margin: 0; font-size: 1.05rem; }
+  .song-inner > .lyrics { grid-area: lyr; height: 100%; max-height: 360px; align-self: stretch; }
+  .song-inner > .song-toggle { grid-area: btn; }
+  .song-inner > .song-foot { grid-area: foot; }
+  .song-vibe { font-size: 0.9rem; }
+  .ly-list { padding: 40px 18px; }
+  .ly-line { font-size: 1.22rem; margin-bottom: 10px; }
+  .song-toggle { min-width: 240px; font-size: 1.2rem; }
+  .song-hint { font-size: 0.9rem; }
+
+  /* Arrows sit in the right margin, clear of the panel */
+  .side-nav { right: calc(14px + var(--safe-r)); top: 50%; transform: translateY(-50%); gap: 12px; }
+  .nav-btn { width: 52px; height: 52px; font-size: 1.35rem; }
+  .nav-btn:hover:not(:disabled) { background: #fff; }
+  .swipe-hint {
+    left: auto; right: 10px; top: calc(50% - 96px);
+    font-size: 0; animation-name: hintR;
+  }
+  .swipe-hint::after { content: "press ↓"; font-size: 0.82rem; }
+}
+@keyframes hintR { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+/* Short laptop screens (1366×768, 1280×800 minus browser bars) */
+@media (min-width: 900px) and (min-height: 540px) and (max-height: 760px) {
+  .card-inner { padding: 18px 26px; }
+  .song-box { padding: 18px 26px 0; }
+  .card-body { gap: 6px; padding-bottom: 12px; }
+  .scene { font-size: 0.98rem; line-height: 1.35; }
+  .en-line { font-size: 1.5rem; }
+  .nb-text { font-size: 1.45rem; }
+  .lq-line { font-size: 1.08rem; padding: 8px 12px; }
+  .caption-row { gap: 8px; }
+  .caption-btn { min-height: 50px; font-size: 1.06rem; padding-top: 8px; padding-bottom: 8px; }
+  .caption-btn::before { flex-basis: 30px; height: 30px; }
+  .feedback { margin-top: 10px; padding: 8px 12px; font-size: 0.96rem; }
+  .feedback .fb-sub { font-size: 0.88rem; }
+  .song-inner { padding: 20px 28px 18px 0; row-gap: 8px; }
+  .song-inner > .song-title { font-size: 1.5rem; }
+  .ly-line { font-size: 1.1rem; margin-bottom: 8px; }
+  .home-hello { font-size: 2.2rem; }
+}
+
+/* Big screens (1920×1080): a little larger still */
+@media (min-width: 1200px) and (min-height: 900px) {
+  .en-line { font-size: 2rem; }
+  .nb-text { font-size: 1.85rem; }
+  .scene { font-size: 1.15rem; }
+  .caption-btn { min-height: 64px; font-size: 1.28rem; }
+  .caption-btn::before { flex-basis: 38px; height: 38px; font-size: 1rem; }
+  .feedback { font-size: 1.1rem; }
+  .feedback .fb-sub { font-size: 1rem; }
+  .card-inner { padding: 30px 38px; }
+  .song-box { padding: 30px 38px 0; }
+  .song-inner > .disc-wrap { width: min(calc(var(--mw) - 90px), 400px); }
+  .song-inner > .lyrics { max-height: 420px; }
+  .song-inner > .song-title { font-size: 2.1rem; }
+  .song-inner > .song-scene { font-size: 1.15rem; }
+  .ly-line { font-size: 1.4rem; margin-bottom: 12px; }
+}
