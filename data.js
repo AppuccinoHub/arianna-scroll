@@ -82,10 +82,11 @@ const LYRICS = {
     { t: 26.2, w: [["Tu", "you", "too"], ["vuò", "Neapolitan for “vuoi”: you want", "vwoh"], ["fà", "Neapolitan for “fare”: to act / to do", "fah"], ["l'americano", "the American", "lah-meh-ree-KAH-noh"]] },
     { t: 27.86, w: [["'Mericano,", "short for “americano”: American", "meh-ree-KAH-noh"], ["'mericano", "short for “americano”: American", "meh-ree-KAH-noh"]] }
   ],
-  /* Neapolitan chorus only. The two verses in this preview are shown as ♪ (a romantic line and a sad line, not for this app). */
+  /* Neapolitan chorus only (its real 4 lines). The two verses in this preview are shown as ♪ (a romantic line and a sad line, not for this app). */
   malatia: [
-    { t: [10.86, 14.66, 27.2], w: [["Malatì,", "Neapolitan for “malattia”: sickness (here: I'm crazy about you!)", "mah-lah-TEE"], ["malatì", "Neapolitan for “malattia”: sickness (here: I'm crazy about you!)", "mah-lah-TEE"]] },
+    { t: [10.86, 27.2], w: [["Malatì,", "Neapolitan for “malattia”: sickness (here: I'm crazy about you!)", "mah-lah-TEE"], ["malatì", "Neapolitan for “malattia”: sickness (here: I'm crazy about you!)", "mah-lah-TEE"]] },
     { t: [12.74, 28.02], w: [["pe'", "Neapolitan for “per”: for", "peh"], ["me", "me", "meh"], ["tu", "you", "too"], ["si'", "Neapolitan for “sei”: you are", "see"], ["na", "Neapolitan for “una”: a", "nah"], ["malatì", "Neapolitan for “malattia”: sickness (here: my obsession)", "mah-lah-TEE"]] },
+    { t: 14.66, w: [["Malatì,", "Neapolitan for “malattia”: sickness (here: I'm crazy about you!)", "mah-lah-TEE"], ["malatì", "Neapolitan for “malattia”: sickness (here: I'm crazy about you!)", "mah-lah-TEE"]] },
     { t: [0.0, 17.22], w: [["tu", "you", "too"], ["fai", "you make", "FAH-ee"], ["over", "Neapolitan for “davvero”: real (fai over = you make … come true)", "OH-ver"], ["pur'", "Neapolitan for “pure”: even", "poor"], ["'e", "Neapolitan for “le”: the", "eh"], ["bugie", "lies", "boo-JEE-eh"]] },
     { t: [2.75, 18.34], w: [] }
   ],
@@ -97,15 +98,14 @@ const LYRICS = {
     { t: [8.7, 24.6], w: [["e", "and", "eh"], ["se", "if", "seh"], ["l'amore", "love", "lah-MOH-reh"], ["non", "not", "nohn"], ["c'è,", "there is (non c'è = isn't there)", "cheh"], ["basta", "it's enough", "BAHS-tah"], ["una", "one / a", "OO-nah"], ["sola", "single", "SOH-lah"], ["canzone", "song", "kahn-TSOH-neh"]] },
     { t: [13.14, 28.96], w: [["per", "to", "pehr"], ["far", "make (short for “fare”)", "fahr"], ["confusione", "confusion (a happy mess)", "kohn-foo-ZYOH-neh"], ["fuori", "outside", "FWOH-ree"], ["e", "and", "eh"], ["dentro", "inside", "DEN-troh"], ["di", "of", "dee"], ["te", "you", "teh"]] }
   ],
-  /* Lines 5-8 of the verse (13-25 s) are skipped (♪) to keep it to 6 short lines. */
+  /* Lines 5-8 of the verse (13-25 s) are skipped (♪). The preview ends just as “praticamente…” starts, so that line isn't shown. */
   pedro: [
     { t: 0.0, w: [["Passeggio", "I stroll (I walk around)", "pahs-SED-joh"], ["tutta", "all", "TOOT-tah"], ["sola", "alone (girl form)", "SOH-lah"], ["per", "through", "pehr"], ["le", "the", "leh"], ["strade", "streets", "STRAH-deh"]] },
     { t: 3.6, w: [["guardando", "looking at", "gwar-DAHN-doh"], ["attentamente", "carefully", "aht-ten-tah-MEN-teh"], ["i", "the", "ee"], ["monumenti", "monuments", "moh-noo-MEN-tee"]] },
     { t: 6.88, w: [["La", "the", "lah"], ["classica", "typical", "KLAHS-see-kah"], ["straniera", "foreigner / tourist (girl)", "strah-NYEH-rah"], ["con", "with", "kohn"], ["un'aria", "a look (an air)", "oo-NAH-ryah"], ["strana", "strange", "STRAH-nah"]] },
     { t: 10.0, w: [["che", "who", "keh"], ["gira", "wanders around", "JEE-rah"], ["stanca", "tired (girl form)", "STAHN-kah"], ["tutta", "the whole", "TOOT-tah"], ["la", "the", "lah"], ["città", "city", "cheet-TAH"]] },
     { t: 13.24, w: [] },
-    { t: 25.68, w: [["Pedro,", "Pedro (a name)", "PEH-droh"], ["Pedro,", "Pedro (a name)", "PEH-droh"], ["Pedro,", "Pedro (a name)", "PEH-droh"], ["Pedro,", "Pedro (a name)", "PEH-droh"], ["Pedro,", "Pedro (a name)", "PEH-droh"], ["Pè", "short for Pedro", "peh"]] },
-    { t: 29.3, w: [["praticamente", "basically", "prah-tee-kah-MEN-teh"], ["il", "the", "eel"], ["meglio", "best", "MEH-lyoh"], ["di", "of", "dee"], ["Santa", "Santa (part of a city name)", "SAHN-tah"], ["Fè", "Santa Fe: a city", "feh"]] }
+    { t: 25.68, w: [["Pedro,", "Pedro (a name)", "PEH-droh"], ["Pedro,", "Pedro (a name)", "PEH-droh"], ["Pedro,", "Pedro (a name)", "PEH-droh"], ["Pedro,", "Pedro (a name)", "PEH-droh"], ["Pedro,", "Pedro (a name)", "PEH-droh"], ["Pè", "short for Pedro", "peh"]] }
   ],
   /* The 4th chorus line (15-19 s) has a rude word, so it's ♪. */
   ciaoCiao: [
@@ -116,10 +116,10 @@ const LYRICS = {
     { t: 15.34, w: [] }
   ],
   volare: [
-    { t: [1.4, 21.74], w: [["Nel", "in the", "nel"], ["blu,", "blue", "bloo"], ["dipinto", "painted", "dee-PEEN-toh"], ["di", "with", "dee"], ["blu,", "blue", "bloo"]] },
+    { t: [1.4, 21.4], w: [["Nel", "in the", "nel"], ["blu,", "blue", "bloo"], ["dipinto", "painted", "dee-PEEN-toh"], ["di", "with", "dee"], ["blu,", "blue", "bloo"]] },
     { t: [5.9, 24.32], w: [["felice", "happy", "feh-LEE-cheh"], ["di", "to", "dee"], ["stare", "be", "STAH-reh"], ["lassù", "up there", "lahs-SOO"]] },
-    { t: 9.94, w: [["Volare,", "to fly", "voh-LAH-reh"], ["oh", "oh", "oh"], ["oh", "oh", "oh"]] },
-    { t: 16.14, w: [["cantare,", "to sing", "kahn-TAH-reh"], ["oh", "oh", "oh"], ["oh", "oh", "oh"], ["oh", "oh", "oh"], ["oh", "oh", "oh"]] },
+    { t: 8.5, w: [["Volare,", "to fly", "voh-LAH-reh"], ["oh", "oh", "oh"], ["oh", "oh", "oh"]] },
+    { t: 14.8, w: [["cantare,", "to sing", "kahn-TAH-reh"], ["oh", "oh", "oh"], ["oh", "oh", "oh"], ["oh", "oh", "oh"], ["oh", "oh", "oh"]] },
     { t: 27.04, w: [["E", "and", "eh"], ["volavo,", "I was flying", "voh-LAH-voh"], ["volavo", "I was flying", "voh-LAH-voh"], ["felice…", "happy", "feh-LEE-cheh"]] }
   ],
   /* English song: each word shows its ITALIAN + how to say the Italian. The "I love it when you do it like that /
@@ -174,8 +174,8 @@ const SONGQ = {
       captions: ["bugie", "sole", "malatì"], correct: 2,
       note: "malatì = malattia (Neapolitan): here it means “I'm crazy about you!”", nudge: "Listen again 🎧 it's the word she keeps singing. Try again." },
     { step: "use", scene: "At the gelato shop, it's your turn to order.", en: "For me, a gelato, please!",
-      captions: ["Per me, un gelato, per favore!", "Per te, un gelato, per favore!", "Per me, un gelato, prego!"], correct: 0,
-      note: "Per me… = for me… (pe' me in Neapolitan)", nudge: "Close 🍦 it's for YOU, and you say please. Try again." }
+      captions: ["Per me, un gelato, per favore!", "Per te, un gelato, per favore!", "Per me, due gelati, per favore!"], correct: 0,
+      note: "Per me… = for me… (pe' me in Neapolitan)", nudge: "Close 🍦 it's for YOU, and just ONE gelato. Try again." }
   ]),
   carosone: quiz("k3", CLIPS.carosone, [
     { step: "notice", en: "What does “la borsetta” mean?", line: "Chi te li dà? La borsetta di mammà!", hl: "borsetta", snip: [23.0, 26.2],
@@ -222,7 +222,7 @@ const SONGQ = {
       note: "Ciao ciao = bye bye · Ti voglio bene = I love you", nudge: "Almost 💛 say bye, and tell her you love her. Try again." }
   ]),
   volare: quiz("k7", CLIPS.volare, [
-    { step: "notice", en: "What does “volare” mean?", line: "Volare, oh oh", hl: "Volare", snip: [9.4, 14.8],
+    { step: "notice", en: "What does “volare” mean?", line: "Volare, oh oh", hl: "Volare", snip: [8.3, 14.6],
       answerLang: "en", captions: ["to sing", "to fly", "to swim"], correct: 1,
       note: "volare = to fly 🕊️ (cantare = to sing)", nudge: "Almost 🕊️ birds do it. Try again." },
     { step: "notice", en: "Which color is missing?", line: "Nel ___, dipinto di blu", snip: [1.2, 5.9],
@@ -378,10 +378,10 @@ window.ARIANNA_APP = {
           id: "s08", type: "vlog", emoji: "🍦", vibe: "Vlog · gelato run",
           scene: "At the gelato counter. Your turn to order!",
           en: "A gelato, please!",
-          captions: ["Un gelato, per favore!", "Un gelato, prego!", "Un gelato, piacere!"],
+          captions: ["Un gelato, per favore!", "Due gelati, per favore!", "Un gelato, piacere!"],
           correct: 0,
           note: "Per favore = please",
-          nudge: "Almost 🍦 you're asking for something, so say please. Try again.",
+          nudge: "Almost 🍦 just ONE gelato, and say please. Try again.",
           image: "images/s08-vlog-gelato-order.jpg"
         },
         {
@@ -391,11 +391,11 @@ window.ARIANNA_APP = {
           vibe: "Vlog · café stop",
           scene: "Hot day in the piazza. Ask the waiter for some water.",
           en: "A water, please!",
-          captions: ["Un'acqua, piacere!", "Un'acqua, prego!", "Un'acqua, per piacere!"],
+          captions: ["Un'acqua, piacere!", "Un gelato, per piacere!", "Un'acqua, per piacere!"],
           correct: 2,
           note: "Per piacere = please (just like per favore)",
           tip: "3 ways to say please: per favore, per piacere, per cortesia (extra polite).",
-          nudge: "Almost 💧 you're asking for something. Which one means please? Try again.",
+          nudge: "Almost 💧 you want WATER, and you say please. Try again.",
           image: "images/a02-water.jpg"
         },
         {
@@ -407,7 +407,7 @@ window.ARIANNA_APP = {
           en: "Thank you so much!",
           captions: ["Prego!", "Per favore!", "Grazie mille!"],
           correct: 2,
-          note: "Grazie mille = thanks a million! (Molte grazie works too)",
+          note: "Grazie = thanks · Grazie mille / Molte grazie = thanks so much!",
           nudge: "So close 🎁 you're saying THANK YOU. Try again.",
           image: "images/a03-gift.jpg"
         },
@@ -650,7 +650,7 @@ window.ARIANNA_APP = {
           emoji: "🏖️",
           vibe: "Beach · new friend",
           scene: "At the beach you meet a girl your age with a new accent.",
-          en: "Where are you from?",
+          en: "Where are you from? (to a friend)",
           captions: ["Di dove sei?", "Dove sei?", "Di dov'è?"],
           correct: 0,
           note: "Di dove sei? = where are you from? (friends and family)",
@@ -751,10 +751,10 @@ window.ARIANNA_APP = {
           id: "t08", type: "photo", emoji: "🍨", vibe: "Photo dump · gelato break",
           scene: "Gelato break with your friend. She holds hers out: want a taste?",
           en: "Yes, please!",
-          captions: ["Sì, per favore!", "Sì, prego!", "No, grazie!"],
+          captions: ["Sì, per favore!", "No, per favore!", "No, grazie!"],
           correct: 0,
           note: "Sì, per favore = yes, please",
-          nudge: "Almost 🍨 you want some, so ask nicely. Try again.",
+          nudge: "Almost 🍨 you DO want some, so say yes and ask nicely. Try again.",
           image: "images/t08-photo-gelato-friend.jpg"
         },
         {
@@ -804,12 +804,12 @@ window.ARIANNA_APP = {
         },
         {
           id: "u03", kind: "asks", type: "vlog", emoji: "🍝", vibe: "Kitchen · pasta time",
-          scene: "Nonna's pasta is almost ready.",
+          scene: "Nonna's pasta is almost ready, and you're really hungry!",
           ask: "Vuoi la pasta?", askEn: "Do you want some pasta?",
-          captions: ["Sì, prego!", "Sì, piacere!", "Sì, grazie!"],
+          captions: ["No, grazie!", "Piacere, nonna!", "Sì, grazie!"],
           correct: 2,
           note: "Vuoi…? = do you want…? · Sì, grazie = yes, thanks",
-          nudge: "Almost 💛 she's offering, so say thanks. Try again.",
+          nudge: "Almost 💛 you're hungry, so say yes, and thank her. Try again.",
           image: "images/v-s3-pasta-pot.jpg", video: "videos/v-s3-pasta-pot.mp4"
         },
         {
