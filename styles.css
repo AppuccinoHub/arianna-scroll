@@ -743,6 +743,10 @@ button:disabled { cursor: default; }
   .song-toggle { min-width: 240px; font-size: 1.2rem; }
   .song-hint { font-size: 0.9rem; }
 
+  /* Pop-ups (v11.1): app.js places them at the top of the white words panel, never over the picture */
+  .toast { font-size: 1.05rem; padding: 12px 20px; }
+  .toast.toast-song { font-size: 1.12rem; padding: 14px 22px; }
+
   /* Arrows sit in the right margin, clear of the panel */
   .side-nav { right: calc(14px + var(--safe-r)); top: 50%; transform: translateY(-50%); gap: 12px; }
   .nav-btn { width: 52px; height: 52px; font-size: 1.35rem; }

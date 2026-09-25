@@ -159,8 +159,35 @@
   function toast(text, ms) {
     const t = $('toast');
     t.textContent = text; t.hidden = false; t.classList.remove('toast-song');
+    placeToast();
     clearTimeout(toast._t);
     toast._t = setTimeout(() => { t.hidden = true; }, ms || 2200);
+  }
+  /* Laptop two-column cards: the words panel (right column) of the card on screen, in .app coordinates.
+     Pop-ups and song confetti stay inside it so nothing ever covers the picture. null = phone layout / not on a card. */
+  const LAPTOP_MQ = '(min-width: 900px) and (min-height: 540px)';
+  function panelBox() {
+    try {
+      if (!window.matchMedia || !matchMedia(LAPTOP_MQ).matches || $('screenPlay').hidden) return null;
+      const feed = $('feed');
+      const card = feed.children[Math.round(feed.scrollTop / Math.max(1, feed.clientHeight))];
+      const vis = card && card.querySelector('.card-visual');
+      if (!vis) return null;
+      const cs = getComputedStyle(vis);
+      const col1 = parseFloat(cs.gridTemplateColumns), gap = parseFloat(cs.columnGap);
+      if (!(col1 > 0) || !(gap >= 0)) return null;
+      const a = $('app').getBoundingClientRect(), v = vis.getBoundingClientRect(), f = feed.getBoundingClientRect();
+      const left = v.left + col1 + gap - a.left, right = v.right - a.left;
+      if (right - left < 200) return null;
+      return { left, right, top: Math.max(v.top, f.top) - a.top, bottom: Math.min(v.bottom, f.bottom) - a.top };
+    } catch (_) { return null; }
+  }
+  function placeToast() {
+    const t = $('toast'), p = panelBox();
+    if (!p) { t.style.left = t.style.top = t.style.maxWidth = ''; return; }
+    t.style.left = ((p.left + p.right) / 2) + 'px';   // centered on the words panel (CSS keeps translateX(-50%))
+    t.style.top = (p.top + 16) + 'px';
+    t.style.maxWidth = (p.right - p.left - 40) + 'px'; // 20px inside each panel edge, even at the 1.07 "pop"
   }
   function showScreen(screen) {
     document.querySelectorAll('.screen').forEach((s) => {
@@ -899,9 +926,10 @@
     const box = $('confetti');
     if (reduceMotion()) return;
     const colors = ['#ff8fb1', '#9fd6f5', '#fff3b0', '#f4c93d', '#6fd3a0', '#c9b6ff'];
+    const pb = panelBox();   // laptop: confetti falls only over the words panel, never over the picture
     for (let i = 0; i < 36; i++) {
       const p = document.createElement('i');
-      p.style.left = Math.random() * 100 + '%';
+      p.style.left = pb ? (pb.left + 60 + Math.random() * Math.max(0, pb.right - pb.left - 120)) + 'px' : Math.random() * 100 + '%';
       p.style.background = colors[i % colors.length];
       p.style.setProperty('--dx', (Math.random() * 100 - 50).toFixed(0) + 'px');
       p.style.animationDuration = (1.8 + Math.random() * 1.2).toFixed(2) + 's';
@@ -963,6 +991,7 @@
   function init() {
     fixHeight();
     window.addEventListener('resize', fixHeight);
+    window.addEventListener('resize', () => { if (!$('toast').hidden) placeToast(); });
     updateMuteUI();
     renderHome();
 
