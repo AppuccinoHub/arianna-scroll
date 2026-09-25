@@ -1,22 +1,36 @@
-# Arianna Scroll
+# Italian with Arianna (Arianna Scroll)
 
-Personal Italian scroll for **Arianna** — TikTok-style vertical feed of dance moments, photo dumps, and Italy stills. She picks the line that fits; Italian locks in. Not a textbook.
+A TikTok-style Italian Level 1 practice app for **Arianna**, built for her phone. Read the English line, tap the Italian that says it, swipe up for the next card.
 
 **Live:** https://appuccinohub.github.io/arianna-scroll/
 
-## Add or swap phrases
+## What's where
 
-Edit `data.js` — the `cards` array at the top of the file has a comment block with the full recipe.
+| Path | What |
+|---|---|
+| `/` | The app: start screen, 2 sessions × 10 cards, end screen with confetti + share |
+| `/classic/` | The original first version (kept working) |
+| `/preview/` | Redirects to `/` (kept so old shared links still show the link card) |
 
-Each card:
+## Editing cards
 
-- `id`, `chunk` (1 = greetings, 2 = likes / Italy / friends)
-- `vibe`, `culture`, `emoji`, `image`
-- `captions` (array), `correct` (0-based index)
-- `tip`, `nudge` (friendly wrong-answer line)
+All content lives in `data.js` (`window.ARIANNA_APP.sessions[].cards[]`). Each card:
 
-Put new stills in `images/`. Bump `?v=` on the script/link tags in `index.html` when you publish content changes.
+- `id`, `type` (`dance` | `karaoke` | `vlog` | `photo`), `emoji`, `vibe`, `scene`
+- `en` (the English line), `captions` (3 Italian choices), `correct` (0-based index)
+- `note` (shown after a correct pick), `nudge` (gentle wrong-answer line)
+- `image` (720×1280, 9:16, under `images/`; credits in `images/CREDITS.md`)
+- optional `song` (sticker label), `yt` (tap-to-play embed) or `listen` (YouTube link)
+
+When you publish changes, bump the `?v=` numbers in `index.html` **and** `VERSION` + the `CORE` list in `sw.js`.
+
+## Behaviour notes
+
+- Correct pick → "Brava!" + new-phrase note → auto-advance after 1.2 s (skipped if she already swiped/pressed ↓, cancelled on Home/restart). On the Mamma Maria card there is no auto-advance once the song has started ("Enjoy the song, tap ↓ when you're ready").
+- Progress, unlocks, best scores and mute are saved in `localStorage` under `ariannaScroll.app.v1`. Session 2 unlocks when Session 1 is finished.
+- Sound is on by default (small WebAudio chimes); mute toggle top-right.
+- PWA: `manifest.webmanifest`, `sw.js` (versioned cache, network-first HTML), Add to Home Screen meta for iPhone.
 
 ## Stack
 
-Static HTML / CSS / JS. GitHub Pages from `main` (root). Progress in `localStorage` under keys prefixed `ariannaScroll.*`.
+Static HTML / CSS / JS on GitHub Pages from `main`.

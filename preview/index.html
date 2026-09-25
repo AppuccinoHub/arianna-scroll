@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#cfe8f8" />
+  <meta name="theme-color" content="#ffd9e8" />
   <meta name="robots" content="noindex" />
   <meta name="description" content="Scroll, tap, and learn Italian one card at a time. Ciao, bella!" />
   <title>Italian with Arianna 🇮🇹</title>
 
-  <!-- Link preview (Open Graph / iMessage / Android) -->
+  <!-- Kept so links that were already shared still show the cute preview card -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Arianna Scroll" />
   <meta property="og:title" content="Italian with Arianna 🇮🇹" />
@@ -26,66 +26,15 @@
   <meta name="twitter:description" content="Scroll, tap, and learn Italian one card at a time. Ciao, bella!" />
   <meta name="twitter:image" content="https://appuccinohub.github.io/arianna-scroll/preview/og-card.jpg" />
   <meta name="twitter:image:alt" content="Cute pastel card: a phone with a gelato, lemons, pizza, hearts and an Italian flag, with the title Italian with Arianna" />
-  <link rel="canonical" href="https://appuccinohub.github.io/arianna-scroll/preview/" />
-  <link rel="apple-touch-icon" sizes="180x180" href="https://appuccinohub.github.io/arianna-scroll/preview/apple-touch-icon.png" />
-  <link rel="icon" type="image/png" sizes="180x180" href="https://appuccinohub.github.io/arianna-scroll/preview/apple-touch-icon.png" />
-  <link rel="stylesheet" href="styles.css?v=p2" />
+  <link rel="canonical" href="https://appuccinohub.github.io/arianna-scroll/" />
+  <link rel="apple-touch-icon" sizes="180x180" href="https://appuccinohub.github.io/arianna-scroll/apple-touch-icon.png" />
+
+  <!-- The preview grew up: send everyone to the real app -->
+  <meta http-equiv="refresh" content="0; url=../" />
+  <script>location.replace('../' + location.search + location.hash);</script>
+  <style>body{font-family:system-ui,-apple-system,sans-serif;background:#fff4f8;color:#3b2a4a;display:grid;place-items:center;min-height:100vh;margin:0;text-align:center}a{color:#c2185b;font-weight:700}</style>
 </head>
 <body>
-  <div class="stage">
-    <div class="phone" id="phone" role="application" aria-label="Arianna Scroll">
-      <header class="app-header">
-        <button type="button" class="icon-btn" id="btnHome" aria-label="Home" title="Home" hidden>⌂</button>
-        <div class="brand">
-          <span class="logo" aria-hidden="true">✨</span>
-          <div>
-            <h1>Arianna Scroll</h1>
-            <p class="subtitle" id="headerSubtitle">For You</p>
-          </div>
-        </div>
-        <div class="header-actions">
-          <button type="button" class="icon-btn" id="btnMute" aria-label="Mute sound" title="Sound">🔊</button>
-        </div>
-      </header>
-
-      <section class="screen active" id="screenHome" aria-label="Home">
-        <div class="hero">
-          <div class="hero-art" aria-hidden="true">
-            <div class="hero-orb lemon"></div>
-            <div class="hero-orb sky"></div>
-            <div class="hero-sparkle">💃</div>
-          </div>
-          <p class="home-hello">Ciao, Arianna 💛</p>
-          <h2 class="home-title">Dance · karaoke · vlog</h2>
-          <p class="home-blurb">Read the English line.<br/>Tap the Italian that says it.</p>
-          <button type="button" class="primary-btn" id="btnStart">Start →</button>
-          <p class="home-soft">7 quick cards · sound on 🔊</p>
-        </div>
-      </section>
-
-      <section class="screen" id="screenPlay" aria-label="Feed" hidden>
-        <div class="feed" id="feed" tabindex="0" aria-label="Vertical card feed"></div>
-        <div class="feed-nav">
-          <button type="button" class="nav-btn" id="btnPrev" aria-label="Previous">↑</button>
-          <span class="feed-pos" id="feedPos">1</span>
-          <button type="button" class="nav-btn" id="btnNext" aria-label="Next">↓</button>
-        </div>
-      </section>
-
-      <section class="screen" id="screenEnd" aria-label="Done" hidden>
-        <div class="end-card">
-          <p class="end-emoji" aria-hidden="true">🌟</p>
-          <h2 id="endTitle">Brava, Arianna!</h2>
-          <p class="end-blurb" id="endBlurb">You did all 7.</p>
-          <button type="button" class="primary-btn" id="btnAgain">Play again</button>
-          <button type="button" class="ghost-btn" id="btnEndHome">Home</button>
-        </div>
-      </section>
-
-      <div class="tip-toast" id="tipToast" hidden role="status"></div>
-    </div>
-  </div>
-  <script src="data.js?v=p1"></script>
-  <script src="app.js?v=p3"></script>
+  <p>Ciao! 💛 The app moved.<br /><a href="../">Tap here to open Italian with Arianna</a></p>
 </body>
 </html>
