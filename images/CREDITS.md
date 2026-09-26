@@ -110,3 +110,16 @@ Original illustrations generated for Arianna Scroll (fictional characters, not b
 | `k11-happy.jpg` | k11 (Canzoni) | Arianna dancing with headphones in an empty sunny piazza. Original illustration made for Arianna Scroll (fictional character); landscape 1280×720 shown whole on a blurred 9:16 background (720×1280 JPG). |
 
 Song k11: “You Make Me So Happy”, Alfa & Mr Gabriel (2022). 30-second preview from the Apple iTunes Search API, streamed from Apple, never re-hosted ([Apple Music](https://music.apple.com/us/album/you-make-me-so-happy/1857809304?i=1857809309&uo=4)). “Blue (Da Ba Dee)” (Eiffel 65) and `c07-disco-blue.jpg` were removed; Session 1 card p07 now plays “Ciao ciao” with `k-ciao-sunset.jpg`.
+
+## v11.5 stock characters ("Make it yours")
+
+Original illustrations generated with AI for Arianna Scroll (fictional southern Italian kids, not based on any real person or photo). Each 16:9 picture was cropped to a square around the face and saved at 360×360 JPG for the round avatar spot.
+
+| File | Shows |
+|---|---|
+| `char-a.jpg` | Girl with big headphones around her neck, blue hoodie |
+| `char-b.jpg` | Boy with a football, black tee |
+| `char-c.jpg` | Girl holding a Vespa-style helmet, sunglasses on her head |
+| `char-d.jpg` | Boy holding a gelato cone, striped shirt |
+| `char-e.jpg` | Girl with curly hair and a sketchbook, sea behind her |
+| `char-f.jpg` | Boy with a skateboard on his shoulder, cap backwards |

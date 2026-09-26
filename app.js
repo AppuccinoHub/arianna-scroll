@@ -48,7 +48,7 @@
   const NAME_MAX = 16;
   const PHOTO_KEY = 'ariannaScroll.photo.v1';           // the photo lives in its own key so a full storage never blocks progress saving
   const AVATAR = 'images/avatar.jpg?v=11.5';
-  const SHOW_CHARS = false;                              // turn on once images/char-a…f.jpg are in the repo
+  const SHOW_CHARS = true;                              // turn on once images/char-a…f.jpg are in the repo
   const CHARS = !SHOW_CHARS ? [] : [                     // stock characters (images/char-*.jpg, illustrated, 360×360)
     { id: 'char-a', emoji: '🎧', label: 'Girl with headphones' },
     { id: 'char-b', emoji: '⚽', label: 'Boy with a football' },
