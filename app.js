@@ -14,9 +14,11 @@
   const reduceMotion = () => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
   /* ---------- saved data (localStorage) ---------- */
+  let storageOK = true;   // v11.5: can this device save at all? (private mode / blocked storage → no first-run screen)
   function load() {
     let d = null;
-    try { d = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (_) { d = null; }
+    try { d = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (_) { d = null; storageOK = false; }
+    try { localStorage.setItem('ariannaScroll.probe', '1'); localStorage.removeItem('ariannaScroll.probe'); } catch (_) { storageOK = false; }
     d = d && typeof d === 'object' ? d : {};
     const firstV9 = !('correct' in d);
     d.muted = !!d.muted;                      // sound ON by default
@@ -28,6 +30,9 @@
     d.correct = Math.max(0, parseInt(d.correct, 10) || 0);   // correct answers, all sessions + songs
     d.songsOpen = d.songsOpen && typeof d.songsOpen === 'object' ? d.songsOpen : {};
     d.songsEarned = Math.max(0, parseInt(d.songsEarned, 10) || 0); // songs opened by correct answers so far
+    // v11.5 "Make it yours": { name: '' (= Arianna), pic: 'default' | 'photo' | 'char-a'…'char-f' }
+    if (d.me && typeof d.me === 'object') d.me = { name: cleanName(d.me.name), pic: typeof d.me.pic === 'string' ? d.me.pic : 'default' };
+    else delete d.me;
     if (d.songsOpen.k9 && !d.songsOpen.k11) d.songsOpen.k11 = 'earned';   // v11.4: k11 took Blue's (k9) place in the list
     // Already played before song unlocks existed? Credit her best first-try scores and every song she finished.
     if (firstV9) {
@@ -38,8 +43,57 @@
     }
     return d;
   }
+  /* ---------- v11.5 "Make it yours": first name + picture, saved only on this device ---------- */
+  const DEFAULT_NAME = 'Arianna';
+  const NAME_MAX = 16;
+  const PHOTO_KEY = 'ariannaScroll.photo.v1';           // the photo lives in its own key so a full storage never blocks progress saving
+  const AVATAR = 'images/avatar.jpg?v=11.5';
+  const SHOW_CHARS = false;                              // turn on once images/char-a…f.jpg are in the repo
+  const CHARS = !SHOW_CHARS ? [] : [                     // stock characters (images/char-*.jpg, illustrated, 360×360)
+    { id: 'char-a', emoji: '🎧', label: 'Girl with headphones' },
+    { id: 'char-b', emoji: '⚽', label: 'Boy with a football' },
+    { id: 'char-c', emoji: '🛵', label: 'Girl with a scooter helmet' },
+    { id: 'char-d', emoji: '🍦', label: 'Boy with a gelato' },
+    { id: 'char-e', emoji: '🎨', label: 'Girl with a sketchbook' },
+    { id: 'char-f', emoji: '🛹', label: 'Boy with a skateboard' }
+  ];
+  function cleanName(raw) {
+    let t = String(raw == null ? '' : raw).replace(/[\u0000-\u001f\u007f-\u009f\u200b-\u200f\u2028-\u202e\u2060-\u206f\ufeff]/g, '').replace(/\s+/g, ' ').trim();
+    t = Array.from(t).slice(0, NAME_MAX).join('').trim();
+    return t ? t.charAt(0).toLocaleUpperCase('it-IT') + t.slice(1) : '';
+  }
   const saved = load();
-  function persist() { try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (_) {} }
+  function persist() { try { localStorage.setItem(KEY, JSON.stringify(saved)); return true; } catch (_) { return false; } }
+  let photoURL = null;
+  try { const v = localStorage.getItem(PHOTO_KEY); if (v && /^data:image\/(jpeg|png|webp);base64,/.test(v) && v.length < 300000) photoURL = v; } catch (_) {}
+  const myName = () => (saved.me && saved.me.name) || DEFAULT_NAME;
+  function picSrc(pic, photo) {
+    if (pic === 'photo' && photo) return photo;
+    const c = CHARS.find((x) => x.id === pic);
+    return c ? 'images/' + c.id + '.jpg?v=11.5' : AVATAR;
+  }
+  // Fill {name} into a card (text, choices, hints). Replacer function: a name like "$&" stays literal.
+  const NAME_FIELDS = ['en', 'note', 'ask', 'askEn', 'nudge', 'tip', 'scene', 'line'];
+  const hasName = (c) => NAME_FIELDS.some((f) => typeof c[f] === 'string' && c[f].indexOf('{name}') >= 0) || (c.captions || []).some((t) => String(t).indexOf('{name}') >= 0);
+  function fillName(card, name) {
+    const c = Object.assign({}, card);
+    const put = (t) => String(t).replace(/\{name\}/g, () => name);
+    NAME_FIELDS.forEach((f) => { if (typeof c[f] === 'string') c[f] = put(c[f]); });
+    if (Array.isArray(c.captions)) c.captions = c.captions.map(put);
+    return c;
+  }
+  function personalize(card) {
+    try {
+      if (!card || !hasName(card)) return card;
+      const c = fillName(card, myName());
+      // Name collision: if the chosen name makes two answer choices read the same (e.g. a wrong answer that already
+      // names someone else), this one card falls back to the default name so there is still exactly one right answer.
+      const norm = (t) => t.toLocaleLowerCase('it-IT').replace(/[\s.,!?;:'’"…-]+/g, ' ').trim();
+      const n = (c.captions || []).map(norm);
+      if (n.some((x, i) => n.indexOf(x) !== i)) return fillName(card, DEFAULT_NAME);
+      return c;
+    } catch (_) { return card; }
+  }
   /* ---------- Canzoni unlocks: song 1 is open; +1 song (in list order) per 5 correct answers.
      A song reached as an in-session song break opens too. Never let this break the app. ---------- */
   const PER_SONG = 5;
@@ -239,7 +293,7 @@
     const play = screen === $('screenPlay');
     $('btnHome').hidden = screen === $('screenHome');
     $('dots').hidden = !play;
-    if (!play) $('topTitle').textContent = screen === $('screenSongs') ? 'Canzoni 🎶' : 'Italian with Arianna';
+    if (!play) $('topTitle').textContent = screen === $('screenSongs') ? 'Canzoni 🎶' : screen === $('screenMe') ? 'Make it yours ✏️' : 'Italian with ' + myName();
     if (!play) pauseVideos();
     if (screen !== $('screenEnd')) { clearTimeout(confetti._t); $('confetti').replaceChildren(); }
     clearTimeout(toast._t); clearTimeout(holdToast._t); $('toast').classList.remove('toast-hold'); $('toast').hidden = true;
@@ -591,6 +645,7 @@
 
   /* ---------- cards ---------- */
   function buildCard(card, i) {
+    card = personalize(card);   // v11.5: {name} → the chosen first name
     const art = el('article', 'feed-card');
     art.dataset.index = String(i);
     art.dataset.id = card.id;
@@ -939,7 +994,7 @@
     if (!song && nextS) saved.selected = nextS.id;
     persist();
 
-    $('endTitle').textContent = song ? 'Brava, Arianna! 🎶' : 'Brava, Arianna! 🎉';
+    $('endTitle').textContent = 'Brava, ' + myName() + (song ? '! 🎶' : '! 🎉');
     $('endScore').textContent = score + ' of ' + n + ' on the first try!';
     const stars = score >= n ? 3 : score >= (n <= 4 ? n - 1 : Math.ceil(n * 0.7)) ? 2 : 1;
     $('endStars').textContent = '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
@@ -1007,7 +1062,7 @@
   }
 
   async function share() {
-    const payload = { title: 'Italian with Arianna 🇮🇹', text: 'Scroll, tap, and learn Italian! Ciao! 🍦', url: SHARE_URL };
+    const payload = { title: 'Italian with ' + myName() + ' 🇮🇹', text: 'Scroll, tap, and learn Italian! Ciao! 🍦', url: SHARE_URL };
     if (navigator.share) {
       try { await navigator.share(payload); return; }
       catch (e) { if (e && e.name === 'AbortError') return; }
@@ -1026,6 +1081,160 @@
     toast('Share this link: ' + SHARE_URL, 5000);
   }
 
+  /* ---------- v11.5 "Make it yours" screen ---------- */
+  let draft = { pic: 'default', photo: null };
+  function applyMe() {
+    try {
+      const n = myName();
+      document.title = 'Italian with ' + n + ' 🇮🇹';
+      $('homeHello').textContent = 'Ciao, ' + n + '!';
+      if ($('screenHome').classList.contains('active')) $('topTitle').textContent = 'Italian with ' + n;
+      const av = $('heroAvatar'), src = picSrc(saved.me && saved.me.pic, photoURL);
+      av.alt = n;
+      av.onerror = () => { av.onerror = null; av.src = AVATAR; };
+      if (av.getAttribute('src') !== src) av.src = src;
+    } catch (_) {}
+  }
+  function hasProgress() {
+    return saved.correct > 0 || !!saved.hinted || Object.keys(saved.songsOpen).length > 0 ||
+      ['progress', 'done', 'best', 'unlocked'].some((k) => Object.keys(saved[k] || {}).length > 0);
+  }
+  // First open only, for someone with no progress yet (and only if this device can remember the answer).
+  const shouldAskFirst = () => storageOK && !saved.me && !saved.meSeen && !hasProgress();
+  function meNote(text) { const n = $('meNote'); n.textContent = text || ''; n.hidden = !text; }
+  function renderMe() {
+    const name = cleanName($('meName').value) || DEFAULT_NAME;
+    $('meHello').textContent = 'Ciao, ' + name + '!';
+    const pv = $('mePreview');
+    pv.onerror = () => { pv.onerror = null; pv.src = AVATAR; };
+    pv.src = picSrc(draft.pic, draft.photo);
+    const grid = $('meGrid');
+    grid.replaceChildren();
+    const tiles = [{ id: 'photo', label: 'Use my photo' }, { id: 'default', label: 'Default picture' }].concat(CHARS);
+    tiles.forEach((t) => {
+      const b = el('button', 'me-tile');
+      b.type = 'button';
+      b.dataset.pic = t.id;
+      b.setAttribute('role', 'radio');
+      const on = draft.pic === t.id;
+      b.setAttribute('aria-checked', String(on));
+      const circle = el('span', 'me-circle');
+      let cap;
+      if (t.id === 'photo') {
+        if (draft.photo) { const im = el('img'); im.src = draft.photo; im.alt = ''; circle.appendChild(im); }
+        else { circle.classList.add('me-cam'); circle.appendChild(el('span', null, '📷')); }
+        cap = draft.photo && on ? '📷 Change' : '📷 My photo';
+        b.setAttribute('aria-label', draft.photo ? (on ? 'Your photo (selected). Tap to choose a different photo' : 'Use your photo') : 'Use my photo: take one or pick from your gallery');
+      } else {
+        const im = el('img');
+        im.alt = ''; im.decoding = 'async'; im.width = 120; im.height = 120;
+        im.src = picSrc(t.id, null);
+        if (t.id !== 'default') im.addEventListener('error', () => { b.hidden = true; if (draft.pic === t.id) { draft.pic = 'default'; renderMe(); } });
+        circle.appendChild(im);
+        cap = t.id === 'default' ? '⭐ Default' : t.emoji;
+        b.setAttribute('aria-label', t.label);
+      }
+      b.append(circle, el('span', 'me-cap', cap));
+      b.addEventListener('click', () => {
+        sound('tap');
+        if (t.id === 'photo' && (!draft.photo || draft.pic === 'photo')) { meNote(''); $('meFile').click(); return; }
+        draft.pic = t.id; meNote(''); renderMe();
+        const again = $('meGrid').querySelector('[data-pic="' + t.id + '"]');
+        if (again) again.focus({ preventScroll: true });
+      });
+      grid.appendChild(b);
+    });
+  }
+  function openMe(first) {
+    cancelAutoAdvance(); stopClip(); hideBubble();
+    draft = { pic: (saved.me && saved.me.pic) || 'default', photo: photoURL };
+    if (draft.pic === 'photo' && !photoURL) draft.pic = 'default';
+    $('meName').value = (saved.me && saved.me.name) || '';
+    $('meCancel').textContent = first ? 'Not now' : 'Cancel';
+    meNote('');
+    renderMe();
+    showScreen($('screenMe'));
+    if (first) { saved.meSeen = true; persist(); }
+    $('meTitle').focus({ preventScroll: true });
+  }
+  // Photo → square, center-cropped ~320×320 JPEG data URL (made on the device; nothing is uploaded).
+  function photoToDataURL(file) {
+    return new Promise((resolve, reject) => {
+      if (!file || (file.type && !/^image\//.test(file.type))) { reject(new Error('not an image')); return; }
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        try {
+          const w = img.naturalWidth, h = img.naturalHeight, s = Math.min(w, h);
+          if (!s) throw new Error('empty');
+          const SIDE = 320, cv = document.createElement('canvas');
+          cv.width = SIDE; cv.height = SIDE;
+          const g = cv.getContext('2d');
+          g.fillStyle = '#ffffff'; g.fillRect(0, 0, SIDE, SIDE);
+          g.imageSmoothingEnabled = true; g.imageSmoothingQuality = 'high';
+          g.drawImage(img, (w - s) / 2, (h - s) / 2, s, s, 0, 0, SIDE, SIDE);
+          let q = 0.8, d = cv.toDataURL('image/jpeg', q);
+          while (d.length > 50000 && q > 0.45) { q -= 0.1; d = cv.toDataURL('image/jpeg', q); }   // keep it well under 60 KB
+          URL.revokeObjectURL(url);
+          if (!/^data:image\/jpeg/.test(d)) throw new Error('no jpeg');
+          resolve(d);
+        } catch (e) { URL.revokeObjectURL(url); reject(e); }
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('decode')); };
+      img.src = url;
+    });
+  }
+  function onPhotoPicked() {
+    const inp = $('meFile'), file = inp.files && inp.files[0];
+    if (!file) return;
+    meNote('Getting your photo ready… 📷');
+    photoToDataURL(file).then((d) => {
+      draft.photo = d; draft.pic = 'photo';
+      meNote(''); renderMe();
+    }).catch(() => {
+      meNote('Hmm, that picture didn’t open. Try another photo 💛');
+    }).then(() => { try { inp.value = ''; } catch (_) {} });
+  }
+  function saveMe() {
+    const name = cleanName($('meName').value);
+    let pic = draft.pic, note = '';
+    if (pic === 'photo') {
+      if (!draft.photo) pic = 'default';
+      else if (draft.photo !== photoURL) {
+        try { localStorage.setItem(PHOTO_KEY, draft.photo); photoURL = draft.photo; }
+        catch (_) { pic = 'default'; note = 'This device couldn’t save your photo (it may be full or in private mode), so the default picture stays. 💛'; }
+      }
+    }
+    if (pic !== 'photo' && pic !== 'default' && !CHARS.some((c) => c.id === pic)) pic = 'default';
+    saved.me = { name, pic };
+    saved.meSeen = true;
+    const ok = persist();
+    applyMe();
+    goHome();
+    homeNote(note || (ok ? 'Saved on this device ✓ 💖' : 'Done for now! This device can’t remember it for next time. 💛'), note || !ok ? 6000 : 3000);
+  }
+  // A short note in place of the start-page blurb (a pop-up there would cover the picture).
+  function homeNote(text, ms) {
+    const b = $('homeBlurb');
+    if (b.dataset.orig == null) b.dataset.orig = b.textContent;
+    b.textContent = text; b.classList.add('home-note');
+    clearTimeout(homeNote._t);
+    homeNote._t = setTimeout(() => { b.textContent = b.dataset.orig; b.classList.remove('home-note'); }, ms || 3000);
+  }
+  function resetMe() {
+    try { localStorage.removeItem(PHOTO_KEY); } catch (_) {}
+    photoURL = null;
+    saved.me = { name: '', pic: 'default' };
+    saved.meSeen = true;
+    persist();
+    draft = { pic: 'default', photo: null };
+    $('meName').value = '';
+    renderMe();
+    applyMe();
+    sound('tap');
+    meNote('Back to the default: Arianna and her picture ✓');
+  }
+
   /* ---------- wiring ---------- */
   function fixHeight() {
     // Older browsers without dvh: size to the visible area so Safari's toolbar never hides the answers.
@@ -1038,7 +1247,16 @@
     window.addEventListener('resize', fixHeight);
     window.addEventListener('resize', () => { if (!$('toast').hidden) placeToast(); });
     updateMuteUI();
+    applyMe();
     renderHome();
+    $('btnMe').addEventListener('click', () => { sound('tap'); openMe(false); });
+    $('meName').addEventListener('input', renderMe);
+    $('meName').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); $('meName').blur(); } });
+    $('meFile').addEventListener('change', onPhotoPicked);
+    $('meSave').addEventListener('click', saveMe);
+    $('meReset').addEventListener('click', resetMe);
+    $('meCancel').addEventListener('click', goHome);
+    if (shouldAskFirst()) openMe(true);
 
     $('btnStart').addEventListener('click', () => {
       primeAudio();

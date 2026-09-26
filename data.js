@@ -5,7 +5,8 @@
    optional song (sticker label), optional clip (30 s Apple Music preview, tap to play) and lyrics.
    kind "asks": Nonna asks (ask + askEn); she picks the Italian answer. kind "says": she picks the Italian Nonna uses.
    type "lyricq": song question (see quiz() below). Song card: type "song", title, artist, clip (auto-plays), lyrics.
-   Lyric line: t = seconds into the preview (or a list of times when the line repeats). */
+   Lyric line: t = seconds into the preview (or a list of times when the line repeats).
+   v11.5: {name} = the learner's chosen first name ("Make it yours"; default Arianna), filled in by app.js when the card is shown. */
 
 /* Official 30-second previews from the Apple iTunes Search API. Streamed, never re-hosted. */
 const CLIPS = {
@@ -200,7 +201,7 @@ const SONGQ = {
       captions: ["piede", "cuore", "naso"], correct: 1,
       note: "il cuore = the heart ❤️", nudge: "Listen again 🎧 it's where love lives. Try again." },
     { step: "use", scene: "The video call with Nonna is ending. Wave bye!", en: "Bye bye, Nonna! I love you!",
-      captions: ["Buongiorno, nonna! Ti voglio bene!", "Ciao ciao, nonna! Mi chiamo Arianna!", "Ciao ciao, nonna! Ti voglio bene!"], correct: 2,
+      captions: ["Buongiorno, nonna! Ti voglio bene!", "Ciao ciao, nonna! Mi chiamo {name}!", "Ciao ciao, nonna! Ti voglio bene!"], correct: 2,
       note: "Ciao ciao = bye bye · Ti voglio bene = I love you", nudge: "Almost 💛 say bye, and tell her you love her. Try again." }
   ]),
   volare: quiz("k7", CLIPS.volare, [
@@ -306,8 +307,8 @@ window.ARIANNA_APP = {
           id: "p07", type: "dance", emoji: "👋", vibe: "Dance · party",
           song: "Ciao ciao · La Rappresentante di Lista",
           scene: "Evening party, first dance. Say hi to the whole room.",
-          en: "Good evening, everyone! I'm Arianna.",
-          captions: ["Buonanotte a tutti! Sono Arianna.", "Buonasera a tutti! Sono Arianna.", "Buonasera a tutti! Sei Arianna."],
+          en: "Good evening, everyone! I'm {name}.",
+          captions: ["Buonanotte a tutti! Sono {name}.", "Buonasera a tutti! Sono {name}.", "Buonasera a tutti! Sei {name}."],
           correct: 1,
           note: "Buonasera a tutti = good evening, everyone",
           nudge: "Almost 🌙 the party's just starting, and it's YOU. Try again.",
@@ -327,8 +328,8 @@ window.ARIANNA_APP = {
         {
           id: "p01", type: "dance", emoji: "💃", vibe: "Dance · intro video",
           scene: "Your intro video. Big smile, first beat.",
-          en: "Hi! My name is Arianna.",
-          captions: ["Ciao! Ti chiami Arianna.", "Ciao! Mi chiamo Arianna.", "Arrivederci! Mi chiamo Arianna."],
+          en: "Hi! My name is {name}.",
+          captions: ["Ciao! Ti chiami {name}.", "Ciao! Mi chiamo {name}.", "Arrivederci! Mi chiamo {name}."],
           correct: 1,
           note: "Mi chiamo… = my name is…",
           nudge: "So close 💛 it's about YOUR name. Try again.",
@@ -410,10 +411,10 @@ window.ARIANNA_APP = {
           emoji: "🔁",
           vibe: "Review · new friend",
           scene: "Review time! You meet a new friend after school.",
-          en: "Hi! I'm Arianna. Nice to meet you!",
-          captions: ["Ciao! Sono Arianna. Piacere!", "Ciao! Sei Arianna. Piacere!", "Ciao! Sono Arianna. Prego!"],
+          en: "Hi! I'm {name}. Nice to meet you!",
+          captions: ["Ciao! Sono {name}. Piacere!", "Ciao! Sei {name}. Piacere!", "Ciao! Sono {name}. Prego!"],
           correct: 0,
-          note: "Sono Arianna = I'm Arianna · Piacere = nice to meet you",
+          note: "Sono {name} = I'm {name} · Piacere = nice to meet you",
           nudge: "Almost 💛 it's YOU, and you're happy to meet her. Try again.",
           image: "images/s10-vlog-school-wave.jpg"
         },
@@ -565,7 +566,7 @@ window.ARIANNA_APP = {
           scene: "Now she asks you!",
           ask: "E tu, come ti chiami?",
           askEn: "And you, what's your name?",
-          captions: ["Sono americana!", "Mi chiamo Arianna!", "Ti chiami Arianna!"],
+          captions: ["Sono americana!", "Mi chiamo {name}!", "Ti chiami {name}!"],
           correct: 1,
           note: "Mi chiamo… = my name is…",
           tip: "Literally: “I call myself”.",
@@ -576,8 +577,8 @@ window.ARIANNA_APP = {
           id: "p06", type: "dance", emoji: "🪩", vibe: "Dance · Pedro trend",
           song: "Pedro · Jaxomy, Agatino Romero & Raffaella Carrà",
           scene: "The Pedro TikTok dance is on. Caption your dance.",
-          en: "Hi, I'm Arianna, and I'm dancing!",
-          captions: ["Ciao, sono Arianna e ballo!", "Ciao, sei Arianna e balli!", "Arrivederci, sono Arianna e ballo!"],
+          en: "Hi, I'm {name}, and I'm dancing!",
+          captions: ["Ciao, sono {name} e ballo!", "Ciao, sei {name} e balli!", "Arrivederci, sono {name} e ballo!"],
           correct: 0,
           note: "Sono = I am · Ballo = I dance",
           nudge: "Close 💛 it's about you, and you're saying hi. Try again.",
@@ -587,8 +588,8 @@ window.ARIANNA_APP = {
         {
           id: "t02", type: "dance", emoji: "🎉", vibe: "Dance · party hats",
           scene: "Party-hat dance with a new friend. Introduce yourself!",
-          en: "Nice to meet you! My name is Arianna.",
-          captions: ["Piacere! Mi chiamo Arianna.", "Prego! Mi chiamo Arianna.", "Piacere! Ti chiami Arianna."],
+          en: "Nice to meet you! My name is {name}.",
+          captions: ["Piacere! Mi chiamo {name}.", "Prego! Mi chiamo {name}.", "Piacere! Ti chiami {name}."],
           correct: 0,
           note: "Piacere = nice to meet you · Mi chiamo… = my name is…",
           nudge: "Close 🎉 you're meeting her, and it's YOUR name. Try again.",
@@ -604,8 +605,8 @@ window.ARIANNA_APP = {
           emoji: "🤝",
           vibe: "Meeting Nonna's friend",
           scene: "Nonna introduces you to her friend, Signora Rosa.",
-          ask: "Piacere, Arianna!",
-          askEn: "Nice to meet you, Arianna!",
+          ask: "Piacere, {name}!",
+          askEn: "Nice to meet you, {name}!",
           captions: ["Mi piace!", "Piacere mio!", "Prego!"],
           correct: 1,
           note: "Piacere mio = the pleasure is mine",
@@ -678,7 +679,7 @@ window.ARIANNA_APP = {
           scene: "Review! Nonna's neighbor stops you one morning.",
           ask: "Buongiorno! Come ti chiami?",
           askEn: "Good morning! What's your name?",
-          captions: ["Buonanotte! Mi chiamo Arianna.", "Buongiorno! Mi chiamo Arianna.", "Buongiorno! Ti chiami Arianna."],
+          captions: ["Buonanotte! Mi chiamo {name}.", "Buongiorno! Mi chiamo {name}.", "Buongiorno! Ti chiami {name}."],
           correct: 1,
           note: "Buongiorno = good morning · Mi chiamo… = my name is…",
           nudge: "Almost ☀️ it's morning, and it's YOUR name. Try again.",
@@ -768,7 +769,7 @@ window.ARIANNA_APP = {
           id: "u01", kind: "asks", type: "vlog", emoji: "📱", vibe: "Balcony · with Nonna",
           scene: "On Nonna's balcony by the sea. She says hello.",
           ask: "Ciao, tesoro! Come stai?", askEn: "Hi, sweetie! How are you?",
-          captions: ["Mi chiamo Arianna!", "Bene, grazie, nonna!", "A domani, nonna!"],
+          captions: ["Mi chiamo {name}!", "Bene, grazie, nonna!", "A domani, nonna!"],
           correct: 1,
           note: "Come stai? = how are you? · Bene, grazie = good, thanks",
           nudge: "Almost 💛 Nonna asked how you ARE. Try again.",

@@ -39,7 +39,7 @@
   <meta name="twitter:image:alt" content="Cute pastel card: a phone with a gelato, lemons, pizza, hearts and an Italian flag, with the title Italian with Arianna" />
   <link rel="canonical" href="https://appuccinohub.github.io/arianna-scroll/" />
 
-  <link rel="stylesheet" href="styles.css?v=11.4" />
+  <link rel="stylesheet" href="styles.css?v=11.5" />
 </head>
 <body>
   <div class="app" id="app">
@@ -63,11 +63,12 @@
           <div class="home-top">
             <div class="hero-art" aria-hidden="true">
               <span class="orb pink"></span><span class="orb sky"></span><span class="orb lemon"></span>
-              <img class="hero-avatar" src="images/avatar.jpg?v=11.4" alt="Arianna" width="120" height="120" decoding="async" />
+              <img class="hero-avatar" id="heroAvatar" src="images/avatar.jpg?v=11.5" alt="Arianna" width="120" height="120" decoding="async" />
               <span class="float f1">💖</span><span class="float f2">🇮🇹</span><span class="float f3">✨</span>
             </div>
             <h1 class="home-hello" id="homeHello">Ciao, Arianna!</h1>
-            <p class="home-blurb">Read the English. Tap the Italian that says it. 💬</p>
+            <p class="home-blurb" id="homeBlurb" role="status" aria-live="polite">Read the English. Tap the Italian that says it. 💬</p>
+            <button type="button" class="me-btn" id="btnMe">✏️ Make it yours</button>
           </div>
 
           <div class="home-bottom">
@@ -88,6 +89,33 @@
           <button type="button" class="nav-btn" id="btnNext" aria-label="Next card"><span aria-hidden="true">↓</span></button>
         </div>
         <p class="swipe-hint" id="swipeHint" aria-hidden="true" hidden>swipe up ↑</p>
+      </section>
+
+      <!-- MAKE IT YOURS (v11.5): first name + picture. Saved only on this device (localStorage), never sent anywhere. -->
+      <section class="screen" id="screenMe" aria-labelledby="meTitle" hidden>
+        <div class="me">
+          <div class="me-head">
+            <img class="me-preview" id="mePreview" src="images/avatar.jpg?v=11.5" alt="" width="84" height="84" decoding="async" />
+            <div class="me-head-text">
+              <h2 class="me-title" id="meTitle" tabindex="-1">Make it yours ✏️</h2>
+              <p class="me-hello" id="meHello" aria-live="polite">Ciao, Arianna!</p>
+            </div>
+          </div>
+          <label class="me-label" for="meName"><span lang="it">Come ti chiami?</span> <span class="me-en">= What’s your name?</span></label>
+          <input class="me-input" id="meName" type="text" maxlength="16" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" enterkeyhint="done" placeholder="Arianna" />
+          <p class="me-label" id="mePickLabel">Pick your picture</p>
+          <div class="me-grid" id="meGrid" role="radiogroup" aria-labelledby="mePickLabel"></div>
+          <input class="me-file" id="meFile" type="file" accept="image/*" tabindex="-1" aria-hidden="true" />
+          <p class="me-note" id="meNote" role="status" aria-live="polite" hidden></p>
+          <p class="me-privacy">🔒 Your name and photo stay on this device. Nothing is sent anywhere.</p>
+          <div class="me-actions">
+            <button type="button" class="primary-btn" id="meSave">Save ✓</button>
+            <div class="me-row">
+              <button type="button" class="ghost-btn" id="meReset">↺ Reset to default</button>
+              <button type="button" class="ghost-btn" id="meCancel">Cancel</button>
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- CANZONI: songs list (open from the start) -->
@@ -130,7 +158,7 @@
     <audio id="songPlayer" preload="none" playsinline webkit-playsinline></audio>
   </div>
   <noscript><p style="padding:24px;text-align:center">Please turn on JavaScript to play. 💛</p></noscript>
-  <script src="data.js?v=11.4"></script>
-  <script src="app.js?v=11.4"></script>
+  <script src="data.js?v=11.5"></script>
+  <script src="app.js?v=11.5"></script>
 </body>
 </html>

@@ -806,3 +806,113 @@ button:disabled { cursor: default; }
   .song-inner > .song-scene { font-size: 1.15rem; }
   .ly-line { font-size: 1.4rem; margin-bottom: 12px; }
 }
+
+/* ==========================================================================
+   v11.5 "Make it yours": first name + picture (saved only on this device)
+   ========================================================================== */
+.me-btn {
+  min-height: 44px;
+  margin-top: 4px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 2px solid rgba(199, 56, 114, 0.35);
+  color: var(--pink-deep);
+  font-size: 0.98rem;
+  font-weight: 800;
+  box-shadow: 0 4px 12px rgba(199, 56, 114, 0.12);
+}
+.me-btn:active { transform: scale(0.97); }
+.me-btn:hover { border-color: var(--pink-deep); }
+.me {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px calc(20px + var(--safe-r)) calc(16px + var(--safe-b)) calc(20px + var(--safe-l));
+}
+.me > * { width: 100%; max-width: 560px; margin-left: auto; margin-right: auto; }
+.me-head { display: flex; align-items: center; gap: 14px; }
+.me-preview {
+  flex: 0 0 auto;
+  width: 84px; height: 84px; box-sizing: border-box;
+  border-radius: 50%; object-fit: cover; object-position: 50% 40%;
+  border: 3px solid #fff; background: #ffe3ee;
+  box-shadow: 0 0 0 3px #ffc2d9, 0 0 0 6px #fff1a0, 0 6px 16px rgba(255, 120, 170, 0.3);
+  margin: 6px;
+}
+.me-head-text { min-width: 0; }
+.me-title:focus { outline: none; }
+.home-blurb.home-note { color: var(--ink); background: #fff7cf; border-radius: 14px; padding: 4px 12px; font-weight: 800; }
+.me-title { margin: 0; font-size: 1.7rem; font-weight: 900; letter-spacing: -0.02em; color: var(--pink-deep); line-height: 1.15; }
+.me-hello { margin: 2px 0 0; font-size: 1.15rem; font-weight: 800; color: var(--ink); overflow-wrap: anywhere; }
+.me-label { margin-top: 4px; margin-bottom: 0; font-size: 1.08rem; font-weight: 800; color: var(--ink); }
+.me-en { font-weight: 700; color: var(--ink-soft); }
+.me-input {
+  width: 100%;
+  min-height: 54px;
+  padding: 10px 16px;
+  border-radius: 16px;
+  border: 2px solid rgba(199, 56, 114, 0.35);
+  background: #fff;
+  color: var(--ink);
+  font: inherit;
+  font-size: 1.3rem;           /* ≥16px so iPhone Safari does not zoom in */
+  font-weight: 800;
+}
+.me-input::placeholder { color: #9a8fae; font-weight: 700; }
+.me-input:focus { outline: 3px solid var(--pink-deep); outline-offset: 2px; border-color: var(--pink-deep); }
+.me-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px 8px; }
+.me-tile {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 6px 2px 4px;
+  border-radius: 18px;
+  min-height: 44px;
+}
+.me-circle {
+  position: relative;
+  width: min(72px, 100%); aspect-ratio: 1; border-radius: 50%;
+  overflow: hidden;
+  background: #ffe3ee;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 2px rgba(199, 56, 114, 0.18), 0 4px 10px rgba(120, 60, 110, 0.14);
+  display: grid; place-items: center;
+}
+.me-circle img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; display: block; }
+.me-cam { background: linear-gradient(135deg, #e3f3fd, #fff7cf); font-size: 1.9rem; }
+.me-cap { font-size: 0.9rem; font-weight: 800; color: var(--ink-soft); line-height: 1.2; white-space: nowrap; }
+.me-tile[aria-checked="true"] { background: linear-gradient(135deg, #fff, #ffeaf3); }
+.me-tile[aria-checked="true"] .me-circle { box-shadow: 0 0 0 4px var(--pink-deep), 0 6px 14px rgba(199, 56, 114, 0.3); }
+.me-tile[aria-checked="true"] .me-cap { color: var(--pink-deep); }
+.me-tile:active .me-circle { transform: scale(0.95); }
+.me-file { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none; }
+.me-note {
+  margin-top: 0; margin-bottom: 0;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: #fff7cf;
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.me-privacy { margin-top: 0; margin-bottom: 0; font-size: 0.9rem; font-weight: 700; color: var(--ink-soft); line-height: 1.35; }
+.me-actions { display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: auto; padding-top: 4px; }
+.me-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 8px; }
+.me-row .ghost-btn { font-size: 1rem; }
+@media (max-height: 700px) {
+  .me { gap: 8px; padding-top: 10px; }
+  .me-preview { width: 70px; height: 70px; }
+  .me-title { font-size: 1.45rem; }
+  .me-circle { width: min(62px, 100%); }
+  .me-btn { min-height: 40px; margin-top: 0; }
+}
+@media (min-width: 900px) and (min-height: 540px) {
+  .me { justify-content: center; gap: 12px; }
+  .me-circle { width: min(96px, 100%); }
+  .me-cap { font-size: 0.95rem; }
+  .me-title { font-size: 2rem; }
+  .me-actions { margin-top: 6px; }
+}
