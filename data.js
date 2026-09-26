@@ -19,10 +19,10 @@ const CLIPS = {
     trackViewUrl: "https://music.apple.com/us/album/tu-vuo-fa-lamericano/253148071?i=253148072&uo=4",
     track: "Tu vuò fà l'americano", artist: "Renato Carosone", label: "Tu vuò fà l'americano"
   },
-  blue: {
-    url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/5c/2a/4f/5c2a4f09-ac01-be90-d6b2-a0b94bd82b7e/mzaf_3916619128344794117.plus.aac.p.m4a",
-    trackViewUrl: "https://music.apple.com/us/album/blue-da-ba-dee-gabry-ponte-video-edit/257424513?i=257425447&uo=4",
-    track: "Blue (Da Ba Dee)", artist: "Eiffel 65", label: "Blue (Da Ba Dee)"
+  happy: {
+    url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/de/16/fe/de16fe58-c0b3-c81f-f9df-93deca30223a/mzaf_13448940401159568876.plus.aac.p.m4a",
+    trackViewUrl: "https://music.apple.com/us/album/you-make-me-so-happy/1857809304?i=1857809309&uo=4",
+    track: "You Make Me So Happy", artist: "Alfa & Mr Gabriel", label: "You Make Me So Happy"
   },
   saraPerche: {
     url: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/7b/2f/cb/7b2fcb1b-0288-c551-7330-c676d186e06c/mzaf_6433311904750505108.plus.aac.p.m4a",
@@ -109,10 +109,16 @@ const LYRICS = {
     { t: 14.8, w: [["cantare,", "to sing", "kahn-TAH-reh"], ["oh", "oh", "oh"], ["oh", "oh", "oh"], ["oh", "oh", "oh"], ["oh", "oh", "oh"]] },
     { t: 27.04, w: [["E", "and", "eh"], ["volavo,", "I was flying", "voh-LAH-voh"], ["volavo", "I was flying", "voh-LAH-voh"], ["felice…", "happy", "feh-LEE-cheh"]] }
   ],
-  /* English song: each word shows its ITALIAN + how to say the Italian. The "I love it when you do it like that /
-     when you're close up" part is ♪ (romantic), so the hook line starts at "give me the shivers". */
-  blue: [
-    { t: [3.54, 18.34], w: [["I'm", "sono (io sono = I am)", "SOH-noh"], ["blue,", "blu", "bloo"], ["da", "just a fun sound (no meaning!)", "dah"], ["ba", "just a fun sound", "bah"], ["dee", "just a fun sound", "dee"], ["da", "just a fun sound", "dah"], ["ba", "just a fun sound", "bah"], ["di", "just a fun sound", "dee"]] }
+  /* Italian verse + English chorus: Italian words show English; lines with lang "en" show the ITALIAN (like Shivers).
+     Preview = verse 1 + first chorus (checked with speech-to-text); verse 2 is not in the preview. */
+  happy: [
+    { t: 2.6, w: [["Non", "not (non so = I don't know)", "nohn"], ["so,", "I know", "soh"], ["ti", "for you", "tee"], ["basta", "is enough (ti basta = it's enough for you)", "BAHS-tah"], ["così", "so", "koh-ZEE"], ["poco", "little", "POH-koh"]] },
+    { t: 7.7, w: [["Se", "if", "seh"], ["va", "goes", "vah"], ["tutto", "everything", "TOOT-toh"], ["storto,", "wrong (va storto = goes wrong)", "STOR-toh"], ["raddrizzi", "you fix (you straighten out)", "rahd-DREET-tsee"], ["una", "a", "OO-nah"], ["giornata", "day", "jor-NAH-tah"]] },
+    { t: 11.6, w: [["No,", "no", "noh"], ["che", "what a", "keh"], ["viaggio", "trip", "VYAHD-joh"], ["che", "that", "keh"], ["è", "is", "eh"], ["la", "the", "lah"], ["vita", "life", "VEE-tah"]] },
+    { t: 15.7, w: [["Senza", "without", "SEN-tsah"], ["una", "a", "OO-nah"], ["valigia,", "suitcase", "vah-LEE-jah"], ["né", "or (not even)", "neh"], ["una", "a", "OO-nah"], ["meta", "destination", "MEH-tah"], ["precisa", "exact", "preh-CHEE-zah"]] },
+    { t: 19.9, lang: "en", w: [["You", "tu", "too"], ["make", "rendi (you make me happy = mi rendi felice)", "REN-dee"], ["me", "mi (me)", "mee"], ["so", "così", "koh-ZEE"], ["happy", "felice", "feh-LEE-cheh"]] },
+    { t: 24.9, lang: "en", w: [["Oh,", "oh", "oh"], ["I'm", "io", "EE-oh"], ["gonna", "I'm gonna tell everybody = lo dirò a tutti", "loh dee-ROH ah TOOT-tee"], ["tell", "dire", "DEE-reh"], ["everybody", "tutti", "TOOT-tee"]] },
+    { t: 27.7, lang: "en", w: [["You", "tu", "too"], ["make", "rendi (you make me happy = mi rendi felice)", "REN-dee"], ["me…", "mi (me)", "mee"]] }
   ],
   italiano: [
     { t: 2.82, w: [["Buongiorno", "good morning (hello!)", "bwon-JOR-noh"], ["Italia,", "Italy", "ee-TAH-lyah"], ["con", "with", "kohn"], ["i", "the", "ee"], ["tuoi", "your", "TWOH-ee"], ["artisti", "artists", "ar-TEE-stee"]] },
@@ -208,16 +214,16 @@ const SONGQ = {
       captions: ["Mi piace cantare!", "Mi piace volare!", "Ti piace cantare?"], correct: 0,
       note: "Mi piace cantare = I like singing 🎤", nudge: "Almost 🎤 you like to SING, and it's about you. Try again." }
   ]),
-  blue: quiz("k9", CLIPS.blue, [
-    { step: "notice", en: "“I'm” in Italian is…", line: "I'm blue, da ba dee da ba di", hl: "I'm", snip: [3.3, 6.2],
-      captions: ["Sono", "Ho", "Sei"], correct: 0,
-      note: "I'm = sono (Sono Arianna! Sono americana!)", nudge: "Almost 💙 think of “Sono Arianna”. Try again." },
-    { step: "notice", en: "Which color is missing? Pick it in Italian!", line: "I'm ___, da ba dee da ba di", snip: [18.1, 21.2],
-      captions: ["giallo", "blu", "rosa"], correct: 1,
-      note: "blu = blue 💙 (giallo = yellow · rosa = pink)", nudge: "Listen again 🎧 it's the song's name! Try again." },
-    { step: "use", scene: "A friend asks what color you like.", en: "I like blue!",
-      captions: ["Ti piace il blu?", "Mi piace il rosso!", "Mi piace il blu!"], correct: 2,
-      note: "Mi piace il blu! = I like blue! 💙", nudge: "Almost 💙 it's about YOU, and it's blue. Try again." }
+  happy: quiz("k11", CLIPS.happy, [
+    { step: "notice", en: "“happy” in Italian is…", line: "You make me so happy", hl: "happy", snip: [19.9, 24.2], songLang: "en",
+      captions: ["triste", "felice", "stanca"], correct: 1,
+      note: "felice = happy 😊 (triste = sad · stanca = tired)", nudge: "Almost 😊 happy is the opposite of triste (sad). Try again." },
+    { step: "notice", en: "What does “la vita” mean?", line: "No, che viaggio che è la vita", hl: "la vita", snip: [11.6, 15.6],
+      answerLang: "en", captions: ["the trip", "life", "the suitcase"], correct: 1,
+      note: "la vita = life 🌈 (che viaggio = what a trip!)", nudge: "Almost 🌈 the song says it's a big trip. Try again." },
+    { step: "use", scene: "Your best friend made you laugh all day. Tell her!", en: "You make me happy!",
+      captions: ["Mi rendi triste!", "Ti rendo felice!", "Mi rendi felice!"], correct: 2,
+      note: "Mi rendi felice! = you make me happy! (felice, like the song's “happy”)", nudge: "Almost 😊 SHE makes YOU happy. Try again." }
   ]),
   italiano: quiz("k10", CLIPS.italiano, [
     { step: "notice", en: "What does “gli occhi” mean?", line: "con gli occhi pieni di malinconia", hl: "occhi", snip: [22.4, 26.0],
@@ -297,16 +303,16 @@ window.ARIANNA_APP = {
           image: "images/a01-bakery.jpg"
         },
         {
-          id: "p07", type: "dance", emoji: "💙", vibe: "Dance · party",
-          song: "Blue (Da Ba Dee) · Eiffel 65",
+          id: "p07", type: "dance", emoji: "👋", vibe: "Dance · party",
+          song: "Ciao ciao · La Rappresentante di Lista",
           scene: "Evening party, first dance. Say hi to the whole room.",
           en: "Good evening, everyone! I'm Arianna.",
           captions: ["Buonanotte a tutti! Sono Arianna.", "Buonasera a tutti! Sono Arianna.", "Buonasera a tutti! Sei Arianna."],
           correct: 1,
           note: "Buonasera a tutti = good evening, everyone",
           nudge: "Almost 🌙 the party's just starting, and it's YOU. Try again.",
-          image: "images/c07-disco-blue.jpg",
-          clip: CLIPS.blue
+          image: "images/k-ciao-sunset.jpg",
+          clip: CLIPS.ciaoCiao
         },
         {
           id: "t09", type: "photo", emoji: "🌙", vibe: "Photo dump · bedtime story",
@@ -995,10 +1001,10 @@ window.ARIANNA_APP = {
       { id: "k3", type: "song", emoji: "🚗", vibe: "Canzoni · Naples, 1956", imageFrom: "p05",
         scene: "A 1950s classic from Naples. Tap any word!", title: "Tu vuò fà l'americano", artist: "Renato Carosone",
         clip: CLIPS.carosone, lyrics: LYRICS.carosone }].concat(SONGQ.carosone) },
-    { id: "k9", title: "Blue (Da Ba Dee)", artist: "Eiffel 65", emoji: "💙", cards: [
-      { id: "k9", type: "song", emoji: "💙", vibe: "Canzoni · Italian band, English song", imageFrom: "p07", lyricsLang: "en",
-        scene: "Eiffel 65 are from Turin, Italy! Tap a word to see it in ITALIAN.", title: "Blue (Da Ba Dee)", artist: "Eiffel 65",
-        clip: CLIPS.blue, lyrics: LYRICS.blue }].concat(SONGQ.blue) },
+    { id: "k11", title: "You Make Me So Happy", artist: "Alfa & Mr. Gabriel", emoji: "😊", cards: [
+      { id: "k11", type: "song", emoji: "😊", vibe: "Canzoni · Italian + English", image: "images/k11-happy.jpg",
+        scene: "An Italian + English mix! Tap any word.", title: "You Make Me So Happy", artist: "Alfa & Mr. Gabriel",
+        clip: CLIPS.happy, lyrics: LYRICS.happy }].concat(SONGQ.happy) },
     { id: "k5", title: "Pedro", artist: "Jaxomy, Agatino Romero & Raffaella Carrà", emoji: "🪩", cards: [
       { id: "k5", type: "song", emoji: "🪩", vibe: "Canzoni · the viral remix", image: "images/k-pedro-dance.jpg",
         scene: "Raffaella Carrà's 1980 hit, remixed for TikTok. Tap any word!", title: "Pedro", artist: "Jaxomy, Agatino Romero & Raffaella Carrà",
@@ -1024,6 +1030,6 @@ window.ARIANNA_APP = {
   const songCard = (id) => all.find((c) => c.type === "song" && c.id === id);
   all.forEach((c) => {
     const sc = c.songOf && songCard(c.songOf);
-    if (sc) { c.image = sc.image; c.songTitle = sc.title; c.songLang = sc.lyricsLang || "it"; }
+    if (sc) { c.image = sc.image; c.songTitle = sc.title; c.songLang = c.songLang || sc.lyricsLang || "it"; }
   });
 })(window.ARIANNA_APP);

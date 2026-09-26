@@ -9,7 +9,6 @@ All card photos are from [Pexels](https://www.pexels.com/) under the [Pexels Lic
 | `c04-dance-duet.jpg` | [cottonbro studio](https://www.pexels.com/@cottonbro/) | [#3662824](https://www.pexels.com/photo/photo-of-girls-dancing-3662824/) |
 | `c05-fiat500.jpg` | [Leonardo Mazzone](https://www.pexels.com/@mypointviews/) | [#34789762](https://www.pexels.com/photo/classic-red-car-parked-in-scenic-rome-street-34789762/) |
 | `c06-naples-vesuvius.jpg` | [Ciro Passaro](https://www.pexels.com/@ciro-passaro-2099608/) | [#14686440](https://www.pexels.com/photo/seaside-city-in-summer-14686440/) |
-| `c07-disco-blue.jpg` | [Tatiane Herder](https://www.pexels.com/@tatianeherder/) | [#19133822](https://www.pexels.com/photo/illuminating-disco-ball-hanging-under-ceiling-19133822/) |
 | `m01-vinyl-pink.jpg` | [Lisa Fotios](https://www.pexels.com/@fotios-photos/) | [#9853334](https://www.pexels.com/photo/a-vinyl-record-on-a-turntable-9853334/) |
 | `s08-vlog-gelato-order.jpg` | [ΘSWΛLD](https://www.pexels.com/@sw-ld-147012990/) | [#31712640](https://www.pexels.com/photo/colorful-ice-cream-display-with-various-cones-31712640/) |
 | `s09-photo-birthday.jpg` | [Thang Nguyen](https://www.pexels.com/@chipi1189/) | [#35214942](https://www.pexels.com/photo/teen-celebrating-birthday-with-cake-and-balloons-35214942/) |
@@ -103,3 +102,11 @@ Original illustrations generated for Arianna Scroll (fictional characters, not b
 | `n04-family.jpg` | n04 | Arianna with her zio and cugino |
 | `n10-family.jpg` | n10 | Arianna with her zia and her Bichon Frise |
 | `n11-family.jpg` | n11 | Arianna with her mamma |
+
+## v11.4
+
+| File | Card | Shows |
+|---|---|---|
+| `k11-happy.jpg` | k11 (Canzoni) | Arianna dancing with headphones in an empty sunny piazza. Original illustration made for Arianna Scroll (fictional character); landscape 1280×720 shown whole on a blurred 9:16 background (720×1280 JPG). |
+
+Song k11: “You Make Me So Happy”, Alfa & Mr Gabriel (2022). 30-second preview from the Apple iTunes Search API, streamed from Apple, never re-hosted ([Apple Music](https://music.apple.com/us/album/you-make-me-so-happy/1857809304?i=1857809309&uo=4)). “Blue (Da Ba Dee)” (Eiffel 65) and `c07-disco-blue.jpg` were removed; Session 1 card p07 now plays “Ciao ciao” with `k-ciao-sunset.jpg`.

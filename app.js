@@ -28,6 +28,7 @@
     d.correct = Math.max(0, parseInt(d.correct, 10) || 0);   // correct answers, all sessions + songs
     d.songsOpen = d.songsOpen && typeof d.songsOpen === 'object' ? d.songsOpen : {};
     d.songsEarned = Math.max(0, parseInt(d.songsEarned, 10) || 0); // songs opened by correct answers so far
+    if (d.songsOpen.k9 && !d.songsOpen.k11) d.songsOpen.k11 = 'earned';   // v11.4: k11 took Blue's (k9) place in the list
     // Already played before song unlocks existed? Credit her best first-try scores and every song she finished.
     if (firstV9) {
       try {
@@ -527,12 +528,13 @@
 
   function buildLyrics(card, compact) {
     const box = el('div', 'lyrics' + (compact ? ' compact' : ''));
-    const toIt = card.lyricsLang === 'en';
-    box.setAttribute('aria-label', toIt ? 'Lyrics: tap a word to see it in Italian' : 'Lyrics: tap a word to see what it means');
+    const cardToIt = card.lyricsLang === 'en';
+    box.setAttribute('aria-label', cardToIt ? 'Lyrics: tap a word to see it in Italian' : 'Lyrics: tap a word to see what it means');
     box.dataset.on = '-2';
     const list = el('div', 'ly-list');
     card.lyrics.forEach((ln) => {
       const line = el('p', 'ly-line');
+      const toIt = ln.lang ? ln.lang === 'en' : cardToIt;   // v11.4: a line can be English inside an Italian song
       line.lang = toIt ? 'en' : 'it';
       if (!ln.w.length) { line.classList.add('ly-break'); line.textContent = '♪ ♪ ♪'; line.setAttribute('aria-label', 'music'); }
       ln.w.forEach(([word, en, say], i) => {
